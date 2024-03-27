@@ -20,11 +20,11 @@ export default async function Home() {
       <div className="flex flex-row gap-4 text-center">
         {allGames.map((game) => {
           return (
-            <div className="flex h-80 w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25">
-              <p
-                className="h-16 overflow-hidden text-ellipsis bg-slate-900 p-1"
-                key={game.id}
-              >
+            <div
+              key={game.id}
+              className="flex h-80 w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25"
+            >
+              <p className="h-16 overflow-hidden text-ellipsis bg-slate-900 p-1">
                 {game.title}
               </p>
               <div className="bg-slate-900 p-1">
@@ -37,7 +37,7 @@ export default async function Home() {
                     className="m-2 inline"
                     width={24}
                     height={24}
-                    src={Steam}
+                    src={Steam as string}
                     alt="Steam-Icon"
                   />
                 </a>
