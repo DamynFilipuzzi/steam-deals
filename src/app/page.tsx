@@ -12,7 +12,7 @@ export default async function Home() {
   const session = await getServerAuthSession();
 
   const allPosts = await api.post.getAll.query();
-  const allGames = await api.game.getAll.query();
+  const allGames = await api.games.getAll.query();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
@@ -20,29 +20,24 @@ export default async function Home() {
       <div className="flex flex-row gap-4 text-center">
         {allGames.map((game) => {
           return (
-            <div
-              key={game.id}
-              className="flex h-80 w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25"
-            >
-              <p className="h-16 overflow-hidden text-ellipsis bg-slate-900 p-1">
-                {game.title}
-              </p>
-              <div className="bg-slate-900 p-1">
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={`https://store.steampowered.com/app/${game.steam_id}`}
+            <Link href={`/game/${game.id}`}>
+              <div className="m-0">
+                <div
+                  key={game.id}
+                  className="flex h-80 w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25"
                 >
-                  <Image
-                    className="m-2 inline"
-                    width={24}
-                    height={24}
-                    src={Steam as string}
-                    alt="Steam-Icon"
-                  />
-                </a>
+                  <div className="h-16 overflow-hidden text-ellipsis bg-slate-900 p-1">
+                    {game.title}
+                  </div>
+                  <div>
+                    <img
+                      src={`https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_id}/library_600x900.jpg`}
+                      alt={`${game.title} game image`}
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
+            </Link>
           );
         })}
       </div>

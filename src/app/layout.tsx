@@ -10,8 +10,9 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Dashboard",
-  description: "Steam Scraper. Created to help you find better deals on games",
+  title: "Dashboard | Steam Games",
+  description:
+    "Steam Games. Created to help you find better deals on steam games",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

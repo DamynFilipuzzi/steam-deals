@@ -9,7 +9,7 @@ import { gameRouter } from "./routers/game";
  */
 export const appRouter = createTRPCRouter({
   post: postRouter,
-  game: gameRouter,
+  games: gameRouter,
 });
 
 // export type definition of API
