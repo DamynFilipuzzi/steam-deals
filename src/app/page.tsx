@@ -4,8 +4,6 @@ import Link from "next/link";
 import { CreatePost } from "~/app/_components/create-post";
 import { getServerAuthSession } from "~/server/auth";
 import { api } from "~/trpc/server";
-import Image from "next/image";
-import Steam from "public/steam.svg";
 
 export default async function Home() {
   noStore();
@@ -20,12 +18,9 @@ export default async function Home() {
       <div className="flex flex-row gap-4 text-center">
         {allGames.map((game) => {
           return (
-            <Link href={`/game/${game.id}`}>
+            <Link key={game.id} href={`/game/${game.id}`}>
               <div className="m-0">
-                <div
-                  key={game.id}
-                  className="flex h-80 w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25"
-                >
+                <div className="flex h-80 w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25">
                   <div className="h-16 overflow-hidden text-ellipsis bg-slate-900 p-1">
                     {game.title}
                   </div>
