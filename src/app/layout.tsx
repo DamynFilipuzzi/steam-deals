@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { TRPCReactProvider } from "~/trpc/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import Navbar from "./ui/navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,9 +13,9 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "Dashboard | Steam Games",
+  title: "Dashboard | Steam Deals",
   description:
-    "Steam Games. Created to help you find better deals on steam games",
+    "Steam Deals. Created to help you find better deals on steam games",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
@@ -26,7 +27,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`font-sans ${inter.variable}`}>
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <TRPCReactProvider>
+          <Navbar />
+          {children}
+        </TRPCReactProvider>
         <SpeedInsights />
         <Analytics />
       </body>

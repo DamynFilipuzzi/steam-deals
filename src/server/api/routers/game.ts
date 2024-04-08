@@ -5,7 +5,7 @@ export const gameRouter = createTRPCRouter({
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.db.games.findMany({
       skip: 0,
-      take: 8,
+      take: 64,
       orderBy: { id: "asc" },
     });
   }),

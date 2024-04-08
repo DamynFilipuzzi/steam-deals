@@ -17,6 +17,7 @@ const config = {
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/consistent-type-imports": "off",
     "@next/next/no-img-element": "off",
+    "@typescript-eslint/unbound-method": "off",
 
     // "@typescript-eslint/consistent-type-imports": [
     //   "warn",
