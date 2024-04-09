@@ -7,21 +7,21 @@ export const gamesPerPages = () => {
 };
 
 export const gameRouter = createTRPCRouter({
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.db.games.findMany({
-      skip: 0,
-      take: gamesPerPage,
-      orderBy: { id: "asc" },
-    });
-  }),
-
-  getQuery: publicProcedure.input(z.number()).query(({ ctx, input }) => {
-    return ctx.db.games.findMany({
-      skip: Number(gamesPerPage * input - gamesPerPage),
-      take: gamesPerPage,
-      orderBy: { id: "asc" },
-    });
-  }),
+  getQuery: publicProcedure
+    .input(z.object({ page: z.number(), query: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.db.games.findMany({
+        skip: Number(gamesPerPage * input.page - gamesPerPage),
+        take: gamesPerPage,
+        orderBy: { id: "asc" },
+        where: {
+          title: {
+            contains: input.query,
+            mode: "insensitive",
+          },
+        },
+      });
+    }),
 
   getById: publicProcedure.input(z.number()).query(({ ctx, input }) => {
     return ctx.db.games.findFirst({
@@ -29,7 +29,14 @@ export const gameRouter = createTRPCRouter({
     });
   }),
 
-  getTotalPages: publicProcedure.query(({ ctx }) => {
-    return ctx.db.games.count();
+  getTotalPages: publicProcedure.input(z.string()).query(({ ctx, input }) => {
+    return ctx.db.games.count({
+      where: {
+        title: {
+          contains: input,
+          mode: "insensitive",
+        },
+      },
+    });
   }),
 });

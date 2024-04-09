@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import { api } from "~/trpc/server";
 import Steam from "public/steam.svg";
 import Image from "next/image";
+import BackButton from "~/app/_components/backButton";
 
 type Props = {
   params: { id: string };
@@ -31,12 +31,7 @@ export default async function Page({ params }: Props) {
           className="w-full"
         />
         <div className="absolute left-60 top-0 grid h-full w-1/4 grid-rows-10 items-center justify-items-center space-y-0 bg-slate-950/80 p-8">
-          <Link
-            href="/"
-            className="row-start-1 w-min justify-self-start text-slate-200"
-          >
-            <h1 className="text-lg">Back</h1>
-          </Link>
+          <BackButton />
           <h1 className="row-start-2 text-2xl">{game?.title}</h1>
           <img
             className="row-start-3 row-end-9 h-5/6 border-2 border-slate-700/25 shadow-2xl"

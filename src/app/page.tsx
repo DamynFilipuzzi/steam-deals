@@ -2,6 +2,7 @@ import Pagination from "./ui/pagination";
 import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
 import { gamesPerPages } from "~/server/api/routers/game";
+import Search from "./ui/search";
 
 import { api } from "~/trpc/server";
 
@@ -9,23 +10,26 @@ export default async function Home({
   searchParams,
 }: {
   searchParams?: {
-    queue?: string;
+    query?: string;
     page?: string;
   };
 }) {
   noStore();
-  // const query = searchParams?.query || "";
+  const query = searchParams?.query ?? "";
   const currentPage = Number(searchParams?.page) || 1;
+  const params = { page: currentPage, query: query };
   const totalPages = Math.ceil(
-    Number((await api.games.getTotalPages.query()) / gamesPerPages()),
+    Number((await api.games.getTotalPages.query(query)) / gamesPerPages()),
   );
 
-  // const allGames = await api.games.getAll.query();
-  const gamesQuery = await api.games.getQuery.query(currentPage);
+  const gamesQuery = await api.games.getQuery.query(params);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <h1 className="my-5 text-3xl underline">Top Games of the Day</h1>
+      <h1 className="mt-5 text-3xl underline">Search All Steam Games</h1>
+      <div className="my-5 w-1/3">
+        <Search placeholder="Search games..." />
+      </div>
       <div className="flex w-2/3 flex-wrap items-center justify-center gap-4">
         {gamesQuery.map((game) => {
           return (
