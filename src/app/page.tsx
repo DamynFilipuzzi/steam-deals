@@ -1,18 +1,33 @@
+import Pagination from "./ui/pagination";
 import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
+import { gamesPerPages } from "~/server/api/routers/game";
 
 import { api } from "~/trpc/server";
 
-export default async function Home() {
+export default async function Home({
+  searchParams,
+}: {
+  searchParams?: {
+    queue?: string;
+    page?: string;
+  };
+}) {
   noStore();
+  // const query = searchParams?.query || "";
+  const currentPage = Number(searchParams?.page) || 1;
+  const totalPages = Math.ceil(
+    Number((await api.games.getTotalPages.query()) / gamesPerPages()),
+  );
 
-  const allGames = await api.games.getAll.query();
+  // const allGames = await api.games.getAll.query();
+  const gamesQuery = await api.games.getQuery.query(currentPage);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
       <h1 className="my-5 text-3xl underline">Top Games of the Day</h1>
       <div className="flex w-2/3 flex-wrap items-center justify-center gap-4">
-        {allGames.map((game) => {
+        {gamesQuery.map((game) => {
           return (
             <Link
               key={game.id}
@@ -35,6 +50,9 @@ export default async function Home() {
             </Link>
           );
         })}
+      </div>
+      <div className="mt-5 flex w-full justify-center">
+        <Pagination totalPages={totalPages} />
       </div>
 
       <div className="my-7"></div>

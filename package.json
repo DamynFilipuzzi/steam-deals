@@ -24,6 +24,7 @@
     "@trpc/server": "^10.45.1",
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
+    "clsx": "^2.1.0",
     "next": "^14.1.0",
     "next-auth": "^4.24.6",
     "react": "18.2.0",
@@ -31,6 +32,7 @@
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
     "use-debounce": "^10.0.0",
+    "uuid": "^9.0.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -38,6 +40,7 @@
     "@types/node": "^20.11.20",
     "@types/react": "^18.2.57",
     "@types/react-dom": "^18.2.19",
+    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^7.0.2",
     "@typescript-eslint/parser": "^7.0.2",
     "eslint": "^8.56.0",
