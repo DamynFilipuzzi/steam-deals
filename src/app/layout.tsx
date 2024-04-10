@@ -1,14 +1,14 @@
 import "~/styles/globals.css";
 
-import { Inter } from "next/font/google";
-
+import { Inter as FontSans } from "next/font/google";
+import { cn } from "~/lib/utils";
 import { TRPCReactProvider } from "~/trpc/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./ui/navbar";
 import Footer from "./ui/footer";
 
-const inter = Inter({
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
@@ -27,7 +27,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${inter.variable}`}>
+      <body
+        className={cn(
+          `bg-background dark min-h-screen font-sans antialiased ${fontSans.variable}`,
+        )}
+      >
         <TRPCReactProvider>
           <Navbar />
           {children}
