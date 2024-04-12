@@ -6,7 +6,7 @@ export default function BackButton() {
 
   return (
     <button
-      className="row-start-1 w-min justify-self-start text-lg text-slate-200"
+      className="row-start-1 w-min justify-self-start text-lg text-slate-200 underline"
       type="button"
       onClick={() => router.back()}
     >

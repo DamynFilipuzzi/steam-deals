@@ -25,12 +25,11 @@ export default async function Home({
   const gamesQuery = await api.games.getQuery.query(params);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c] text-white">
-      <h1 className="mt-5 text-3xl underline">Search All Steam Games</h1>
-      <div className="my-5 w-1/3">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white">
+      <div className="my-5 w-2/3 lg:w-1/3">
         <Search placeholder="Search games..." />
       </div>
-      <div className="flex w-2/3 flex-wrap items-center justify-center gap-4">
+      <div className="flex w-full flex-wrap items-center justify-center gap-4 lg:w-2/3 3xl:w-3/6">
         {gamesQuery.map((game) => {
           return (
             <Link
@@ -39,7 +38,7 @@ export default async function Home({
               className="text-center"
             >
               <div className="m-0">
-                <div className="ease- flex h-80 w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25 transition duration-100 hover:border-cyan-300">
+                <div className="ease- flex h-80 w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25 transition duration-100 hover:border-cyan-500">
                   <div className="h-16 overflow-hidden text-ellipsis bg-slate-900 p-1">
                     {game.title}
                   </div>
@@ -58,8 +57,6 @@ export default async function Home({
       <div className="mt-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
-
-      <div className="my-7"></div>
     </main>
   );
 }
