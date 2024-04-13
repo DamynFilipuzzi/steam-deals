@@ -14,7 +14,9 @@ export default async function Navbar() {
         className="flex flex-row items-center justify-center gap-4 hover:opacity-70"
       >
         <Image src={Logo} height={60} width={60} alt="Steam Deals Site Logo" />
-        <h1 className="text-lg text-cyan-500 sm:text-3xl">Steam Deals</h1>
+        <h1 className="text-lg font-medium text-cyan-500 sm:text-3xl">
+          Steam Deals
+        </h1>
       </Link>
 
       <div className="my-7 flex flex-row items-center justify-center gap-4">
@@ -23,8 +25,8 @@ export default async function Navbar() {
             <button className="dropbtn">
               <p className="mr-2 inline text-center align-middle text-2xl text-white">
                 {session.user?.name ? (
-                  <span className="hidden sm:inline">
-                    {capitalizeFirstLetter(session.user?.name)}
+                  <span className="hidden capitalize sm:inline">
+                    {session.user?.name}
                   </span>
                 ) : (
                   <span className="hidden sm:inline">Username</span>
@@ -62,8 +64,4 @@ export default async function Navbar() {
       </div>
     </nav>
   );
-}
-
-function capitalizeFirstLetter(string: string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
 }

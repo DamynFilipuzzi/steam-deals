@@ -38,23 +38,56 @@ export default async function Home({
               className="text-center"
             >
               <div className="m-0">
-                <div className="ease- flex h-80 w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25 transition duration-100 hover:border-cyan-500">
-                  <div className="h-16 overflow-hidden text-ellipsis bg-slate-900 p-1">
+                <div className="flex w-44 flex-col justify-between border-2 border-slate-700/25 bg-slate-700/25 transition duration-100 ease-in hover:border-cyan-500">
+                  <div className="line-clamp-2 h-12 bg-slate-900">
                     {game.title}
                   </div>
                   <div>
                     <img
                       src={`https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_id}/library_600x900.jpg`}
                       alt={`${game.title} game image`}
+                      className="h-64"
                     />
+                  </div>
+                  <div className="flex h-12 flex-row items-center justify-end bg-slate-900 p-1 text-right text-sm">
+                    {game.original_price != null &&
+                    game.discount_price != null ? (
+                      <>
+                        <p className="bg-green-600 p-1">
+                          -
+                          {(
+                            ((game.original_price - game.discount_price) /
+                              game.original_price) *
+                            100
+                          ).toFixed(0)}
+                          %
+                        </p>
+                        <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
+                          {"$" + (game.original_price / 100).toFixed(2)}
+                        </p>
+                      </>
+                    ) : (
+                      <></>
+                    )}
+                    <p className="bg-slate-300/10 p-1">
+                      $
+                      {game.discount_price != null
+                        ? (game.discount_price / 100).toFixed(2)
+                        : "0.00"}
+                    </p>
                   </div>
                 </div>
               </div>
             </Link>
           );
         })}
+        {gamesQuery.length == 0 && (
+          <div>
+            <p className="text-white">No results found</p>
+          </div>
+        )}
       </div>
-      <div className="mt-5 flex w-full justify-center">
+      <div className="my-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>
     </main>

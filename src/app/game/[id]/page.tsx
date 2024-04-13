@@ -11,7 +11,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const game = await api.games.getById.query(Number(params.id));
   return {
-    title: `${game?.title ?? "Game"} | Steam Games`,
+    title: `${game?.title ?? "Game"} | Steam Deals`,
   };
 }
 
