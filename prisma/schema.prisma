@@ -15,17 +15,17 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+// model Post {
+//     id        Int      @id @default(autoincrement())
+//     name      String
+//     createdAt DateTime @default(now())
+//     updatedAt DateTime @updatedAt
 
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
+//     createdBy   User   @relation(fields: [createdById], references: [id])
+//     createdById String
 
-    @@index([name])
-}
+//     @@index([name])
+// }
 
 // Necessary for Next auth
 model Account {
@@ -62,7 +62,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    // posts         Post[]
 }
 
 model VerificationToken {
@@ -77,9 +77,17 @@ model Games {
     id                  Int       @id @default(autoincrement())
     steam_id            Int       @unique
     title               String?
-    rating_percentage   Int?
-    number_of_reviews   Int?
     original_price      Int?
     discount_price      Int?
     created_at          DateTime  @default(now())
+    info_games          Game_Info?
+}
+
+model Game_Info {
+    id                   Int       @id @default(autoincrement())
+    game_id              Int       @unique
+    desc                 String?
+    raiting_percentage   Int?
+    number_of_reviews    Int?
+    games                Games     @relation(fields: [game_id], references: [id], onDelete: Cascade)
 }
