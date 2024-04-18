@@ -85,9 +85,9 @@ model Games {
 
 model Game_Info {
     id                   Int       @id @default(autoincrement())
-    game_id              Int       @unique
+    steam_id             Int       @unique
     desc                 String?
     raiting_percentage   Int?
     number_of_reviews    Int?
-    games                Games     @relation(fields: [game_id], references: [id], onDelete: Cascade)
+    game                Games     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
