@@ -87,6 +87,7 @@ model Game_Info {
     id                   Int       @id @default(autoincrement())
     steam_id             Int       @unique
     desc                 String?
+    is_mature            Boolean?
     raiting_percentage   Int?
     number_of_reviews    Int?
     game                Games     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
