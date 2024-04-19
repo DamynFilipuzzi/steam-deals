@@ -1,8 +1,10 @@
 import { Metadata } from "next";
 import { api } from "~/trpc/server";
 import Steam from "public/steam.svg";
-import Image from "next/image";
 import BackButton from "~/app/_components/backButton";
+import noCapsule from "public/no-capsule.jpg";
+import noHeader from "public/no-header.jpg";
+import Image from "next/image";
 
 type Props = {
   params: { id: string };
@@ -18,6 +20,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const game = await api.games.getById.query(Number(params.id));
 
+  const headerFetch = await fetch(
+    `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_hero.jpg`,
+  );
+
+  const capsuleFetch = await fetch(
+    `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_600x900.jpg`,
+  );
+
   if (!game) {
     // return not found redirect
   }
@@ -28,20 +38,46 @@ export default async function Page({ params }: Props) {
         <BackButton />
         <h1 className="row-start-2 text-2xl">{game?.title}</h1>
       </div>
-      <div className="relative">
-        <img
-          src={`https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_hero.jpg`}
-          alt={`${game?.title} Hero Image`}
-          className="w-full"
-        />
+      <div className="relative overflow-hidden">
+        {headerFetch.ok ? (
+          <img
+            src={headerFetch.url}
+            alt={`${game?.title} Hero Image`}
+            className="aspect-[426000/137561] w-full"
+          />
+        ) : (
+          <div>
+            <p className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 text-center text-cyan-500 xl:text-2xl">
+              No Image Found :(
+            </p>
+            <Image
+              src={noHeader}
+              alt={`${game?.title} Missing Hero Image`}
+              className="aspect-[426000/137561] w-full blur-xl"
+            />
+          </div>
+        )}
         <div className="absolute left-60 top-0 hidden h-full w-1/4 grid-rows-12 items-center justify-items-center space-y-0 bg-slate-950/80 p-8 xl:grid">
           <BackButton />
           <h1 className="z-10 row-start-3 row-end-3 text-2xl">{game?.title}</h1>
-          <img
-            className="row-start-4 row-end-11 h-5/6 border-2 border-slate-700/25 shadow-2xl"
-            src={`https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_600x900.jpg`}
-            alt={`${game?.title} Library Image`}
-          />
+          {capsuleFetch.ok ? (
+            <img
+              className="row-start-4 row-end-11 h-5/6 border-2 border-slate-700/25 shadow-2xl"
+              src={capsuleFetch.url}
+              alt={`${game?.title} Library Image`}
+            />
+          ) : (
+            <>
+              <p className="absolute top-1/2 z-10 text-cyan-500">
+                No Image Found :(
+              </p>
+              <Image
+                src={noCapsule}
+                alt={`${game?.title} Missing Library Image`}
+                className="row-start-4 row-end-11 h-5/6 border-2 border-slate-700/25 shadow-2xl blur-md"
+              />
+            </>
+          )}
           <a
             className="row-start-12"
             target="_blank"
