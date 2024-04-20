@@ -88,7 +88,7 @@ model Game_Info {
     steam_id                  Int       @unique
     desc                      String?
     is_mature                 Boolean?
-    total_revies              Int?
+    total_reviews              Int?
     total_positive_reviews    Int?
     game                      Games     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
