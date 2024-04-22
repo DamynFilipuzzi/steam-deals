@@ -11,14 +11,14 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const game = await api.games.getById.query(Number(params.id));
+  const game = await api.games.getGameInfo.query(Number(params.id));
   return {
     title: `${game?.title ?? "Game"} | Steam Deals`,
   };
 }
 
 export default async function Page({ params }: Props) {
-  const game = await api.games.getById.query(Number(params.id));
+  const game = await api.games.getGameInfo.query(Number(params.id));
 
   const headerFetch = await fetch(
     `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_hero.jpg`,
@@ -115,131 +115,48 @@ export default async function Page({ params }: Props) {
           </p>
         </a>
       </div>
-
       <div className="p-5">
-        <p className=" my-10 text-center text-3xl">
-          THIS IS FILLER TEXT FOR THE TIME BEING.
-        </p>
-        <ul>
-          <li>
-            Morbi in sem quis dui placerat ornare. Pellentesque odio nisi,
-            euismod in, pharetra a, ultricies in, diam. Sed arcu. Cras
-            consequat.
-          </li>
-          <li>
-            Praesent dapibus, neque id cursus faucibus, tortor neque egestas
-            augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam
-            dui mi, tincidunt quis, accumsan porttitor, facilisis luctus, metus.
-          </li>
-          <li>
-            Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec
-            consectetuer ligula vulputate sem tristique cursus. Nam nulla quam,
-            gravida non, commodo a, sodales sit amet, nisi.
-          </li>
-          <li>
-            Pellentesque fermentum dolor. Aliquam quam lectus, facilisis auctor,
-            ultrices ut, elementum vulputate, nunc.
-          </li>
-        </ul>
-
-        <p>
-          Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
-          ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-          egestas semper. Aenean ultricies mi vitae est. Mauris placerat
-          eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.
-          Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet,
-          wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum
-          rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in
-          turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus
-          faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
-          Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
-          facilisis luctus, metus
-        </p>
-        <p>
-          Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
-          ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-          egestas semper. Aenean ultricies mi vitae est. Mauris placerat
-          eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.
-          Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet,
-          wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum
-          rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in
-          turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus
-          faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
-          Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
-          facilisis luctus, metus
-        </p>
-        <p>
-          Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
-          ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-          egestas semper. Aenean ultricies mi vitae est. Mauris placerat
-          eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.
-          Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet,
-          wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum
-          rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in
-          turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus
-          faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
-          Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
-          facilisis luctus, metus
-        </p>
-        <p>
-          Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
-          ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-          egestas semper. Aenean ultricies mi vitae est. Mauris placerat
-          eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.
-          Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet,
-          wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum
-          rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in
-          turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus
-          faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
-          Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
-          facilisis luctus, metus
-        </p>
-        <p>
-          Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
-          ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-          egestas semper. Aenean ultricies mi vitae est. Mauris placerat
-          eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.
-          Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet,
-          wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum
-          rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in
-          turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus
-          faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
-          Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
-          facilisis luctus, metus
-        </p>
-        <p>
-          Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
-          ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-          egestas semper. Aenean ultricies mi vitae est. Mauris placerat
-          eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.
-          Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet,
-          wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum
-          rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in
-          turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus
-          faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
-          Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
-          facilisis luctus, metus
-        </p>
-        <p>
-          Pellentesque habitant morbi tristique senectus et netus et malesuada
-          fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae,
-          ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam
-          egestas semper. Aenean ultricies mi vitae est. Mauris placerat
-          eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.
-          Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet,
-          wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum
-          rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in
-          turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus
-          faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat.
-          Aliquam erat volutpat. Nam dui mi, tincidunt quis, accumsan porttitor,
-          facilisis luctus, metus
-        </p>
+        {/* Description */}
+        <div className="grid-rows grid content-center justify-items-center xl:grid-cols-3">
+          {game?.info_games?.desc ? (
+            <div className="col-span-2 xl:w-1/2">
+              <p className="mb-2 text-2xl text-cyan-500">About This Game</p>
+              <div
+                dangerouslySetInnerHTML={{ __html: game?.info_games?.desc }}
+              ></div>
+            </div>
+          ) : (
+            <div className="col-span-2 xl:w-1/2">No Description Available</div>
+          )}
+          {/* Price */}
+          <div className="col-span-1 place-self-start">
+            <p className="mb-2 text-2xl text-cyan-500">Price</p>
+            <div className="flex h-12 flex-row items-center justify-end bg-slate-900 p-1 text-right text-sm">
+              {game?.original_price != null && game?.discount_price != null && (
+                <>
+                  <p className="bg-green-600 p-1">
+                    -
+                    {(
+                      ((game.original_price - game.discount_price) /
+                        game.original_price) *
+                      100
+                    ).toFixed(0)}
+                    %
+                  </p>
+                  <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
+                    {"$" + (game.original_price / 100).toFixed(2)}
+                  </p>
+                </>
+              )}
+              <p className="bg-slate-300/10 p-1">
+                $
+                {game?.discount_price != null
+                  ? (game.discount_price / 100).toFixed(2)
+                  : "0.00"}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   );

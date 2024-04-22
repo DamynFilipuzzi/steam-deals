@@ -51,24 +51,22 @@ export default async function Home({
                   </div>
                   <div className="flex h-12 flex-row items-center justify-end bg-slate-900 p-1 text-right text-sm">
                     {game.original_price != null &&
-                    game.discount_price != null ? (
-                      <>
-                        <p className="bg-green-600 p-1">
-                          -
-                          {(
-                            ((game.original_price - game.discount_price) /
-                              game.original_price) *
-                            100
-                          ).toFixed(0)}
-                          %
-                        </p>
-                        <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
-                          {"$" + (game.original_price / 100).toFixed(2)}
-                        </p>
-                      </>
-                    ) : (
-                      <></>
-                    )}
+                      game.discount_price != null && (
+                        <>
+                          <p className="bg-green-600 p-1">
+                            -
+                            {(
+                              ((game.original_price - game.discount_price) /
+                                game.original_price) *
+                              100
+                            ).toFixed(0)}
+                            %
+                          </p>
+                          <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
+                            {"$" + (game.original_price / 100).toFixed(2)}
+                          </p>
+                        </>
+                      )}
                     <p className="bg-slate-300/10 p-1">
                       $
                       {game.discount_price != null

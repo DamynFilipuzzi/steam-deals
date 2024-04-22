@@ -23,8 +23,11 @@ export const gameRouter = createTRPCRouter({
       });
     }),
 
-  getById: publicProcedure.input(z.number()).query(({ ctx, input }) => {
+  getGameInfo: publicProcedure.input(z.number()).query(({ ctx, input }) => {
     return ctx.db.games.findFirst({
+      include: {
+        info_games: true,
+      },
       where: { id: input },
     });
   }),

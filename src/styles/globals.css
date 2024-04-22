@@ -68,6 +68,15 @@
   }
 }
 
+.bb_tag {
+  --tw-text-opacity: 1;
+  color: rgb(6 182 212 / var(--tw-text-opacity));
+}
+
+br {
+  margin-bottom: 2%;
+}
+
 @layer base {
   * {
     @apply border-border;
