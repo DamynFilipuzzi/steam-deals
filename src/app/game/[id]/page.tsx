@@ -115,11 +115,12 @@ export default async function Page({ params }: Props) {
           </p>
         </a>
       </div>
-      <div className="p-5">
+      {/* Description */}
+      <div className="flex flex-col-reverse justify-center gap-4 p-5 xl:flex-row xl:px-80">
         {/* Description */}
-        <div className="grid-rows grid content-center justify-items-center xl:grid-cols-3">
+        <div className="h-full w-full basis-2/3 bg-slate-900 p-5">
           {game?.info_games?.description ? (
-            <div className="col-span-2 xl:w-1/2">
+            <div>
               <p className="mb-2 text-2xl text-cyan-500">About This Game</p>
               <div
                 dangerouslySetInnerHTML={{
@@ -128,35 +129,35 @@ export default async function Page({ params }: Props) {
               ></div>
             </div>
           ) : (
-            <div className="col-span-2 xl:w-1/2">No Description Available</div>
+            <div>No Description Available</div>
           )}
-          {/* Price */}
-          <div className="col-span-1 place-self-start">
-            <p className="mb-2 text-2xl text-cyan-500">Price</p>
-            <div className="flex h-12 flex-row items-center justify-end bg-slate-900 p-1 text-right text-sm">
-              {game?.original_price != null && game?.discount_price != null && (
-                <>
-                  <p className="bg-green-600 p-1">
-                    -
-                    {(
-                      ((game.original_price - game.discount_price) /
-                        game.original_price) *
-                      100
-                    ).toFixed(0)}
-                    %
-                  </p>
-                  <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
-                    {"$" + (game.original_price / 100).toFixed(2)}
-                  </p>
-                </>
-              )}
-              <p className="bg-slate-300/10 p-1">
-                $
-                {game?.discount_price != null
-                  ? (game.discount_price / 100).toFixed(2)
-                  : "0.00"}
-              </p>
-            </div>
+        </div>
+        {/* Price */}
+        <div className="h-full w-full basis-1/3 bg-slate-900 p-5">
+          <p className="mb-2 text-2xl text-cyan-500">Price</p>
+          <div className="flex h-12 flex-row items-center justify-end bg-slate-900 p-1 text-right text-sm">
+            {game?.original_price != null && game?.discount_price != null && (
+              <>
+                <p className="bg-green-600 p-1">
+                  -
+                  {(
+                    ((game.original_price - game.discount_price) /
+                      game.original_price) *
+                    100
+                  ).toFixed(0)}
+                  %
+                </p>
+                <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
+                  {"$" + (game.original_price / 100).toFixed(2)}
+                </p>
+              </>
+            )}
+            <p className="bg-slate-300/10 p-1">
+              $
+              {game?.discount_price != null
+                ? (game.discount_price / 100).toFixed(2)
+                : "0.00"}
+            </p>
           </div>
         </div>
       </div>
