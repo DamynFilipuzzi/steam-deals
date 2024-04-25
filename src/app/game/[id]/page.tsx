@@ -118,11 +118,13 @@ export default async function Page({ params }: Props) {
       <div className="p-5">
         {/* Description */}
         <div className="grid-rows grid content-center justify-items-center xl:grid-cols-3">
-          {game?.info_games?.desc ? (
+          {game?.info_games?.description ? (
             <div className="col-span-2 xl:w-1/2">
               <p className="mb-2 text-2xl text-cyan-500">About This Game</p>
               <div
-                dangerouslySetInnerHTML={{ __html: game?.info_games?.desc }}
+                dangerouslySetInnerHTML={{
+                  __html: game?.info_games?.description,
+                }}
               ></div>
             </div>
           ) : (
