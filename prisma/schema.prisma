@@ -73,7 +73,7 @@ model Games {
 model Game_Info {
     id                        Int       @id @default(autoincrement())
     steam_id                  Int       @unique
-    desc                      String?
+    description               String?
     is_mature                 Boolean?
     total_reviews             Int?
     total_positive_reviews    Int?
