@@ -115,13 +115,12 @@ export default async function Page({ params }: Props) {
           </p>
         </a>
       </div>
-      {/* Description */}
+      {/* Game Info Area */}
       <div className="flex flex-col-reverse justify-center gap-4 p-5 xl:flex-row xl:px-80">
         {/* Description */}
         <div className="h-full w-full basis-2/3 bg-slate-900 p-5">
           {game?.info_games?.description ? (
             <div>
-              <p className="mb-2 text-2xl text-cyan-500">About This Game</p>
               <div
                 dangerouslySetInnerHTML={{
                   __html: game?.info_games?.description,
@@ -132,31 +131,64 @@ export default async function Page({ params }: Props) {
             <div>No Description Available</div>
           )}
         </div>
-        {/* Price */}
-        <div className="h-full w-full basis-1/3 bg-slate-900 p-5">
-          <p className="mb-2 text-2xl text-cyan-500">Price</p>
-          <div className="flex h-12 flex-row items-center justify-end bg-slate-900 p-1 text-right text-sm">
-            {game?.original_price != null && game?.discount_price != null && (
-              <>
-                <p className="bg-green-600 p-1">
-                  -
-                  {(
-                    ((game.original_price - game.discount_price) /
-                      game.original_price) *
-                    100
-                  ).toFixed(0)}
-                  %
-                </p>
-                <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
-                  {"$" + (game.original_price / 100).toFixed(2)}
-                </p>
-              </>
-            )}
-            <p className="bg-slate-300/10 p-1">
-              $
-              {game?.discount_price != null
-                ? (game.discount_price / 100).toFixed(2)
-                : "0.00"}
+        {/* Right Bar */}
+        <div className="flex h-full w-full basis-1/3 flex-col gap-5">
+          {/* Price */}
+          <div className="h-full w-full bg-slate-900 p-5">
+            <p className="mb-2 text-2xl text-cyan-500">Price</p>
+            <div className="flex h-12 flex-row items-center justify-end bg-slate-900 p-1 text-right text-sm">
+              {game?.original_price != null && game?.discount_price != null && (
+                <>
+                  <p className="bg-green-600 p-1">
+                    -
+                    {(
+                      ((game.original_price - game.discount_price) /
+                        game.original_price) *
+                      100
+                    ).toFixed(0)}
+                    %
+                  </p>
+                  <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
+                    {"$" + (game.original_price / 100).toFixed(2)}
+                  </p>
+                </>
+              )}
+              <p className="bg-slate-300/10 p-1">
+                $
+                {game?.discount_price != null
+                  ? (game.discount_price / 100).toFixed(2)
+                  : "0.00"}
+              </p>
+            </div>
+          </div>
+          {/* Reviews */}
+          <div className="h-full w-full bg-slate-900 p-5">
+            <p className="mb-2 text-2xl text-cyan-500">Reviews</p>
+            <p className="text-right">
+              Total Reviews:{" "}
+              <span className="text-slate-400">
+                {game?.info_games?.total_reviews != 0 &&
+                game?.info_games?.total_reviews != null
+                  ? (game?.info_games?.total_reviews)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  : "No reviews yet"}
+              </span>
+            </p>
+            <p className="text-right">
+              Positive reviews:{" "}
+              <span className="text-slate-400">
+                {game?.info_games?.total_reviews != null &&
+                game?.info_games?.total_positive_reviews != null &&
+                game?.info_games?.total_reviews != 0 &&
+                game?.info_games?.total_positive_reviews != 0
+                  ? (
+                      (game?.info_games?.total_positive_reviews /
+                        game?.info_games?.total_reviews) *
+                      100
+                    ).toFixed(0) + "%"
+                  : "No reviews yet"}
+              </span>
             </p>
           </div>
         </div>
