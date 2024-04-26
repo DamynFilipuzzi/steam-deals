@@ -68,13 +68,33 @@
   }
 }
 
-.bb_tag {
+/* About This Game - Text */
+.game_area_description h2:first-child {
+  --tw-text-opacity: 1;
+  color: rgb(6 182 212 / var(--tw-text-opacity));
+  font-size: 1.5rem /* 24px */;
+  line-height: 2rem /* 32px */;
+  margin-bottom: 5%;
+  border-bottom: 3px solid;
+  border-image: linear-gradient(to right, #06b6d4, #0f172a) 1;
+}
+
+.game_area_description h2 {
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+/* Headers - steam tag */
+.game_area_description .bb_tag {
   --tw-text-opacity: 1;
   color: rgb(6 182 212 / var(--tw-text-opacity));
 }
 
-br {
+.game_area_description img {
   margin-bottom: 2%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @layer base {

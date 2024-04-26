@@ -5,6 +5,7 @@ import BackButton from "~/app/_components/backButton";
 import noCapsule from "public/no-capsule.jpg";
 import noHeader from "public/no-header.jpg";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 type Props = {
   params: { id: string };
@@ -19,6 +20,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const game = await api.games.getGameInfo.query(Number(params.id));
+  if (!game) {
+    notFound();
+  }
 
   const headerFetch = await fetch(
     `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_hero.jpg`,
@@ -27,10 +31,6 @@ export default async function Page({ params }: Props) {
   const capsuleFetch = await fetch(
     `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_600x900.jpg`,
   );
-
-  if (!game) {
-    // return not found redirect
-  }
 
   return (
     <main className="flex min-h-screen flex-col bg-black text-white">

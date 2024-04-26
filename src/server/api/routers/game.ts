@@ -24,12 +24,13 @@ export const gameRouter = createTRPCRouter({
     }),
 
   getGameInfo: publicProcedure.input(z.number()).query(({ ctx, input }) => {
-    return ctx.db.games.findFirst({
-      include: {
-        info_games: true,
-      },
-      where: { id: input },
-    });
+    if (input < 2147483647)
+      return ctx.db.games.findFirst({
+        include: {
+          info_games: true,
+        },
+        where: { id: input },
+      });
   }),
 
   getTotalPages: publicProcedure.input(z.string()).query(({ ctx, input }) => {
