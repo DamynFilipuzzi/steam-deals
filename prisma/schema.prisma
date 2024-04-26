@@ -68,6 +68,8 @@ model Games {
     discount_price      Int?
     created_at          DateTime  @default(now())
     info_games          Game_Info?
+    game_tag            Game_Tags[]
+    price               Price[]
 }
 
 model Game_Info {
@@ -78,4 +80,21 @@ model Game_Info {
     total_reviews             Int?
     total_positive_reviews    Int?
     game                      Games     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+}
+
+model Game_Tags {
+  id         Int    @id @default(autoincrement())
+  steam_id   Int
+  tag        String
+  game       Games  @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+}
+
+model Price {
+  id                Int     @id @default(autoincrement())
+  steam_id          Int
+  original_price    Int?
+  discount_price    Int?
+  valid_from        DateTime  @default(now())
+  valid_to          DateTime
+  game              Games     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
