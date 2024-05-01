@@ -37,3 +37,11 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function formatCurrency(currency: number) {
+  return "$" + (currency / 100).toFixed(2);
+}
+
+export function dateFormatter(date: Date) {
+  return date.toLocaleDateString();
+}

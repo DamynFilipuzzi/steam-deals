@@ -19,7 +19,21 @@ export const gameRouter = createTRPCRouter({
             contains: input.query,
             mode: "insensitive",
           },
+          // price: {
+          //   some: {
+          //     valid_to: { lte: new Date().toISOString() },
+          //   },
+          // },
         },
+        // include: {
+        //   // price: {
+        //   //   where: {
+        //   //     valid_from: { gte: new Date().toISOString() },
+        //   //     valid_to: { lte: new Date().toISOString() },
+        //   //   },
+        //   // },
+        //   price: true,
+        // },
       });
     }),
 
@@ -28,6 +42,14 @@ export const gameRouter = createTRPCRouter({
       return ctx.db.games.findFirst({
         include: {
           info_games: true,
+          price: {
+            orderBy: { valid_from: "asc" },
+            //include filter when ready
+            //   where: {
+            //     valid_from: { gte: new Date().toISOString() },
+            //     valid_to: { lte: new Date().toISOString() },
+            //   },
+          },
         },
         where: { id: input },
       });

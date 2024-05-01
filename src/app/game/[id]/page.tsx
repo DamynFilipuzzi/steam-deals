@@ -6,6 +6,7 @@ import noCapsule from "public/no-capsule.jpg";
 import noHeader from "public/no-header.jpg";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { HistoricalPriceChart } from "~/app/_components/historicalChart";
 
 type Props = {
   params: { id: string };
@@ -115,6 +116,17 @@ export default async function Page({ params }: Props) {
           </p>
         </a>
       </div>
+      <div className="mt-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
+        {/* Price History */}
+        <div className="h-full w-full bg-slate-900 p-5">
+          <p className="mb-2 text-2xl text-cyan-500">Price History</p>
+          {game.price.length > 1 ? (
+            <HistoricalPriceChart data={game.price} />
+          ) : (
+            <p className="text-center text-slate-400">No Data to show yet</p>
+          )}
+        </div>
+      </div>
       {/* Game Info Area */}
       <div className="flex flex-col-reverse justify-center gap-4 p-5 xl:flex-row xl:px-80">
         {/* Description */}
@@ -135,7 +147,7 @@ export default async function Page({ params }: Props) {
         <div className="flex h-full w-full basis-1/3 flex-col gap-5">
           {/* Price */}
           <div className="h-full w-full bg-slate-900 p-5">
-            <p className="mb-2 text-2xl text-cyan-500">Price</p>
+            <p className="mb-2 text-2xl text-cyan-500">Current Price</p>
             <div className="flex h-12 flex-row items-center justify-end bg-slate-900 p-1 text-right text-sm">
               {game?.original_price != null && game?.discount_price != null && (
                 <>
