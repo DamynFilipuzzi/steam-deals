@@ -4,5 +4,5 @@ Work in progress.
 
 # TODO
 
-- [] Convert price based on region. And allow user to set their preffered region
-- []
+- [x] Add age verification
+- [] Add proper documentation. (I.e. ERD, Usage, etc..)
