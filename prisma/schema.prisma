@@ -2,99 +2,126 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
-    provider = "postgresql"
-    // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
-    url = env("DATABASE_URL")
-    directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+  // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
+  // Further reading:
+  // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
+  // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+  url = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // Necessary for Next auth
 model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? // @db.Text
-    access_token      String? // @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? // @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? // @db.Text
+  access_token      String? // @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? // @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([provider, providerAccountId])
 }
 
 model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
-    @@unique([identifier, token])
-}
-
-model Games {
-    id                  Int       @id @default(autoincrement())
-    steam_id            Int       @unique
-    title               String?
-    original_price      Int?
-    discount_price      Int?
-    created_at          DateTime  @default(now())
-    info_games          Game_Info?
-    game_tag            Game_Tags[]
-    price               Price[]
-}
-
-model Game_Info {
-    id                        Int       @id @default(autoincrement())
-    steam_id                  Int       @unique
-    description               String?
-    is_mature                 Boolean?
-    total_reviews             Int?
-    total_positive_reviews    Int?
-    game                      Games     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+  @@unique([identifier, token])
 }
 
 model Game_Tags {
   id         Int    @id @default(autoincrement())
   steam_id   Int
   tag        String
-  game       Games  @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+  // game       Games  @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
 
-model Price {
+model Apps {
+  id                  Int       @id @default(autoincrement())
+  steam_id            Int       @unique
+  title               String?
+  type                String
+  original_price      Int?
+  discount_price      Int?
+  last_modified       Int
+  price_change_number Int
+  updated_at          DateTime
+  created_at          DateTime  @default(now())
+  app_info            App_Info?
+  prices              Prices[]
+  apps_tags           Apps_Tags[]
+  // game_tag         Game_Tags[]
+}
+
+model App_Info {
+  id                      Int       @id @default(autoincrement())
+  steam_id                Int       @unique
+  description             String?
+  short_description       String?
+  is_mature               Boolean?
+  total_reviews           Int?
+  total_positive_reviews  Int?
+  updated_at              DateTime
+  created_at              DateTime  @default(now())
+  app                     Apps     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+}
+
+model Prices {
   id                Int     @id @default(autoincrement())
   steam_id          Int
+  is_free           Boolean?
+  currency          String?
   original_price    Int?
   discount_price    Int?
   valid_from        DateTime  @default(now())
   valid_to          DateTime
-  game              Games     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+  app               Apps     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+}
+
+model Tags {
+  id            Int       @id @default(autoincrement())
+  tag_id        Int       @unique
+  tag_name      String    @unique
+  apps_tags     Apps_Tags[]
+}
+
+model Apps_Tags {
+  steam_id      Int
+  tag_id        Int
+  tags          Tags      @relation(fields: [tag_id], references: [tag_id])
+  apps          Apps      @relation(fields: [steam_id], references: [steam_id])
+
+  @@id([steam_id, tag_id])
 }
