@@ -11,7 +11,7 @@ type Props = {
 export function AppDescription({ data }: Props) {
   const [expandDescription, setExpandDescription] = React.useState(false);
 
-  const textRef = useRef();
+  const textRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
   function isOverflowActive(event: HTMLElement) {
     return event.offsetHeight < event.scrollHeight;
