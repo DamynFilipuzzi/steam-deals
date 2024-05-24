@@ -17,7 +17,6 @@ export default function Tag({ data }: Props) {
 
   function handleClick(tagId: number) {
     const params = new URLSearchParams(searchParams);
-    params.set("byTags", "true");
     params.set("tags", tagId.toString());
     replace(`/?${params.toString()}`);
   }

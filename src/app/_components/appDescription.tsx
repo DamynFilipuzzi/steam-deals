@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
 

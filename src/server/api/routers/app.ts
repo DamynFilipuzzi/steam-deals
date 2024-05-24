@@ -21,7 +21,6 @@ export const appsRouter = createTRPCRouter({
       z.object({
         page: z.number(),
         query: z.string(),
-        byTags: z.boolean(),
         tags: z.string(),
       }),
     )
@@ -45,10 +44,14 @@ export const appsRouter = createTRPCRouter({
             contains: input.query,
             mode: "insensitive",
           },
-          ...(input.byTags
+          ...(input.tags
             ? {
                 apps_tags: {
-                  some: { tag_id: { in: convertToIntArray(input.tags) } },
+                  some: {
+                    tag_id: {
+                      in: convertToIntArray(decodeURIComponent(input.tags)),
+                    },
+                  },
                 },
               }
             : {}),
@@ -135,7 +138,6 @@ export const appsRouter = createTRPCRouter({
     .input(
       z.object({
         query: z.string(),
-        byTags: z.boolean(),
         tags: z.string(),
       }),
     )
@@ -146,10 +148,14 @@ export const appsRouter = createTRPCRouter({
             contains: input.query,
             mode: "insensitive",
           },
-          ...(input.byTags
+          ...(input.tags
             ? {
                 apps_tags: {
-                  some: { tag_id: { in: convertToIntArray(input.tags) } },
+                  some: {
+                    tag_id: {
+                      in: convertToIntArray(decodeURIComponent(input.tags)),
+                    },
+                  },
                 },
               }
             : {}),

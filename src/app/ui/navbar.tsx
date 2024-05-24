@@ -9,7 +9,7 @@ export default async function Navbar() {
   const session = await getServerAuthSession();
   return (
     <nav className="sticky top-0 z-50 flex h-24 w-full flex-row items-center justify-between bg-background px-6 py-3 shadow-md">
-      <Link
+      <a
         href="/"
         className="flex flex-row items-center justify-center gap-4 hover:opacity-70"
       >
@@ -17,7 +17,7 @@ export default async function Navbar() {
         <h1 className="text-lg font-medium text-cyan-500 sm:text-3xl">
           Steam Deals
         </h1>
-      </Link>
+      </a>
 
       <div className="my-7 flex flex-row items-center justify-center gap-4">
         {session ? (
