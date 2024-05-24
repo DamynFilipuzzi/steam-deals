@@ -19,7 +19,6 @@ export default function Page({ params }: Props) {
           18 and would like to view mature content.
         </p>
       </div>
-      {/* <form action={`/confirmAge/${params.id}`}> */}
       <div className="mt-5 flex flex-row gap-5">
         <Button variant="outline" onClick={() => router.back()}>
           Back
@@ -28,7 +27,6 @@ export default function Page({ params }: Props) {
           <Button type="submit">View Game</Button>
         </a>
       </div>
-      {/* </form> */}
     </main>
   );
 }
