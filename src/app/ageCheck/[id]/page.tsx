@@ -9,6 +9,7 @@ type Props = {
 
 export default function Page({ params }: Props) {
   const router = useRouter();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white">
       <div className="flex flex-col gap-5 text-center">
@@ -18,14 +19,16 @@ export default function Page({ params }: Props) {
           18 and would like to view mature content.
         </p>
       </div>
-      <form action={`/confirmAge/${params.id}`}>
-        <div className="mt-5 flex flex-row gap-5">
-          <Button variant="outline" onClick={() => router.back()}>
-            Back
-          </Button>
+      {/* <form action={`/confirmAge/${params.id}`}> */}
+      <div className="mt-5 flex flex-row gap-5">
+        <Button variant="outline" onClick={() => router.back()}>
+          Back
+        </Button>
+        <a href={`/confirmAge/${params.id}`}>
           <Button type="submit">View Game</Button>
-        </div>
-      </form>
+        </a>
+      </div>
+      {/* </form> */}
     </main>
   );
 }
