@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { ListBulletIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 interface CheckboxOption {
@@ -28,6 +29,7 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const [changeButton, setChangeButton] = useState(false);
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
     {},
   );
@@ -89,35 +91,43 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
   }, [checkedItems, pathname, replace, searchParams]);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu onOpenChange={() => setChangeButton(!changeButton)}>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
-          <ListBulletIcon height={30} width={30} />
+          {changeButton ? (
+            <XMarkIcon height={30} width={30} />
+          ) : (
+            <ListBulletIcon height={30} width={30} />
+          )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="h-96 w-48 overflow-scroll">
-        <DropdownMenuLabel>Sort by Tags</DropdownMenuLabel>
+      <DropdownMenuContent className="h-96 w-48 overflow-scroll lg:h-[32rem] lg:w-[32rem]">
+        <DropdownMenuLabel className="text-center">
+          Sort by Tags
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <ul>
-          {data.map((tag) => (
-            <li
-              className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent"
-              key={tag.tag_id}
-            >
-              <label className="block" htmlFor={tag.tag_id.toString()}>
-                <input
-                  id={tag.tag_id.toString()}
-                  type="checkbox"
-                  className="mr-2"
-                  name={tag.tag_id.toString()}
-                  checked={checkedItems[tag.tag_id] ?? false}
-                  onChange={handleChange}
-                />
-                {tag.tag_name}
-              </label>
-            </li>
-          ))}
-        </ul>
+        <div className="columns-1 lg:columns-3">
+          <ul>
+            {data.map((tag) => (
+              <li
+                className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent"
+                key={tag.tag_id}
+              >
+                <label className="block" htmlFor={tag.tag_id.toString()}>
+                  <input
+                    id={tag.tag_id.toString()}
+                    type="checkbox"
+                    className="mr-2"
+                    name={tag.tag_id.toString()}
+                    checked={checkedItems[tag.tag_id] ?? false}
+                    onChange={handleChange}
+                  />
+                  {tag.tag_name}
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );
