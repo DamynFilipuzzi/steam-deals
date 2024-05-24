@@ -1,6 +1,6 @@
 <p align="center">
   <br/>
-  <a href="https://authjs.dev" target="_blank"><img width="96px" src="https://www.steamdeals.ca/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fandroid-chrome-192x192.7be14410.png&w=128&q=75" /></a>
+  <a href="https://www.steamdeals.ca" target="_blank"><img width="96px" src="https://www.steamdeals.ca/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fandroid-chrome-192x192.7be14410.png&w=128&q=75" /></a>
   <h3 align="center">Steam Deals</h3>
   <p align="center">
     Steam Deals is a web application created with the intention of making purchasing steam games easier. This project is still in early development, but a live version can be found <a href='https://www.steamdeals.ca'>here</a>. This projected is supported by this <a href="https://github.com/DamynFilipuzzi/scraper-py">repository</a> for the purpose of web scraping.
