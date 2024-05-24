@@ -55,11 +55,6 @@ export const appsRouter = createTRPCRouter({
                 },
               }
             : {}),
-          // price: {
-          //   some: {
-          //     valid_to: { lte: new Date().toISOString() },
-          //   },
-          // },
         },
         include: {
           prices: {
@@ -67,15 +62,6 @@ export const appsRouter = createTRPCRouter({
           },
           // prices: true,
         },
-        // include: {
-        //   // price: {
-        //   //   where: {
-        //   //     valid_from: { gte: new Date().toISOString() },
-        //   //     valid_to: { lte: new Date().toISOString() },
-        //   //   },
-        //   // },
-        //   prices: true,
-        // },
       });
     }),
 
@@ -86,13 +72,9 @@ export const appsRouter = createTRPCRouter({
           required_error: "Input is required",
           invalid_type_error: "Input must be a number",
         })
-        .lte(2147483647, {
-          message: "Number must be less than or equal to: 2147483647",
-        })
-        .gte(-2147483647, {
-          message: "Number must be greater than or equal to: -2147483647",
-        })
-        .int({ message: "Number must be an integer" }),
+        .lte(2147483647)
+        .gte(-2147483647)
+        .int(),
     )
     .query(({ ctx, input }) => {
       return ctx.db.apps.findFirst({
@@ -105,34 +87,15 @@ export const appsRouter = createTRPCRouter({
           app_info: true,
           prices: {
             orderBy: { valid_from: "asc" },
-            //include filter when ready
-            //   where: {
-            //     valid_from: { gte: new Date().toISOString() },
-            //     valid_to: { lte: new Date().toISOString() },
-            //   },
+            where: {
+              // valid_from: { gte: new Date(2022, 0, 20).toISOString() },
+              // valid_to: { lte: new Date(9999, , 24).toISOString() },
+            },
           },
         },
         where: { id: input },
       });
     }),
-  // getAppInfo: publicProcedure
-  //   .input(z.object({ id: z.number() }))
-  //   .query(({ ctx, input }) => {
-  //     return ctx.db.apps.findFirst({
-  //       include: {
-  //         app_info: true,
-  //         prices: {
-  //           orderBy: { valid_from: "asc" },
-  //           //include filter when ready
-  //           //   where: {
-  //           //     valid_from: { gte: new Date().toISOString() },
-  //           //     valid_to: { lte: new Date().toISOString() },
-  //           //   },
-  //         },
-  //       },
-  //       where: { id: input.id },
-  //     });
-  //   }),
 
   getTotalPages: publicProcedure
     .input(
