@@ -16,7 +16,7 @@
 ## Planned Features
 
 - Implement more ways to sort. (Top selling, Concurrent players)
-- Increase the amount of content (DLC: ).
+- Increase the amount of content (DLC, Packages, Bundles Soundtracks.).
 - Expand functionality of price history graph. Add Filtering options.
 - Steam Login Api integration
 - Wishlist feature with user defined low price notification setting.
