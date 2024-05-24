@@ -5,10 +5,10 @@ import noHeader from "public/no-header.jpg";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { HistoricalPriceChart } from "~/app/_components/historicalChart";
-import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { AppDescription } from "~/app/_components/appDescription";
 import Tag from "~/app/_components/tag";
+import ContentWarning from "~/app/_components/contentWarning";
 
 type Props = {
   params: { id: string };
@@ -29,11 +29,12 @@ export default async function Page({ params }: Props) {
     notFound();
   }
 
+  let contentWarn = false;
   if (
     game?.app_info?.is_mature &&
     cookies().get("ageVerify")?.value != "true"
   ) {
-    redirect(`/ageCheck/${game.id}`);
+    contentWarn = true;
   }
 
   const headerFetch = await fetch(
@@ -188,6 +189,7 @@ export default async function Page({ params }: Props) {
           className="w-full"
         ></iframe>
       </div>
+      {contentWarn && <ContentWarning warn={contentWarn} />}
     </main>
   );
 }
