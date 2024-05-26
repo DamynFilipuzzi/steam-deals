@@ -11,8 +11,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { ListBulletIcon } from "@heroicons/react/24/outline";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { X } from "lucide-react";
+import { ListChecks } from "lucide-react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 interface CheckboxOption {
@@ -94,11 +94,7 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
     <DropdownMenu onOpenChange={() => setChangeButton(!changeButton)}>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
-          {changeButton ? (
-            <XMarkIcon height={30} width={30} />
-          ) : (
-            <ListBulletIcon height={30} width={30} />
-          )}
+          {changeButton ? <X size={25} /> : <ListChecks size={25} />}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="h-96 w-48 overflow-scroll lg:h-[32rem] lg:w-[32rem]">
@@ -111,7 +107,7 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
             {data.map((tag) => (
               <li
                 className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent"
-                key={tag.tag_id}
+                key={tag.tag_id + "tid"}
               >
                 <label className="block" htmlFor={tag.tag_id.toString()}>
                   <input
