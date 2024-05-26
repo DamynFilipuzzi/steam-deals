@@ -9,13 +9,19 @@ import { cookies } from "next/headers";
 import { AppDescription } from "~/app/_components/appDescription";
 import Tag from "~/app/_components/tag";
 import ContentWarning from "~/app/_components/contentWarning";
+import { cache } from "react";
 
 type Props = {
   params: { id: string };
 };
 
+const getAppInfo = cache(async (id: string) => {
+  return await api.apps.getAppInfo.query(Number(id));
+});
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const game = await api.apps.getAppInfo.query(Number(params.id));
+  const game = await getAppInfo(params.id);
+
   return {
     title: `${game?.title ?? "Game"} | Steam Deals`,
     description: `${game?.app_info?.short_description ?? "Description"}`,
@@ -23,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
-  const game = await api.apps.getAppInfo.query(Number(params.id));
+  const game = await getAppInfo(params.id);
 
   if (!game) {
     notFound();
