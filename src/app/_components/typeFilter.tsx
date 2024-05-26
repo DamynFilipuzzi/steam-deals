@@ -38,8 +38,16 @@ export default function TypeFilter() {
       if (params.get("type") != null) {
         params.delete("type");
       }
+      // reset page
+      if (params.get("page") != null) {
+        params.delete("page");
+      }
     } else {
       params.set("type", event.target.value);
+      // reset page
+      if (params.get("page") != null) {
+        params.delete("page");
+      }
     }
     replace(`${pathname}?${params.toString()}`);
   };

@@ -31,26 +31,21 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
   const { replace } = useRouter();
   const [changeButton, setChangeButton] = useState(false);
   const [checkedItems, setCheckedItems] = useState<{ [key: string]: boolean }>(
-    {},
-  );
-
-  // Handles initial load state (e.g. if the user refreshes the page this ensures that the parameters from the URL are maintained and sets the checkboxes accordingly)
-  React.useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    const tags = params.get("tags");
-    if (tags != null) {
-      const tagsArr = decodeURIComponent(tags).split(",");
-      tagsArr.forEach((tag) => {
-        setCheckedItems((prevCheckedItems) => {
-          const newCheckedItems = {
-            ...prevCheckedItems,
-            [tag]: true,
-          };
-          return newCheckedItems;
+    () => {
+      // Handles initial load state (e.g. if the user refreshes the page this ensures that the parameters from the URL are maintained and sets the checkboxes accordingly)
+      const params = new URLSearchParams(searchParams);
+      const tags = params.get("tags");
+      if (tags != null) {
+        const tagsArr = decodeURIComponent(tags).split(",");
+        let newCheckedItems = {};
+        tagsArr.forEach((tag) => {
+          newCheckedItems = { ...newCheckedItems, [tag]: true };
         });
-      });
-    }
-  }, [searchParams]);
+        return newCheckedItems;
+      }
+      return {};
+    },
+  );
 
   // Store new checkedItems as true or false when user selects or deselects checkbox
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,18 +57,25 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
       };
       return newCheckedItems;
     });
-  };
 
-  // Updates URL Search Params when checkedItems changes
-  React.useEffect(() => {
+    // Set URL Params
     const params = new URLSearchParams(searchParams);
     const tags = [];
+    // get old tags check if there are other tags previously set to true
     let hasTags = false;
     for (const key in checkedItems) {
-      if (checkedItems[key] == true) {
-        tags.push(key);
-        hasTags = true;
+      if (key == name && !checked) {
+      } else {
+        if (checkedItems[key] == true) {
+          tags.push(key);
+          hasTags = true;
+        }
       }
+    }
+    // Push new tag if checked
+    if (checked) {
+      tags.push(name);
+      hasTags = true;
     }
     if (hasTags) {
       if (tags.length > 1) {
@@ -87,8 +89,12 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
     } else {
       params.delete("tags");
     }
+    // reset page filter
+    if (params.get("page") != null) {
+      params.delete("page");
+    }
     replace(`${pathname}?${params.toString()}`);
-  }, [checkedItems, pathname, replace, searchParams]);
+  };
 
   return (
     <DropdownMenu onOpenChange={() => setChangeButton(!changeButton)}>
