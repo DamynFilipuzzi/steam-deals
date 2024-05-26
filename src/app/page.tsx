@@ -43,6 +43,7 @@ export default async function Home({
         {appsQuery.map((game) => {
           return (
             <Link
+              prefetch={false}
               key={game.id + "g"}
               href={`/game/${game.id}`}
               className="text-center"
@@ -53,38 +54,54 @@ export default async function Home({
                     {game.title}
                   </div>
                   <div>
-                    <img
-                      src={`https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_id}/library_600x900.jpg`}
-                      alt={`${game.title} game image`}
-                      className="h-64"
-                    />
+                    {game.type == "game" ? (
+                      <img
+                        src={`https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_id}/library_600x900.jpg`}
+                        alt={`${game.title} game image`}
+                        className="h-64"
+                      />
+                    ) : (
+                      <img
+                        src={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game.steam_id}/capsule_231x87.jpg`}
+                        alt={`${game.title} game image`}
+                        className="h-64"
+                      />
+                    )}
                   </div>
                   <div className="flex h-12 flex-row items-center justify-end rounded-lg bg-background p-1 text-right text-sm">
-                    {game.original_price != null &&
-                      game.discount_price != null &&
-                      game.discount_price != game.original_price && (
+                    {game.prices.map((price) => {
+                      return (
                         <>
-                          <p className="bg-green-600 p-1">
-                            -
-                            {(
-                              ((game.original_price - game.discount_price) /
-                                game.original_price) *
-                              100
-                            ).toFixed(0)}
-                            %
-                          </p>
-                          <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
-                            {"$" + (game.original_price / 100).toFixed(2)}
-                          </p>
+                          {price.original_price != null &&
+                            price.discount_price != null &&
+                            price.discount_price != price.original_price && (
+                              <>
+                                <p className="bg-green-600 p-1">
+                                  -
+                                  {(
+                                    ((price.original_price -
+                                      price.discount_price) /
+                                      price.original_price) *
+                                    100
+                                  ).toFixed(0)}
+                                  %
+                                </p>
+                                <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
+                                  {"$" +
+                                    (price.original_price / 100).toFixed(2)}
+                                </p>
+                              </>
+                            )}
                         </>
-                      )}
+                      );
+                    })}
                     <div className="bg-slate-300/10 p-1">
                       {game.prices.map((price) => {
                         return (
                           <div key={price.id + "p"}>
                             {/* TODO: FIX THIS DISPLAY FOR GAMES THAT HAVE NO LISTED PRICE BECAUSE THEY ARE ONLY SOLD AS PACKAGED */}
-                            {!price.is_free && game.discount_price != null
-                              ? "$" + (game.discount_price / 100).toFixed(2)
+                            {!price.is_free && price.discount_price != null
+                              ? "$" + (price.discount_price / 100).toFixed(2)
                               : "Free"}
                           </div>
                         );

@@ -30,16 +30,17 @@ export const appsRouter = createTRPCRouter({
         take: appsPerPage,
         orderBy: [
           {
-            app_info: {
-              total_reviews: { sort: "desc", nulls: "last" },
-              // Cant use 2 columns to sort by. TODO: try to find a solution
-              // total_positive_reviews: { sort: "desc", nulls: "last" },
-            },
+            // app_info: {
+            //   total_reviews: { sort: "desc", nulls: "last" },
+            //   // Cant use 2 columns to sort by. TODO: try to find a solution
+            //   // total_positive_reviews: { sort: "desc", nulls: "last" },
+            // },
           },
           { updated_at: "asc" },
-          { id: "desc" },
+          { id: "asc" },
         ],
         where: {
+          type: "game",
           title: {
             contains: input.query,
             mode: "insensitive",
@@ -56,12 +57,32 @@ export const appsRouter = createTRPCRouter({
               }
             : {}),
         },
-        include: {
+        select: {
+          id: true,
+          title: true,
+          steam_id: true,
+          type: true,
           prices: {
             where: { valid_to: new Date("9999-12-31T00:00:00.000Z") },
+            select: {
+              id: true,
+              original_price: true,
+              discount_price: true,
+              // currency: true,
+              is_free: true,
+            },
           },
-          // prices: true,
+          app_info: {
+            select: {
+              total_reviews: true,
+            },
+          },
         },
+        // include: {
+        //   prices: {
+        //     where: { valid_to: new Date("9999-12-31T00:00:00.000Z") },
+        //   },
+        // },
       });
     }),
 
@@ -107,6 +128,7 @@ export const appsRouter = createTRPCRouter({
     .query(({ ctx, input }) => {
       return ctx.db.apps.count({
         where: {
+          type: "game",
           title: {
             contains: input.query,
             mode: "insensitive",
