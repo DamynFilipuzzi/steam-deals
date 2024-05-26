@@ -69,20 +69,22 @@ model Game_Tags {
 }
 
 model Apps {
-  id                  Int       @id @default(autoincrement())
-  steam_id            Int       @unique
-  title               String?
-  type                String
-  original_price      Int?
-  discount_price      Int?
-  last_modified       Int
-  price_change_number Int
-  updated_at          DateTime
-  created_at          DateTime  @default(now())
-  app_info            App_Info?
-  prices              Prices[]
-  apps_tags           Apps_Tags[]
-  // game_tag         Game_Tags[]
+  id                      Int       @id @default(autoincrement())
+  steam_id                Int       @unique
+  title                   String?
+  type                    String
+  original_price          Int?
+  discount_price          Int?
+  total_reviews           Int?
+  total_positive_reviews  Int?
+  last_modified           Int
+  price_change_number     Int
+  updated_at              DateTime
+  created_at              DateTime  @default(now())
+  app_info                App_Info?
+  prices                  Prices[]
+  apps_tags               Apps_Tags[]
+  // game_tag             Game_Tags[]
 }
 
 model App_Info {

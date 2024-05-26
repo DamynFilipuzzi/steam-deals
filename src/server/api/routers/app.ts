@@ -29,13 +29,8 @@ export const appsRouter = createTRPCRouter({
         skip: Number(appsPerPage * input.page - appsPerPage),
         take: appsPerPage,
         orderBy: [
-          {
-            // app_info: {
-            //   total_reviews: { sort: "desc", nulls: "last" },
-            //   // Cant use 2 columns to sort by. TODO: try to find a solution
-            //   // total_positive_reviews: { sort: "desc", nulls: "last" },
-            // },
-          },
+          { total_positive_reviews: { sort: "desc", nulls: "last" } },
+          { total_reviews: { sort: "desc", nulls: "last" } },
           { updated_at: "asc" },
           { id: "asc" },
         ],
@@ -68,21 +63,11 @@ export const appsRouter = createTRPCRouter({
               id: true,
               original_price: true,
               discount_price: true,
-              // currency: true,
+              currency: true,
               is_free: true,
             },
           },
-          app_info: {
-            select: {
-              total_reviews: true,
-            },
-          },
         },
-        // include: {
-        //   prices: {
-        //     where: { valid_to: new Date("9999-12-31T00:00:00.000Z") },
-        //   },
-        // },
       });
     }),
 

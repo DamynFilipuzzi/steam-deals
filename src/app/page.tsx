@@ -75,7 +75,10 @@ export default async function Home({
                           {price.original_price != null &&
                             price.discount_price != null &&
                             price.discount_price != price.original_price && (
-                              <>
+                              <div
+                                key={price.id + "pd"}
+                                className="flex flex-row"
+                              >
                                 <p className="bg-green-600 p-1">
                                   -
                                   {(
@@ -90,7 +93,7 @@ export default async function Home({
                                   {"$" +
                                     (price.original_price / 100).toFixed(2)}
                                 </p>
-                              </>
+                              </div>
                             )}
                         </>
                       );
