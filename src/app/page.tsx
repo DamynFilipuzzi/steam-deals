@@ -6,6 +6,7 @@ import Search from "./ui/search";
 
 import { api } from "~/trpc/server";
 import TagsFilter from "./_components/tagsFilter";
+import TypeFilter from "./_components/typeFilter";
 
 export default async function Home({
   searchParams,
@@ -14,18 +15,21 @@ export default async function Home({
     query?: string;
     page?: string;
     tags?: string;
+    type?: string;
   };
 }) {
   noStore();
   const query = searchParams?.query ?? "";
   const currentPage = Number(searchParams?.page) || 1;
   const tags = searchParams?.tags ?? "";
+  const type = searchParams?.type ?? "game";
   const params = {
     page: currentPage,
     query: query,
     tags: tags,
+    type: type,
   };
-  const paramsPages = { query: query, tags: tags };
+  const paramsPages = { query: query, tags: tags, type: type };
   const totalPages = Math.ceil(
     Number((await api.apps.getTotalPages.query(paramsPages)) / appsPerPages()),
   );
@@ -36,15 +40,16 @@ export default async function Home({
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white">
       <div className="my-5 flex w-5/6 flex-row gap-4 lg:w-1/3">
-        <Search placeholder="Search games..." />
+        <Search placeholder="Search apps..." />
         <TagsFilter data={tagsQuery} />
+        <TypeFilter />
       </div>
       <div className="flex w-full flex-wrap items-center justify-center gap-4 lg:w-2/3 3xl:w-3/6">
         {appsQuery.map((game) => {
           return (
             <Link
               prefetch={false}
-              key={game.id + "g"}
+              key={game.id + "gid"}
               href={`/game/${game.id}`}
               className="text-center"
             >
@@ -71,12 +76,12 @@ export default async function Home({
                   <div className="flex h-12 flex-row items-center justify-end rounded-lg bg-background p-1 text-right text-sm">
                     {game.prices.map((price) => {
                       return (
-                        <>
+                        <div key={price.id + "pd"}>
                           {price.original_price != null &&
                             price.discount_price != null &&
                             price.discount_price != price.original_price && (
                               <div
-                                key={price.id + "pd"}
+                                // key={price.id + "pd"}
                                 className="flex flex-row"
                               >
                                 <p className="bg-green-600 p-1">
@@ -95,13 +100,13 @@ export default async function Home({
                                 </p>
                               </div>
                             )}
-                        </>
+                        </div>
                       );
                     })}
                     <div className="bg-slate-300/10 p-1">
                       {game.prices.map((price) => {
                         return (
-                          <div key={price.id + "p"}>
+                          <div key={price.id + "prid"}>
                             {/* TODO: FIX THIS DISPLAY FOR GAMES THAT HAVE NO LISTED PRICE BECAUSE THEY ARE ONLY SOLD AS PACKAGED */}
                             {!price.is_free && price.discount_price != null
                               ? "$" + (price.discount_price / 100).toFixed(2)

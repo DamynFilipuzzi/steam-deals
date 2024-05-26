@@ -22,6 +22,7 @@ export const appsRouter = createTRPCRouter({
         page: z.number(),
         query: z.string(),
         tags: z.string(),
+        type: z.string(),
       }),
     )
     .query(({ ctx, input }) => {
@@ -35,7 +36,7 @@ export const appsRouter = createTRPCRouter({
           { id: "asc" },
         ],
         where: {
-          type: "game",
+          type: input.type,
           title: {
             contains: input.query,
             mode: "insensitive",
@@ -108,12 +109,13 @@ export const appsRouter = createTRPCRouter({
       z.object({
         query: z.string(),
         tags: z.string(),
+        type: z.string(),
       }),
     )
     .query(({ ctx, input }) => {
       return ctx.db.apps.count({
         where: {
-          type: "game",
+          type: input.type,
           title: {
             contains: input.query,
             mode: "insensitive",
