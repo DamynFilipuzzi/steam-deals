@@ -7,8 +7,6 @@ import Search from "./ui/search";
 import { api } from "~/trpc/server";
 import TagsFilter from "./_components/tagsFilter";
 import TypeFilter from "./_components/typeFilter";
-import noCapsule from "public/no-capsule.jpg";
-import { object } from "zod";
 
 export default async function Home({
   searchParams,
