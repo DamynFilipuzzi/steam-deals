@@ -90,6 +90,10 @@
   color: rgb(6 182 212 / var(--tw-text-opacity));
 }
 
+.game_area_description a {
+  color: rgb(6 182 212 / var(--tw-text-opacity));
+}
+
 .game_area_description img {
   margin-bottom: 2%;
   display: block;

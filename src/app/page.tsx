@@ -7,6 +7,8 @@ import Search from "./ui/search";
 import { api } from "~/trpc/server";
 import TagsFilter from "./_components/tagsFilter";
 import TypeFilter from "./_components/typeFilter";
+import noCapsule from "public/no-capsule.jpg";
+import { object } from "zod";
 
 export default async function Home({
   searchParams,
@@ -69,7 +71,7 @@ export default async function Home({
                       <img
                         src={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game.steam_id}/capsule_231x87.jpg`}
                         alt={`${game.title} game image`}
-                        className="h-64"
+                        className="h-24"
                       />
                     )}
                   </div>
@@ -80,10 +82,7 @@ export default async function Home({
                           {price.original_price != null &&
                             price.discount_price != null &&
                             price.discount_price != price.original_price && (
-                              <div
-                                // key={price.id + "pd"}
-                                className="flex flex-row"
-                              >
+                              <div className="flex flex-row">
                                 <p className="bg-green-600 p-1">
                                   -
                                   {(
