@@ -84,7 +84,9 @@ model Apps {
   app_info                App_Info?
   prices                  Prices[]
   apps_tags               Apps_Tags[]
-  // game_tag             Game_Tags[]
+  top_sellers             TopSellers?
+  most_played             MostPlayed?
+
 }
 
 model App_Info {
@@ -122,8 +124,24 @@ model Tags {
 model Apps_Tags {
   steam_id      Int
   tag_id        Int
-  tags          Tags      @relation(fields: [tag_id], references: [tag_id])
-  apps          Apps      @relation(fields: [steam_id], references: [steam_id])
+  tags          Tags      @relation(fields: [tag_id], references: [tag_id], onDelete: Cascade)
+  apps          Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 
   @@id([steam_id, tag_id])
+}
+
+model TopSellers {
+  steam_id      Int       @id @unique
+  app_order     Int
+  updated_at    DateTime
+  apps          Apps      @relation(fields: [steam_id], references: [steam_id])
+}
+
+model MostPlayed {
+  steam_id      Int       @id @unique
+  app_order     Int
+  current       Int
+  peak          Int
+  updated_at    DateTime
+  apps          Apps      @relation(fields: [steam_id], references: [steam_id])
 }

@@ -134,4 +134,82 @@ export const appsRouter = createTRPCRouter({
         },
       });
     }),
+
+  mostPlayed: publicProcedure.query(({ ctx }) => {
+    return ctx.db.mostPlayed.findMany({
+      orderBy: {
+        app_order: "asc",
+      },
+      select: {
+        steam_id: true,
+        app_order: true,
+        current: true,
+        peak: true,
+        apps: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
+    });
+  }),
+
+  mostPlayedSample: publicProcedure.query(({ ctx }) => {
+    return ctx.db.mostPlayed.findMany({
+      take: 5,
+      orderBy: {
+        app_order: "asc",
+      },
+      select: {
+        steam_id: true,
+        app_order: true,
+        current: true,
+        peak: true,
+        apps: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
+    });
+  }),
+
+  topSellers: publicProcedure.query(({ ctx }) => {
+    return ctx.db.topSellers.findMany({
+      orderBy: {
+        app_order: "asc",
+      },
+      select: {
+        steam_id: true,
+        app_order: true,
+        apps: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
+    });
+  }),
+
+  topSellersSample: publicProcedure.query(({ ctx }) => {
+    return ctx.db.topSellers.findMany({
+      take: 5,
+      orderBy: {
+        app_order: "asc",
+      },
+      select: {
+        steam_id: true,
+        app_order: true,
+        apps: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+      },
+    });
+  }),
 });

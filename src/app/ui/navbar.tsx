@@ -60,7 +60,7 @@ export default async function Navbar() {
             href="/api/auth/signin"
             className="rounded-full border-2 border-cyan-500 px-1 py-1 font-semibold text-black no-underline hover:border-cyan-300 active:border-cyan-700"
           >
-            <User size={36} color="#06b6d4" />
+            <User size={32} color="#06b6d4" />
           </Link>
         )}
       </div>
