@@ -188,6 +188,15 @@ export const appsRouter = createTRPCRouter({
           select: {
             id: true,
             title: true,
+            prices: {
+              where: { valid_to: new Date("9999-12-31T00:00:00.000Z") },
+              select: {
+                id: true,
+                is_free: true,
+                discount_price: true,
+                original_price: true,
+              },
+            },
           },
         },
       },
@@ -207,6 +216,15 @@ export const appsRouter = createTRPCRouter({
           select: {
             id: true,
             title: true,
+            prices: {
+              where: { valid_to: new Date("9999-12-31T00:00:00.000Z") },
+              select: {
+                id: true,
+                is_free: true,
+                discount_price: true,
+                original_price: true,
+              },
+            },
           },
         },
       },

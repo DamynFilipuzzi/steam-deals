@@ -17,14 +17,14 @@ type Props = {
 export function MostPlayedTable({ games }: Props) {
   const router = useRouter();
   return (
-    <table className="">
+    <table>
       <thead>
         <tr className="text-center text-xs xl:text-lg">
           <th>Rank</th>
           <th></th>
           <th></th>
-          <th className="text-wrap">Current Players</th>
-          <th className="text-wrap">Peak Today</th>
+          <th className="text-nowrap">Current Players</th>
+          <th className="text-nowrap">Peak Today</th>
         </tr>
       </thead>
       <tbody>

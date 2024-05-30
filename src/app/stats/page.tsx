@@ -21,7 +21,7 @@ export default async function Page() {
     <main className="flex min-h-screen flex-col items-center justify-center gap-5 bg-black text-white">
       <h1 className="pt-5 text-3xl">Steam Stats</h1>
       <div className="flex flex-col gap-5 p-5 xl:flex-row">
-        <Card>
+        <Card className="border-2 border-solid border-slate-300/20">
           <CardHeader>
             <CardTitle>Top Selling</CardTitle>
             <CardDescription>
@@ -37,7 +37,7 @@ export default async function Page() {
             </Link>
           </CardFooter>
         </Card>
-        <Card>
+        <Card className="border-2 border-solid border-slate-300/20">
           <CardHeader>
             <CardTitle>Most Played</CardTitle>
             <CardDescription>
