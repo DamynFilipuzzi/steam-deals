@@ -34,6 +34,14 @@ export const appsRouter = createTRPCRouter({
           { total_reviews: { sort: "desc", nulls: "last" } },
           { updated_at: "asc" },
           { id: "asc" },
+          // HAS to be ONE-ONE relationship to be filtered here.
+          // TO BE Used for table storing: price savings, sort by discount
+          // {
+          //   app_info: {
+          //     total_reviews: { sort: "desc", nulls: "last" },
+          //     total_positive_reviews: { sort: "desc", nulls: "last" },
+          //   },
+          // },
         ],
         where: {
           type: input.type,
@@ -41,6 +49,44 @@ export const appsRouter = createTRPCRouter({
             contains: input.query,
             mode: "insensitive",
           },
+          // Limit defined by user, to only return apps BELOW A DEFINED VALUE (WORKING)
+          // ...(true
+          //   ? {
+          //       prices: {
+          //         some: {
+          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
+          //           discount_price: { lte: 1000 },
+          //         },
+          //       },
+          //     }
+          //   : {}),
+
+          // Exclude Free games
+          // ...(true
+          //   ? {
+          //       prices: {
+          //         some: {
+          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
+          //           original_price: { not: 0 || null },
+          //           discount_price: { not: 0 || null },
+          //         },
+          //       },
+          //     }
+          //   : {}),
+
+          // ONLY SHOW Free games
+          // ...(true
+          //   ? {
+          //       prices: {
+          //         some: {
+          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
+          //           original_price: 0 || null,
+          //           discount_price: 0 || null,
+          //         },
+          //       },
+          //     }
+          //   : {}),
+
           ...(input.tags
             ? {
                 apps_tags: {
@@ -120,6 +166,44 @@ export const appsRouter = createTRPCRouter({
             contains: input.query,
             mode: "insensitive",
           },
+          // Limit defined by user, to only return apps BELOW A DEFINED VALUE (WORKING)
+          // ...(true
+          //   ? {
+          //       prices: {
+          //         some: {
+          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
+          //           discount_price: { lte: 1000 },
+          //         },
+          //       },
+          //     }
+          //   : {}),
+
+          // Exclude Free games
+          // ...(true
+          //   ? {
+          //       prices: {
+          //         some: {
+          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
+          //           original_price: { not: 0 || null },
+          //           discount_price: { not: 0 || null },
+          //         },
+          //       },
+          //     }
+          //   : {}),
+
+          // ONLY SHOW Free games
+          // ...(true
+          //   ? {
+          //       prices: {
+          //         some: {
+          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
+          //           original_price: 0 || null,
+          //           discount_price: 0 || null,
+          //         },
+          //       },
+          //     }
+          //   : {}),
+
           ...(input.tags
             ? {
                 apps_tags: {
