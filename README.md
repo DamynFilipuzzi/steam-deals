@@ -21,6 +21,12 @@
 - Steam Login Api integration
 - Wishlist feature with user defined low price notification setting.
 
+## Usage
+
+1. Make a copy of the `.env.example` file and rename it to `.env`. Then fill the blank fields in the `.env` file.
+1.  Run `npm install`.
+1.  Then run `npm run build`, and finally `npm run dev`.
+
 ## Tech Stack
 
 <table align="center">
