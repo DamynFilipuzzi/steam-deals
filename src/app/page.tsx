@@ -37,6 +37,10 @@ export default async function Home({
   const appsQuery = await api.apps.getQuery.query(params);
   const tagsQuery = await api.tags.getAllTags.query();
 
+  // To be used for retrieving the maximum app price. For UI Price max filter.
+  // const maxPrice = await api.price.getMaxPrice.query();
+  // console.log("Max Price:", maxPrice);
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white">
       <div className="my-5 flex w-5/6 flex-row gap-4 lg:w-1/3">
