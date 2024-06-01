@@ -37,7 +37,7 @@ export default function FreeAppsFilter() {
   };
 
   return (
-    <ul>
+    <ul className="py-2">
       <li className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent">
         <label className="block select-none text-sm">
           <input
