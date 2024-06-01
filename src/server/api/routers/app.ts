@@ -1,4 +1,5 @@
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import { reverseFormatCurrencyInt } from "~/lib/utils";
 import { z } from "zod";
 
 const appsPerPage = 18;
@@ -23,6 +24,8 @@ export const appsRouter = createTRPCRouter({
         query: z.string(),
         tags: z.string(),
         type: z.string(),
+        limit: z.number(),
+        hidefree: z.number(),
       }),
     )
     .query(({ ctx, input }) => {
@@ -49,43 +52,50 @@ export const appsRouter = createTRPCRouter({
             contains: input.query,
             mode: "insensitive",
           },
-          // Limit defined by user, to only return apps BELOW A DEFINED VALUE (WORKING)
-          // ...(true
-          //   ? {
-          //       prices: {
-          //         some: {
-          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
-          //           discount_price: { lte: 1000 },
-          //         },
-          //       },
-          //     }
-          //   : {}),
-
-          // Exclude Free games
-          // ...(true
-          //   ? {
-          //       prices: {
-          //         some: {
-          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
-          //           original_price: { not: 0 || null },
-          //           discount_price: { not: 0 || null },
-          //         },
-          //       },
-          //     }
-          //   : {}),
-
-          // ONLY SHOW Free games
-          // ...(true
-          //   ? {
-          //       prices: {
-          //         some: {
-          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
-          //           original_price: 0 || null,
-          //           discount_price: 0 || null,
-          //         },
-          //       },
-          //     }
-          //   : {}),
+          // Limit by maximum price set by user AND hide free apps if selected
+          ...(input.limit
+            ? {
+                prices: {
+                  some: {
+                    ...(input.hidefree == 0
+                      ? {
+                          OR: [
+                            {
+                              valid_to: new Date("9999-12-31T00:00:00.000Z"),
+                              discount_price: {
+                                lte: reverseFormatCurrencyInt(input.limit),
+                              },
+                            },
+                            {
+                              valid_to: new Date("9999-12-31T00:00:00.000Z"),
+                              original_price: 0 || null,
+                              discount_price: 0 || null,
+                            },
+                          ],
+                        }
+                      : {
+                          valid_to: new Date("9999-12-31T00:00:00.000Z"),
+                          discount_price: {
+                            lte: reverseFormatCurrencyInt(input.limit),
+                          },
+                          OR: [
+                            {
+                              valid_to: new Date("9999-12-31T00:00:00.000Z"),
+                              discount_price: {
+                                lte: reverseFormatCurrencyInt(input.limit),
+                              },
+                            },
+                            {
+                              valid_to: new Date("9999-12-31T00:00:00.000Z"),
+                              original_price: 0 || null,
+                              discount_price: 0 || null,
+                            },
+                          ],
+                        }),
+                  },
+                },
+              }
+            : {}),
 
           ...(input.tags
             ? {
@@ -156,6 +166,8 @@ export const appsRouter = createTRPCRouter({
         query: z.string(),
         tags: z.string(),
         type: z.string(),
+        limit: z.number(),
+        hidefree: z.number(),
       }),
     )
     .query(({ ctx, input }) => {
@@ -166,43 +178,37 @@ export const appsRouter = createTRPCRouter({
             contains: input.query,
             mode: "insensitive",
           },
-          // Limit defined by user, to only return apps BELOW A DEFINED VALUE (WORKING)
-          // ...(true
-          //   ? {
-          //       prices: {
-          //         some: {
-          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
-          //           discount_price: { lte: 1000 },
-          //         },
-          //       },
-          //     }
-          //   : {}),
-
-          // Exclude Free games
-          // ...(true
-          //   ? {
-          //       prices: {
-          //         some: {
-          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
-          //           original_price: { not: 0 || null },
-          //           discount_price: { not: 0 || null },
-          //         },
-          //       },
-          //     }
-          //   : {}),
-
-          // ONLY SHOW Free games
-          // ...(true
-          //   ? {
-          //       prices: {
-          //         some: {
-          //           valid_to: new Date("9999-12-31T00:00:00.000Z"),
-          //           original_price: 0 || null,
-          //           discount_price: 0 || null,
-          //         },
-          //       },
-          //     }
-          //   : {}),
+          // Limit by maximum price set by user AND hide free apps if selected
+          ...(input.limit
+            ? {
+                prices: {
+                  some: {
+                    ...(input.hidefree == 0
+                      ? {
+                          OR: [
+                            {
+                              valid_to: new Date("9999-12-31T00:00:00.000Z"),
+                              discount_price: {
+                                lte: reverseFormatCurrencyInt(input.limit),
+                              },
+                            },
+                            {
+                              valid_to: new Date("9999-12-31T00:00:00.000Z"),
+                              original_price: 0 || null,
+                              discount_price: 0 || null,
+                            },
+                          ],
+                        }
+                      : {
+                          valid_to: new Date("9999-12-31T00:00:00.000Z"),
+                          discount_price: {
+                            lte: reverseFormatCurrencyInt(input.limit),
+                          },
+                        }),
+                  },
+                },
+              }
+            : {}),
 
           ...(input.tags
             ? {

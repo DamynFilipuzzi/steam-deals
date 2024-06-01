@@ -3,10 +3,11 @@ import { unstable_noStore as noStore } from "next/cache";
 import Link from "next/link";
 import { appsPerPages } from "~/server/api/routers/app";
 import Search from "./ui/search";
+import { formatCurrencyInt } from "~/lib/utils";
 
 import { api } from "~/trpc/server";
 import TagsFilter from "./_components/tagsFilter";
-import TypeFilter from "./_components/typeFilter";
+import FiltersDropdownMenu from "./_components/filtersDropdownMenu";
 
 export default async function Home({
   searchParams,
@@ -16,20 +17,42 @@ export default async function Home({
     page?: string;
     tags?: string;
     type?: string;
+    limit?: number;
+    hidefree?: number;
   };
 }) {
   noStore();
+  const maxPrice = await api.price.getMaxPrice.query();
+
   const query = searchParams?.query ?? "";
   const currentPage = Number(searchParams?.page) || 1;
   const tags = searchParams?.tags ?? "";
   const type = searchParams?.type ?? "game";
+  const hidefree = Number(searchParams?.hidefree) || 0;
+
+  let limit = 1500;
+  if (maxPrice._max.discount_price != null) {
+    limit =
+      Number(searchParams?.limit) ||
+      formatCurrencyInt(maxPrice._max.discount_price);
+  } else {
+    limit = Number(searchParams?.limit) || 1500;
+  }
   const params = {
     page: currentPage,
     query: query,
     tags: tags,
     type: type,
+    limit: limit,
+    hidefree: hidefree,
   };
-  const paramsPages = { query: query, tags: tags, type: type };
+  const paramsPages = {
+    query: query,
+    tags: tags,
+    type: type,
+    limit: limit,
+    hidefree: hidefree,
+  };
   const totalPages = Math.ceil(
     Number((await api.apps.getTotalPages.query(paramsPages)) / appsPerPages()),
   );
@@ -37,16 +60,16 @@ export default async function Home({
   const appsQuery = await api.apps.getQuery.query(params);
   const tagsQuery = await api.tags.getAllTags.query();
 
-  // To be used for retrieving the maximum app price. For UI Price max filter.
-  // const maxPrice = await api.price.getMaxPrice.query();
-  // console.log("Max Price:", maxPrice);
-
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white">
       <div className="my-5 flex w-5/6 flex-row gap-4 lg:w-1/3">
         <Search placeholder="Search apps..." />
         <TagsFilter data={tagsQuery} />
-        <TypeFilter />
+        {maxPrice._max.discount_price == null ? (
+          <FiltersDropdownMenu maxPrice={0} />
+        ) : (
+          <FiltersDropdownMenu maxPrice={maxPrice._max.discount_price} />
+        )}
       </div>
       <div className="flex w-full flex-wrap items-center justify-center gap-4 lg:w-2/3 3xl:w-3/6">
         {appsQuery.map((game) => {

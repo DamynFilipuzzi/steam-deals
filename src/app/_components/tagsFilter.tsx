@@ -115,7 +115,10 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
                 className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent"
                 key={tag.tag_id + "tid"}
               >
-                <label className="block" htmlFor={tag.tag_id.toString()}>
+                <label
+                  className="block select-none"
+                  htmlFor={tag.tag_id.toString()}
+                >
                   <input
                     id={tag.tag_id.toString()}
                     type="checkbox"

@@ -1,24 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { Button } from "~/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "~/components/ui/dropdown-menu";
-import { ChevronUpIcon } from "lucide-react";
-import { ChevronDownIcon } from "lucide-react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export default function TypeFilter() {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
-
-  const [changeButton, setChangeButton] = React.useState(false);
   const [position, setPosition] = React.useState<string>("game");
 
   React.useEffect(() => {
@@ -53,48 +41,31 @@ export default function TypeFilter() {
   };
 
   return (
-    <DropdownMenu onOpenChange={() => setChangeButton(!changeButton)}>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline">
-          {changeButton ? (
-            <ChevronUpIcon size={25} />
-          ) : (
-            <ChevronDownIcon size={25} />
-          )}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-48">
-        <DropdownMenuLabel className="text-center">
-          Sort by Type
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <ul>
-          <li className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent">
-            <label className="block">
-              <input
-                className="mr-2"
-                type="radio"
-                value="game"
-                checked={position == "game"}
-                onChange={handleChange}
-              />
-              Games
-            </label>
-          </li>
-          <li className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent">
-            <label className="block">
-              <input
-                className="mr-2"
-                type="radio"
-                value="dlc"
-                checked={position == "dlc"}
-                onChange={handleChange}
-              />
-              DLC
-            </label>
-          </li>
-        </ul>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <ul>
+      <li className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent">
+        <label className="block select-none">
+          <input
+            className="mr-2"
+            type="radio"
+            value="game"
+            checked={position == "game"}
+            onChange={handleChange}
+          />
+          Games
+        </label>
+      </li>
+      <li className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent">
+        <label className="block select-none">
+          <input
+            className="mr-2"
+            type="radio"
+            value="dlc"
+            checked={position == "dlc"}
+            onChange={handleChange}
+          />
+          DLC
+        </label>
+      </li>
+    </ul>
   );
 }

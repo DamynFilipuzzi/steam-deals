@@ -42,6 +42,14 @@ export function formatCurrency(currency: number) {
   return "$" + (currency / 100).toFixed(2);
 }
 
+export function formatCurrencyInt(currency: number) {
+  return currency / 100;
+}
+
+export function reverseFormatCurrencyInt(currency: number) {
+  return currency * 100;
+}
+
 export function dateFormatter(date: Date) {
   return date.toLocaleDateString();
 }
