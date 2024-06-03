@@ -117,31 +117,43 @@ export default async function Page({ params }: Props) {
           {/* Price */}
           <div className="h-full w-full bg-slate-900 p-5">
             <h2 className="mb-2 text-2xl text-cyan-500">Current Price</h2>
-            <div className="flex h-12 flex-row items-center justify-end bg-slate-900 p-1 text-right text-sm">
-              {game?.original_price != null &&
-                game?.discount_price != null &&
-                game.discount_price != game.original_price && (
-                  <>
-                    <p className="bg-green-600 p-1">
-                      -
-                      {(
-                        ((game.original_price - game.discount_price) /
-                          game.original_price) *
-                        100
-                      ).toFixed(0)}
-                      %
-                    </p>
-                    <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
-                      {"$" + (game.original_price / 100).toFixed(2)}
-                    </p>
-                  </>
-                )}
-              <p className="bg-slate-300/10 p-1">
-                $
-                {game?.discount_price != null
-                  ? (game.discount_price / 100).toFixed(2)
-                  : "0.00"}
-              </p>
+            <div className="flex h-12 flex-row items-center justify-end rounded-lg bg-background p-1 text-right text-sm">
+              {game.prices.map((price) => {
+                return (
+                  <div key={price.id + "pd"}>
+                    {price.original_price != null &&
+                      price.discount_price != null &&
+                      price.discount_price != price.original_price && (
+                        <div className="flex flex-row">
+                          <p className="bg-green-600 p-1">
+                            -
+                            {(
+                              ((price.original_price - price.discount_price) /
+                                price.original_price) *
+                              100
+                            ).toFixed(0)}
+                            %
+                          </p>
+                          <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
+                            {"$" + (price.original_price / 100).toFixed(2)}
+                          </p>
+                        </div>
+                      )}
+                  </div>
+                );
+              })}
+              <div className="bg-slate-300/10 p-1">
+                {game.prices.map((price) => {
+                  return (
+                    <div key={price.id + "prid"}>
+                      {/* TODO: FIX THIS DISPLAY FOR GAMES THAT HAVE NO LISTED PRICE BECAUSE THEY ARE ONLY SOLD AS PACKAGED */}
+                      {!price.is_free && price.discount_price != null
+                        ? "$" + (price.discount_price / 100).toFixed(2)
+                        : "Free"}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           </div>
           {/* Reviews */}
