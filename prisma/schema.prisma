@@ -73,8 +73,6 @@ model Apps {
   steam_id                Int       @unique
   title                   String?
   type                    String
-  original_price          Int?
-  discount_price          Int?
   total_reviews           Int?
   total_positive_reviews  Int?
   last_modified           Int

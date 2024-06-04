@@ -97,6 +97,16 @@ export const appsRouter = createTRPCRouter({
               }
             : {}),
 
+          // ...(true ? {
+          //   prices: {
+          //     some: {
+          //       currency: {
+          //         e
+          //       }
+          //     }
+          //   }
+          // } : {}),
+
           ...(input.tags
             ? {
                 apps_tags: {
@@ -151,12 +161,11 @@ export const appsRouter = createTRPCRouter({
           prices: {
             orderBy: { valid_from: "asc" },
             where: {
-              // valid_from: { gte: new Date(2022, 0, 20).toISOString() },
-              // valid_to: { lte: new Date(9999, , 24).toISOString() },
+              valid_to: new Date("9999-12-31T00:00:00.000Z"),
             },
           },
         },
-        where: { id: input },
+        where: { steam_id: input },
       });
     }),
 

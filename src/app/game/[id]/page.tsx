@@ -19,6 +19,10 @@ const getAppInfo = cache(async (id: string) => {
   return await api.apps.getAppInfo.query(Number(id));
 });
 
+const getPriceInfo = cache(async (id: string) => {
+  return await api.price.getAppPrices.query(Number(id));
+});
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const game = await getAppInfo(params.id);
 
@@ -30,6 +34,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const game = await getAppInfo(params.id);
+  const priceHistory = await getPriceInfo(params.id);
 
   if (!game) {
     notFound();
@@ -101,8 +106,8 @@ export default async function Page({ params }: Props) {
         {/* Price History */}
         <div className="h-full w-full bg-slate-900 p-5">
           <h2 className="mb-2 text-2xl text-cyan-500">Price History</h2>
-          {game.prices.length > 1 ? (
-            <HistoricalPriceChart data={game.prices} />
+          {priceHistory.length > 1 ? (
+            <HistoricalPriceChart data={priceHistory} />
           ) : (
             <p className="text-center text-slate-400">No Data to show yet</p>
           )}
@@ -117,7 +122,7 @@ export default async function Page({ params }: Props) {
           {/* Price */}
           <div className="h-full w-full bg-slate-900 p-5">
             <h2 className="mb-2 text-2xl text-cyan-500">Current Price</h2>
-            <div className="flex h-12 flex-row items-center justify-end rounded-lg bg-background p-1 text-right text-sm">
+            <div className="flex h-12 flex-row items-center justify-end rounded-lg p-1 text-right text-sm">
               {game.prices.map((price) => {
                 return (
                   <div key={price.id + "pd"}>

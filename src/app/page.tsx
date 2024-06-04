@@ -77,7 +77,7 @@ export default async function Home({
             <Link
               prefetch={false}
               key={game.id + "gid"}
-              href={`/game/${game.id}`}
+              href={`/game/${game.steam_id}`}
               className="text-center"
             >
               <div className="m-0">

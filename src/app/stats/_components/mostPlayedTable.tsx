@@ -31,7 +31,7 @@ export function MostPlayedTable({ games }: Props) {
         {games.map((game) => {
           return (
             <tr
-              onClick={() => router.push(`/game/${game.apps.id}`)}
+              onClick={() => router.push(`/game/${game.steam_id}`)}
               key={game.steam_id + "sid"}
               className="h-12 cursor-pointer text-center text-xs hover:bg-slate-500/20 xl:text-lg"
             >
