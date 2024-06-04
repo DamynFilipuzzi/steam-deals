@@ -93,8 +93,6 @@ model App_Info {
   description             String?
   short_description       String?
   is_mature               Boolean?
-  total_reviews           Int?
-  total_positive_reviews  Int?
   updated_at              DateTime
   created_at              DateTime  @default(now())
   app                     Apps     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)

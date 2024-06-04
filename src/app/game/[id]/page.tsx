@@ -167,9 +167,8 @@ export default async function Page({ params }: Props) {
             <p className="text-right">
               Total Reviews:{" "}
               <span className="text-slate-400">
-                {game?.app_info?.total_reviews != 0 &&
-                game?.app_info?.total_reviews != null
-                  ? (game?.app_info?.total_reviews)
+                {game?.total_reviews != 0 && game?.total_reviews != null
+                  ? (game?.total_reviews)
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                   : "No reviews yet"}
@@ -178,13 +177,12 @@ export default async function Page({ params }: Props) {
             <p className="text-right">
               Positive reviews:{" "}
               <span className="text-slate-400">
-                {game?.app_info?.total_reviews != null &&
-                game?.app_info?.total_positive_reviews != null &&
-                game?.app_info?.total_reviews != 0 &&
-                game?.app_info?.total_positive_reviews != 0
+                {game?.total_reviews != null &&
+                game?.total_positive_reviews != null &&
+                game?.total_reviews != 0 &&
+                game?.total_positive_reviews != 0
                   ? (
-                      (game?.app_info?.total_positive_reviews /
-                        game?.app_info?.total_reviews) *
+                      (game?.total_positive_reviews / game?.total_reviews) *
                       100
                     ).toFixed(0) + "%"
                   : "No reviews yet"}
