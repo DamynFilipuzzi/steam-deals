@@ -24,6 +24,9 @@ export const priceRouter = createTRPCRouter({
     )
     .query(({ ctx, input }) => {
       return ctx.db.prices.findMany({
+        orderBy: {
+          valid_from: "asc",
+        },
         where: { steam_id: input },
       });
     }),

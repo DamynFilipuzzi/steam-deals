@@ -9,7 +9,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { dateFormatter, formatCurrency } from "~/lib/utils";
+import { dateFormatter, dateFormatterLong, formatCurrency } from "~/lib/utils";
 
 type PriceHistoryProps = {
   data: {
@@ -53,7 +53,7 @@ export function HistoricalPriceChart({ data }: PriceHistoryProps) {
         />
         <Tooltip
           formatter={(value) => formatCurrency(value as number)}
-          labelFormatter={(date) => dateFormatter(date as Date)}
+          labelFormatter={(date) => dateFormatterLong(date as Date)}
           contentStyle={{ backgroundColor: "black" }}
         />
         <Line

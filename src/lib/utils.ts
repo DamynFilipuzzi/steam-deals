@@ -53,3 +53,13 @@ export function reverseFormatCurrencyInt(currency: number) {
 export function dateFormatter(date: Date) {
   return date.toLocaleDateString();
 }
+
+export function dateFormatterLong(date: Date) {
+  const options: Intl.DateTimeFormatOptions = {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  };
+
+  return date.toLocaleDateString("en-US", options);
+}
