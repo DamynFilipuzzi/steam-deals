@@ -329,4 +329,9 @@ export const appsRouter = createTRPCRouter({
       },
     });
   }),
+
+  // Used to generate sitemap.xml
+  getAllApps: publicProcedure.query(({ ctx }) => {
+    return ctx.db.apps.findMany({});
+  }),
 });
