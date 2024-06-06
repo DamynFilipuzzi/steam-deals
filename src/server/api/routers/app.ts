@@ -331,7 +331,16 @@ export const appsRouter = createTRPCRouter({
   }),
 
   // Used to generate sitemap.xml
-  getAllApps: publicProcedure.query(({ ctx }) => {
-    return ctx.db.apps.findMany({});
-  }),
+  getAllApps: publicProcedure
+    .input(z.number().int())
+    .query(({ ctx, input }) => {
+      return ctx.db.apps.findMany({
+        skip: Number(49998 * input),
+        take: 49998,
+        select: {
+          steam_id: true,
+          updated_at: true,
+        },
+      });
+    }),
 });
