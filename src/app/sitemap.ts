@@ -10,7 +10,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch the total number of products and calculate the number of sitemaps needed
   const numApps = await prisma.apps.count();
   const numSitemaps = Math.ceil(numApps / urlPerSitemap);
-  console.log(numSitemaps);
 
   const maps: {
     url: string;
