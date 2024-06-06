@@ -7,6 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./ui/navbar";
 import Footer from "./ui/footer";
+import GoogleAdsense from "./_components/googleAdsense";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -40,6 +41,7 @@ export default function RootLayout({
         <SpeedInsights />
         <Analytics />
       </body>
+      <GoogleAdsense pId={process.env.NEXT_PUBLIC_GOOGLE_ADS_CLIENT_ID} />
     </html>
   );
 }
