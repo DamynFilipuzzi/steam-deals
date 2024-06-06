@@ -47,6 +47,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "hourly",
       priority: 1,
     },
+    {
+      url: `${process.env.NEXTAUTH_URL}/stats/topsellers`,
+      lastModified: new Date(),
+      changeFrequency: "hourly",
+      priority: 1,
+    },
+    {
+      url: `${process.env.NEXTAUTH_URL}/stats/mostplayed`,
+      lastModified: new Date(),
+      changeFrequency: "hourly",
+      priority: 1,
+    },
     ...maps,
   ];
 }
