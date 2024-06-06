@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const revalidate = 43200; // revalidate page every 12 hours
-const urlPerSitemap = 50000;
+const urlPerSitemap = 10000;
 
 type Sitemap = Array<{
   url: string;

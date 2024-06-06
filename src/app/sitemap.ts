@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const revalidate = 43200; // revalidate page every 12 hours
-const urlPerSitemap = 50000;
+const urlPerSitemap = 10000;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch the total number of products and calculate the number of sitemaps needed
