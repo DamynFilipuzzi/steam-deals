@@ -19,7 +19,7 @@ export async function GET() {
         ${Array.from({ length: numSitemaps }, (_, i) => i + 1)
           .map((id) =>
             generateSitemapLink(
-              `${process.env.NEXTAUTH_URL}/games/sitemap/${id - 1}.xml`,
+              `${process.env.NEXTAUTH_URL}/sitemaps/sitemap/${id - 1}.xml`,
             ),
           )
           .join("")} 
