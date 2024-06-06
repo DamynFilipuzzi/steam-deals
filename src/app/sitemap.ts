@@ -28,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }[] = [];
   for (let i = 0; i < numSitemaps; i++) {
     maps.push({
-      url: `${process.env.NEXTAUTH_URL}/sitemaps/sitemap.xml/${i}`,
+      url: `${process.env.NEXTAUTH_URL}/sitemaps/sitemap/${i}.xml`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 0.5,
