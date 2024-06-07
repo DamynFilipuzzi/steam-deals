@@ -8,7 +8,6 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // NOTE: When using mysql or sqlserver, uncomment the @db.Text annotations in model Account below
   // Further reading:
   // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
   // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
@@ -23,12 +22,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? // @db.Text
-  access_token      String? // @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? // @db.Text
+  id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   
@@ -61,13 +60,6 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Game_Tags {
-  id         Int    @id @default(autoincrement())
-  steam_id   Int
-  tag        String
-  // game       Games  @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
-}
-
 model Apps {
   id                      Int       @id @default(autoincrement())
   steam_id                Int       @unique
@@ -84,7 +76,17 @@ model Apps {
   apps_tags               Apps_Tags[]
   top_sellers             TopSellers?
   most_played             MostPlayed?
+  screenshots             Screenshots[]
 
+}
+
+model Screenshots {
+  id                Int       @id @default(autoincrement())
+  steam_id          Int
+  order             Int
+  path_thumbnail    String
+  path_full         String
+  app               Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
 
 model App_Info {
@@ -95,7 +97,7 @@ model App_Info {
   is_mature               Boolean?
   updated_at              DateTime
   created_at              DateTime  @default(now())
-  app                     Apps     @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+  app                     Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
 
 model Prices {
