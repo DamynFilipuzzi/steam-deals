@@ -4,11 +4,11 @@ import noCapsule from "public/no-capsule.jpg";
 import noHeader from "public/no-header.jpg";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { HistoricalPriceChart } from "~/app/_components/historicalChart";
+import { HistoricalPriceChart } from "~/app/game/[id]/_components/historicalChart";
 import { cookies } from "next/headers";
-import { AppDescription } from "~/app/_components/appDescription";
+import { AppDescription } from "~/app/game/[id]/_components/appDescription";
 import Tag from "~/app/_components/tag";
-import ContentWarning from "~/app/_components/contentWarning";
+import ContentWarning from "~/app/game/[id]/_components/contentWarning";
 import { cache } from "react";
 
 type Props = {
@@ -35,6 +35,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Page({ params }: Props) {
   const game = await getAppInfo(params.id);
   const priceHistory = await getPriceInfo(params.id);
+
+  let priceIsAllNull = true;
+  priceHistory.some((price) => {
+    if (price.discount_price != null) {
+      return (priceIsAllNull = false);
+    }
+  });
 
   if (!game) {
     notFound();
@@ -106,10 +113,12 @@ export default async function Page({ params }: Props) {
         {/* Price History */}
         <div className="h-full w-full bg-slate-900 p-5">
           <h2 className="mb-2 text-2xl text-cyan-500">Price History</h2>
-          {priceHistory.length > 1 ? (
+          {priceHistory.length > 1 && !priceIsAllNull ? (
             <HistoricalPriceChart data={priceHistory} />
           ) : (
-            <p className="text-center text-slate-400">No Data to show yet</p>
+            <p className="text-center text-slate-400">
+              No price history to display.
+            </p>
           )}
         </div>
       </div>
