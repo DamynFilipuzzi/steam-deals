@@ -83,10 +83,12 @@ model Apps {
 model Screenshots {
   id                Int       @id @default(autoincrement())
   steam_id          Int
-  order             Int
+  image_order       Int
   path_thumbnail    String
   path_full         String
   app               Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+
+  @@unique([steam_id, image_order])
 }
 
 model App_Info {
