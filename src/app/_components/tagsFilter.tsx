@@ -99,10 +99,7 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
   return (
     <DropdownMenu onOpenChange={() => setChangeButton(!changeButton)}>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          aria-description="Tags filter dropdown button"
-        >
+        <Button variant="outline" aria-label="Tags filter dropdown button">
           {changeButton ? <X size={25} /> : <ListChecks size={25} />}
         </Button>
       </DropdownMenuTrigger>

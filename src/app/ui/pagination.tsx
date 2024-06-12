@@ -88,7 +88,7 @@ function PaginationNumber({
     <Link
       href={href}
       className={className}
-      aria-description={`Navigate to page ${page}`}
+      aria-label={`Navigate to page ${page}`}
     >
       {page}
     </Link>
@@ -116,15 +116,9 @@ function PaginationArrow({
 
   const icon =
     direction === "left" ? (
-      <ArrowLeftIcon
-        className="w-4"
-        aria-description="Navigate to previous page"
-      />
+      <ArrowLeftIcon className="w-4" aria-label="Navigate to previous page" />
     ) : (
-      <ArrowRightIcon
-        className="w-4"
-        aria-description="Navigate to next page"
-      />
+      <ArrowRightIcon className="w-4" aria-label="Navigate to next page" />
     );
 
   return isDisabled ? (

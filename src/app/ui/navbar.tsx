@@ -12,6 +12,7 @@ export default async function Navbar() {
   return (
     <nav className="sticky top-0 z-50 flex h-24 w-full flex-row items-center justify-between bg-background px-6 py-3 shadow-md">
       <a
+        aria-label="Navigate to home page"
         href="/"
         className="flex flex-row items-center justify-center gap-4 hover:opacity-70"
       >
@@ -47,7 +48,7 @@ export default async function Navbar() {
               </div>
               <div className="dropdown-content absolute right-0 z-10 hidden min-w-36 border-2 border-t-0 border-slate-500/20 bg-background shadow-lg group-hover:block">
                 <Link
-                  aria-description="Sign Out Button"
+                  aria-label="Sign Out Button"
                   href="/api/auth/signout"
                   className="block px-4 py-3 text-white hover:text-cyan-300 active:border-cyan-700"
                 >
@@ -58,7 +59,7 @@ export default async function Navbar() {
           </div>
         ) : (
           <Link
-            aria-description="Sign In Button"
+            aria-label="Sign In Button"
             href="/api/auth/signin"
             className="rounded-full border-2 border-cyan-500 px-1 py-1 font-semibold text-black no-underline hover:border-cyan-300 active:border-cyan-700"
           >
