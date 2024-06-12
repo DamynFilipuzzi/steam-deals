@@ -25,7 +25,10 @@ export default function FiltersDropdownMenu({ maxPrice }: Props) {
   return (
     <DropdownMenu onOpenChange={() => setChangeButton(!changeButton)}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
+        <Button
+          variant="outline"
+          aria-description="Various filters dropdown button"
+        >
           {changeButton ? (
             <ChevronUpIcon size={25} />
           ) : (

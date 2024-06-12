@@ -47,6 +47,7 @@ export default async function Navbar() {
               </div>
               <div className="dropdown-content absolute right-0 z-10 hidden min-w-36 border-2 border-t-0 border-slate-500/20 bg-background shadow-lg group-hover:block">
                 <Link
+                  aria-description="Sign Out Button"
                   href="/api/auth/signout"
                   className="block px-4 py-3 text-white hover:text-cyan-300 active:border-cyan-700"
                 >
@@ -57,6 +58,7 @@ export default async function Navbar() {
           </div>
         ) : (
           <Link
+            aria-description="Sign In Button"
             href="/api/auth/signin"
             className="rounded-full border-2 border-cyan-500 px-1 py-1 font-semibold text-black no-underline hover:border-cyan-300 active:border-cyan-700"
           >

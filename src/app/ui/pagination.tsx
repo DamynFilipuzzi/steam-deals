@@ -85,7 +85,11 @@ function PaginationNumber({
   return isActive || position === "middle" ? (
     <div className={className}>{page}</div>
   ) : (
-    <Link href={href} className={className}>
+    <Link
+      href={href}
+      className={className}
+      aria-description={`Navigate to page ${page}`}
+    >
       {page}
     </Link>
   );
@@ -112,9 +116,15 @@ function PaginationArrow({
 
   const icon =
     direction === "left" ? (
-      <ArrowLeftIcon className="w-4" />
+      <ArrowLeftIcon
+        className="w-4"
+        aria-description="Navigate to previous page"
+      />
     ) : (
-      <ArrowRightIcon className="w-4" />
+      <ArrowRightIcon
+        className="w-4"
+        aria-description="Navigate to next page"
+      />
     );
 
   return isDisabled ? (
