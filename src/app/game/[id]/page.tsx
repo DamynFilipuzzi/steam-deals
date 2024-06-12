@@ -235,6 +235,7 @@ export default async function Page({ params }: Props) {
       </div>
       <div className="mb-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
         <iframe
+          title={`${game.title} - Link to steam store page`}
           src={`https://store.steampowered.com/widget/${game.steam_id}`}
           height="190"
           className="w-full"
