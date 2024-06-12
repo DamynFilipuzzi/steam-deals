@@ -37,8 +37,12 @@ export default async function Page({ params }: Props) {
   const priceHistory = await getPriceInfo(params.id);
 
   let priceIsAllNull = true;
+  let historicalLow = null as number | null;
   priceHistory.some((price) => {
     if (price.discount_price != null) {
+      if (historicalLow == null || historicalLow > price.discount_price) {
+        historicalLow = price.discount_price;
+      }
       return (priceIsAllNull = false);
     }
   });
@@ -130,7 +134,10 @@ export default async function Page({ params }: Props) {
         <div className="flex h-full w-full basis-1/3 flex-col gap-5">
           {/* Price */}
           <div className="h-full w-full bg-slate-900 p-5">
-            <h2 className="mb-2 text-2xl text-cyan-500">Current Price</h2>
+            <h2 className="mb-2 text-2xl text-cyan-500">Price</h2>
+            {!priceIsAllNull && (
+              <h3 className="text-lg text-cyan-500">Current Price</h3>
+            )}
             <div className="flex h-12 flex-row items-center justify-end rounded-lg p-1 text-right text-sm">
               {game.prices.map((price) => {
                 return (
@@ -169,6 +176,20 @@ export default async function Page({ params }: Props) {
                 })}
               </div>
             </div>
+            {!priceIsAllNull && (
+              <>
+                <h3 className="text-lg text-cyan-500">Historical Low</h3>
+                <div className="flex h-12 flex-row items-center justify-end rounded-lg p-1 text-right text-sm">
+                  {historicalLow != null ? (
+                    <span className="bg-slate-300/10 p-1">
+                      {"$" + (historicalLow / 100).toFixed(2)}
+                    </span>
+                  ) : (
+                    "Something went wrong"
+                  )}
+                </div>
+              </>
+            )}
           </div>
           {/* Reviews */}
           <div className="h-full w-full bg-slate-900 p-5">

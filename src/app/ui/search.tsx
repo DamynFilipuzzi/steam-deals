@@ -65,7 +65,7 @@ export default function Search({ placeholder }: { placeholder: string }) {
         defaultValue={searchParams.get("query")?.toString()}
       />
       <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-400 peer-focus:text-gray-300" />
-      <div ref={clearRef}>
+      <div ref={clearRef} hidden>
         <X
           onClick={clearSearch}
           className="absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 cursor-pointer text-gray-400 peer-focus:text-gray-300"
