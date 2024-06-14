@@ -26,13 +26,20 @@ const getPriceInfo = cache(async (id: string) => {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const game = await getAppInfo(params.id);
+  const ogImageUrl = `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_600x900.jpg`;
 
   return {
     title: `${game?.title ?? "Game"} | Steam Deals`,
     description: `${game?.app_info?.short_description ?? "Description"}`,
+    metadataBase: new URL(ogImageUrl),
     openGraph: {
-      images: `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_600x900.jpg`
-    }
+      type: "website",
+      url: ogImageUrl,
+      title: `${game?.title ?? "Game"} | Steam Deals`,
+      description: `${game?.app_info?.short_description ?? "Description"}`,
+      siteName: "Steam Deals",
+      images: `/steam/apps/${game?.steam_id}/library_600x900.jpg`,
+    },
   };
 }
 
