@@ -26,9 +26,20 @@ const getPriceInfo = cache(async (id: string) => {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const game = await getAppInfo(params.id);
-  const ogImageUrl = new URL(
+  const capsuleFetch = await fetch(
     `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_600x900.jpg`,
   );
+  // if app has no library image use capsule image instead
+  let ogImageUrl = new URL("");
+  if (capsuleFetch.ok) {
+    ogImageUrl = new URL(
+      `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_600x900.jpg`,
+    );
+  } else {
+    ogImageUrl = new URL(
+      `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game?.steam_id}/capsule_231x87.jpg`,
+    );
+  }
 
   return {
     title: `${game?.title ?? "Game"} | Steam Deals`,
