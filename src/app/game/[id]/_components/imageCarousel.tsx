@@ -36,7 +36,10 @@ export default function ImageCarousel({ screenshots }: props) {
               <CarouselContent>
                 {screenshots.map((image) => {
                   return (
-                    <CarouselItem className="basis-2/4" key={image.id + "sid"}>
+                    <CarouselItem
+                      className="basis:1/3 md:basis-2/4"
+                      key={image.id + "sid"}
+                    >
                       <img
                         src={image.path_thumbnail}
                         alt={`Image: ${image.id}`}
