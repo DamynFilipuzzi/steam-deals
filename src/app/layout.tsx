@@ -14,21 +14,19 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-const ogImageUrl = new URL("https://www.steamdeals.ca/favicon.ico");
 export const metadata = {
   title: "Dashboard | Steam Deals",
   description:
-    "Steam Deals. Created to help you find better deals on steam games",
+    "Discover the best deals with Steam Deals. Find the biggest discounts on a wide range of Steam games. Stay updated on the latest offers and never miss a great deal on Steam!",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
-  metadataBase: new URL(ogImageUrl.origin),
   openGraph: {
     type: "website",
-    url: ogImageUrl.origin,
+    url: "/android-chrome-512x512.png",
     title: "Dashboard | Steam Deals",
     description:
-      "Steam Deals. Created to help you find better deals on steam games",
+      "Discover the best deals with Steam Deals. Find the biggest discounts on a wide range of Steam games. Stay updated on the latest offers and never miss a great deal on Steam!",
     siteName: "Steam Deals",
-    images: [{ url: ogImageUrl }],
+    images: ["/android-chrome-512x512.png"],
   },
 };
 
