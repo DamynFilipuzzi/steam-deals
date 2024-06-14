@@ -10,6 +10,7 @@ import { AppDescription } from "~/app/game/[id]/_components/appDescription";
 import Tag from "~/app/_components/tag";
 import ContentWarning from "~/app/game/[id]/_components/contentWarning";
 import { cache } from "react";
+import ImageCarousel from "./_components/imageCarousel";
 
 type Props = {
   params: { id: string };
@@ -113,6 +114,8 @@ export default async function Page({ params }: Props) {
           )}
         </div>
       </div>
+      {/* Image Carousel */}
+      <ImageCarousel screenshots={game.screenshots} />
       <div className="mt-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
         {/* Price History */}
         <div className="h-full w-full bg-slate-900 p-5">

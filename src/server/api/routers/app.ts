@@ -157,6 +157,9 @@ export const appsRouter = createTRPCRouter({
               tags: true,
             },
           },
+          screenshots: {
+            orderBy: { image_order: "asc" },
+          },
           app_info: true,
           prices: {
             orderBy: { valid_from: "asc" },
