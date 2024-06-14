@@ -19,6 +19,15 @@ export const metadata = {
   description:
     "Steam Deals. Created to help you find better deals on steam games",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  openGraph: {
+    type: "website",
+    url: "/favicon.ico",
+    title: "Dashboard | Steam Deals",
+    description:
+      "Steam Deals. Created to help you find better deals on steam games",
+    siteName: "Steam Deals",
+    images: [{ url: "/favicon.ico" }],
+  },
 };
 
 export default function RootLayout({
