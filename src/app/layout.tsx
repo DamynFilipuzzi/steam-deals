@@ -8,25 +8,30 @@ import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./ui/navbar";
 import Footer from "./ui/footer";
 import GoogleAdsense from "./_components/googleAdsense";
+import { url } from "inspector";
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
+const ogImageUrl = new URL(
+  "https://www.steamdeals.ca/android-chrome-512x512.png",
+);
 export const metadata = {
   title: "Dashboard | Steam Deals",
   description:
     "Discover the best deals with Steam Deals. Find the biggest discounts on a wide range of Steam games. Stay updated on the latest offers and never miss a great deal on Steam!",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  metadataBase: new URL(ogImageUrl.origin),
   openGraph: {
     type: "website",
-    url: "/android-chrome-512x512.png",
+    url: ogImageUrl.origin,
     title: "Dashboard | Steam Deals",
     description:
       "Discover the best deals with Steam Deals. Find the biggest discounts on a wide range of Steam games. Stay updated on the latest offers and never miss a great deal on Steam!",
     siteName: "Steam Deals",
-    images: ["/android-chrome-512x512.png"],
+    images: [{ url: ogImageUrl }],
   },
 };
 
