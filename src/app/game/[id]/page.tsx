@@ -30,6 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${game?.title ?? "Game"} | Steam Deals`,
     description: `${game?.app_info?.short_description ?? "Description"}`,
+    openGraph: {
+      images: `https://steamcdn-a.akamaihd.net/steam/apps/${game?.steam_id}/library_600x900.jpg`
+    }
   };
 }
 
