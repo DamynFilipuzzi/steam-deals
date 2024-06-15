@@ -8,7 +8,6 @@ import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./ui/navbar";
 import Footer from "./ui/footer";
 import GoogleAdsense from "./_components/googleAdsense";
-import { url } from "inspector";
 
 const fontSans = FontSans({
   subsets: ["latin"],
