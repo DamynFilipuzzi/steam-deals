@@ -10,6 +10,13 @@ import {
   CarouselPrevious,
 } from "~/components/ui/carousel";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTrigger,
+} from "~/components/ui/dialog";
+
 type props = {
   screenshots: {
     id: number;
@@ -39,10 +46,23 @@ export default function ImageCarousel({ screenshots }: props) {
                       className="basis-5/6 md:basis-2/4 3xl:basis-1/3"
                       key={image.id + "sid"}
                     >
-                      <img
-                        src={image.path_thumbnail}
-                        alt={`Image: ${image.id}`}
-                      />
+                      <Dialog>
+                        <DialogTrigger onMouseDown={plugin.current.stop}>
+                          <img
+                            src={image.path_thumbnail}
+                            alt={`Image: ${image.id}`}
+                          />
+                        </DialogTrigger>
+                        <DialogContent className="max-w-full border-0 bg-transparent">
+                          <DialogDescription>
+                            <img
+                              className="m-auto"
+                              src={image.path_full}
+                              alt={`Image: ${image.id}`}
+                            />
+                          </DialogDescription>
+                        </DialogContent>
+                      </Dialog>
                     </CarouselItem>
                   );
                 })}
