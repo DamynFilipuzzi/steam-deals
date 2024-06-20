@@ -103,7 +103,7 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
           {changeButton ? <X size={25} /> : <ListChecks size={25} />}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="h-96 w-48 overflow-scroll lg:h-[32rem] lg:w-[32rem]">
+      <DropdownMenuContent className="h-96 w-48 overflow-scroll lg:w-[36rem]">
         <DropdownMenuLabel className="text-center">
           Sort by Tags
         </DropdownMenuLabel>
@@ -112,7 +112,7 @@ export default function TagsFilter({ data }: DynamicCheckboxesProps) {
           <ul>
             {data.map((tag) => (
               <li
-                className="mx-2 my-1 overflow-hidden text-nowrap hover:bg-accent"
+                className="mx-2 my-1 overflow-hidden text-ellipsis text-nowrap hover:bg-accent"
                 key={tag.tag_id + "tid"}
               >
                 <label
