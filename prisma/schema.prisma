@@ -63,6 +63,7 @@ model VerificationToken {
 model Apps {
   id                      Int       @id @default(autoincrement())
   steam_id                Int       @unique
+  dlc_steam_id            Int?
   title                   String?
   type                    String
   total_reviews           Int?
@@ -77,7 +78,8 @@ model Apps {
   top_sellers             TopSellers?
   most_played             MostPlayed?
   screenshots             Screenshots[]
-
+  app                     Apps?     @relation("Appa_Dlcs", fields: [dlc_steam_id], references: [steam_id])
+  dlc                     Apps[]    @relation("Appa_Dlcs")
 }
 
 model Screenshots {

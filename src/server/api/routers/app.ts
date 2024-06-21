@@ -96,17 +96,7 @@ export const appsRouter = createTRPCRouter({
                 },
               }
             : {}),
-
-          // ...(true ? {
-          //   prices: {
-          //     some: {
-          //       currency: {
-          //         e
-          //       }
-          //     }
-          //   }
-          // } : {}),
-
+          // Filter by tags if provided
           ...(input.tags
             ? {
                 apps_tags: {
@@ -160,8 +150,34 @@ export const appsRouter = createTRPCRouter({
           screenshots: {
             orderBy: { image_order: "asc" },
           },
+          dlc: {
+            orderBy: {
+              steam_id: "desc",
+            },
+            include: {
+              prices: {
+                select: {
+                  id: true,
+                  original_price: true,
+                  discount_price: true,
+                  currency: true,
+                  is_free: true,
+                },
+                where: {
+                  valid_to: new Date("9999-12-31T00:00:00.000Z"),
+                },
+              },
+            },
+          },
           app_info: true,
           prices: {
+            select: {
+              id: true,
+              original_price: true,
+              discount_price: true,
+              currency: true,
+              is_free: true,
+            },
             orderBy: { valid_from: "asc" },
             where: {
               valid_to: new Date("9999-12-31T00:00:00.000Z"),
