@@ -1,6 +1,14 @@
 "use Client";
 
 import clsx from "clsx";
+import { QuestionMarkCircleIcon } from "@heroicons/react/24/outline";
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "~/components/ui/tooltip";
 
 interface PricesProps {
   id: number;
@@ -51,10 +59,36 @@ export default function PriceDisplay({ prices, hasBackground = false }: Props) {
         {prices.map((price) => {
           return (
             <div key={price.id + "prid"}>
-              {/* TODO: FIX THIS DISPLAY FOR GAMES THAT HAVE NO LISTED PRICE BECAUSE THEY ARE ONLY SOLD AS PACKAGED */}
-              {!price.is_free && price.discount_price != null
-                ? "$" + (price.discount_price / 100).toFixed(2)
-                : "Free"}
+              {!price.is_free ? (
+                <>
+                  {price.discount_price != null ? (
+                    "$" + (price.discount_price / 100).toFixed(2)
+                  ) : (
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          Price Not Listed{" "}
+                          <QuestionMarkCircleIcon
+                            className="inline"
+                            height={22}
+                            width={22}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent className="max-w-80">
+                          <p className="text-left">
+                            The price is not listed, likely because the app is
+                            part of a <span className="underline">package</span>{" "}
+                            or has not been{" "}
+                            <span className="underline">released</span> yet.
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  )}
+                </>
+              ) : (
+                "Free"
+              )}
             </div>
           );
         })}
