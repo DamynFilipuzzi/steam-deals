@@ -70,7 +70,7 @@ export default function DLCTable({ appDLC }: DLCProp) {
 
   return (
     <>
-      {appDLC.length > 1 && (
+      {appDLC.length > 0 && (
         <div className="mb-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
           <div className="h-full w-full bg-slate-900 p-5">
             <h2 className="mb-2 text-2xl text-cyan-500">DLC</h2>
