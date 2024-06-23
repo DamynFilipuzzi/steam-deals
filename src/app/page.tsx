@@ -76,7 +76,6 @@ export default async function Home({
         {appsQuery.map((game) => {
           return (
             <Link
-              prefetch={false}
               key={game.id + "gid"}
               href={`/game/${game.steam_id}`}
               className="text-center"
