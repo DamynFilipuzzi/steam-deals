@@ -31,8 +31,8 @@ export default async function Page() {
           <CardContent>
             <TopSellingTable games={topSellers} />
           </CardContent>
-          <CardFooter>
-            <Link href={`/stats/topsellers`} className="w-full text-center">
+          <CardFooter className="justify-center">
+            <Link href={`/stats/topsellers`} className="text-center">
               <Button>View All</Button>
             </Link>
           </CardFooter>
@@ -47,8 +47,8 @@ export default async function Page() {
           <CardContent>
             <MostPlayedTable games={mostPlayed} />
           </CardContent>
-          <CardFooter>
-            <Link href={`/stats/mostplayed`} className="w-full text-center">
+          <CardFooter className="justify-center">
+            <Link href={`/stats/mostplayed`} className="text-center">
               <Button>View All</Button>
             </Link>
           </CardFooter>
