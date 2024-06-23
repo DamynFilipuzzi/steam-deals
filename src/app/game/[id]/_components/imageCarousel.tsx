@@ -12,7 +12,7 @@ import {
 
 import {
   Dialog,
-  DialogContent,
+  DialogContentCustomClose,
   DialogDescription,
   DialogTrigger,
 } from "~/components/ui/dialog";
@@ -53,7 +53,7 @@ export default function ImageCarousel({ screenshots }: props) {
                             alt={`Image: ${image.id}`}
                           />
                         </DialogTrigger>
-                        <DialogContent className="max-w-full border-0 bg-transparent">
+                        <DialogContentCustomClose className="max-w-7xl border-0 bg-transparent">
                           <DialogDescription>
                             <img
                               className="m-auto"
@@ -61,7 +61,7 @@ export default function ImageCarousel({ screenshots }: props) {
                               alt={`Image: ${image.id}`}
                             />
                           </DialogDescription>
-                        </DialogContent>
+                        </DialogContentCustomClose>
                       </Dialog>
                     </CarouselItem>
                   );
