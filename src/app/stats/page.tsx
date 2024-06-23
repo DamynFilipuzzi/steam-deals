@@ -20,8 +20,8 @@ export default async function Page() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-5 bg-black text-white">
       <h1 className="pt-5 text-3xl">Steam Stats</h1>
-      <div className="flex flex-col gap-5 p-5 xl:flex-row">
-        <Card className="border-2 border-solid border-slate-300/20">
+      <div className="flex flex-col gap-5 pb-5 xl:flex-row">
+        <Card className="shrink-0 basis-1/2 border-2 border-solid border-slate-300/20">
           <CardHeader>
             <CardTitle>Top Selling</CardTitle>
             <CardDescription>
@@ -31,13 +31,13 @@ export default async function Page() {
           <CardContent>
             <TopSellingTable games={topSellers} />
           </CardContent>
-          <CardFooter>
-            <Link href={`/stats/topsellers`} className="w-full text-center">
-              <Button>View All Top Selling Games</Button>
+          <CardFooter className="justify-center">
+            <Link href={`/stats/topsellers`} className="text-center">
+              <Button>View All</Button>
             </Link>
           </CardFooter>
         </Card>
-        <Card className="border-2 border-solid border-slate-300/20">
+        <Card className="shrink-0 basis-1/2 border-2 border-solid border-slate-300/20">
           <CardHeader>
             <CardTitle>Most Played</CardTitle>
             <CardDescription>
@@ -47,9 +47,9 @@ export default async function Page() {
           <CardContent>
             <MostPlayedTable games={mostPlayed} />
           </CardContent>
-          <CardFooter>
-            <Link href={`/stats/mostplayed`} className="w-full text-center">
-              <Button>View All Most played Games</Button>
+          <CardFooter className="justify-center">
+            <Link href={`/stats/mostplayed`} className="text-center">
+              <Button>View All</Button>
             </Link>
           </CardFooter>
         </Card>

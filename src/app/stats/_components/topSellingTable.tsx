@@ -1,5 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
+import PriceDisplay from "~/app/_components/priceDisplay";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
 
 type Props = {
   games: {
@@ -13,6 +23,7 @@ type Props = {
         original_price: number | null;
         discount_price: number | null;
         is_free: boolean | null;
+        currency: string | null;
       }[];
     };
   }[];
@@ -21,79 +32,42 @@ type Props = {
 export function TopSellingTable({ games }: Props) {
   const router = useRouter();
   return (
-    <table className="">
-      <thead>
-        <tr className="text-center text-xs xl:text-lg">
-          <th>Rank</th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th className="text-right">Price</th>
-        </tr>
-      </thead>
-      <tbody>
+    <Table className="bg-background">
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[10px] text-center">Rank</TableHead>
+          <TableHead className="hidden w-[100px] lg:inline-block lg:w-[140px]"></TableHead>
+          <TableHead className="text-left">Title</TableHead>
+          <TableHead className="text-right">Price</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {games.map((game) => {
           return (
-            <tr
-              onClick={() => router.push(`/game/${game.steam_id}`)}
+            <TableRow
               key={game.steam_id + "sid"}
-              className="h-12 max-h-16 cursor-pointer text-center text-xs hover:bg-slate-500/20 xl:text-lg"
+              className="cursor-pointer"
+              onClick={() => router.push(`/game/${game.steam_id}`)}
             >
-              <td>{game.app_order}</td>
-              <td className="m-0 w-fit p-1">
+              <TableCell className="text-center text-xs md:text-sm">
+                {game.app_order}
+              </TableCell>
+              <TableCell className="m-0 hidden w-fit p-1 lg:inline-block">
                 <img
-                  src={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game.steam_id}/capsule_231x87.jpg`}
+                  src={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game.steam_id}/capsule_sm_120.jpg`}
                   alt={`${game.apps.title} game image`}
-                  className="aspect-[231/87]"
                 />
-              </td>
-              <td className="text-left">{game.apps.title}</td>
-              <td className="xl:w-34"></td>
-              <td className="xl:w-32">
-                <div className="flex flex-row items-center justify-end rounded-lg p-1 text-right text-sm">
-                  {game.apps.prices.map((price) => {
-                    return (
-                      <div key={price.id + "pd"}>
-                        {price.original_price != null &&
-                          price.discount_price != null &&
-                          price.discount_price != price.original_price && (
-                            <div className="flex flex-row">
-                              <p className="bg-green-600 p-1">
-                                -
-                                {(
-                                  ((price.original_price -
-                                    price.discount_price) /
-                                    price.original_price) *
-                                  100
-                                ).toFixed(0)}
-                                %
-                              </p>
-                              <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
-                                {"$" + (price.original_price / 100).toFixed(2)}
-                              </p>
-                            </div>
-                          )}
-                      </div>
-                    );
-                  })}
-                  <div className="bg-slate-300/10 p-1">
-                    {game.apps.prices.map((price) => {
-                      return (
-                        <div key={price.id + "prid"}>
-                          {/* TODO: FIX THIS DISPLAY FOR GAMES THAT HAVE NO LISTED PRICE BECAUSE THEY ARE ONLY SOLD AS PACKAGED */}
-                          {!price.is_free && price.discount_price != null
-                            ? "$" + (price.discount_price / 100).toFixed(2)
-                            : "Free"}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </td>
-            </tr>
+              </TableCell>
+              <TableCell className="text-left text-xs md:text-sm">
+                {game.apps.title}
+              </TableCell>
+              <TableCell>
+                <PriceDisplay prices={game.apps.prices} noPadding={true} />
+              </TableCell>
+            </TableRow>
           );
         })}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 }

@@ -1,6 +1,15 @@
 "use client";
 import { useRouter } from "next/navigation";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
+
 type Props = {
   games: {
     steam_id: number;
@@ -17,39 +26,46 @@ type Props = {
 export function MostPlayedTable({ games }: Props) {
   const router = useRouter();
   return (
-    <table>
-      <thead>
-        <tr className="text-center text-xs xl:text-lg">
-          <th>Rank</th>
-          <th></th>
-          <th></th>
-          <th className="text-nowrap">Current Players</th>
-          <th className="text-nowrap">Peak Today</th>
-        </tr>
-      </thead>
-      <tbody>
+    <Table className="bg-background">
+      <TableHeader>
+        <TableRow>
+          <TableHead className="w-[10px] text-center">Rank</TableHead>
+          <TableHead className="hidden w-[100px] lg:inline-block lg:w-[140px]"></TableHead>
+          <TableHead>Title</TableHead>
+          <TableHead className="text-left">Current Players</TableHead>
+          <TableHead className="text-right">Peak Today</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {games.map((game) => {
           return (
-            <tr
+            <TableRow
               onClick={() => router.push(`/game/${game.steam_id}`)}
               key={game.steam_id + "sid"}
-              className="h-12 cursor-pointer text-center text-xs hover:bg-slate-500/20 xl:text-lg"
+              className="cursor-pointer"
             >
-              <td>{game.app_order}</td>
-              <td className="m-0 w-fit p-1">
+              <TableCell className="text-center text-xs md:text-sm">
+                {game.app_order}
+              </TableCell>
+              <TableCell className="m-0 hidden w-fit p-1 lg:inline-block">
                 <img
-                  src={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game.steam_id}/capsule_231x87.jpg`}
+                  src={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game.steam_id}/capsule_sm_120.jpg`}
                   alt={`${game.apps.title} game image`}
-                  className="aspect-[231/87]"
                 />
-              </td>
-              <td className="text-left">{game.apps.title}</td>
-              <td className="xl:w-34">{game.current.toLocaleString()}</td>
-              <td className="xl:w-32">{game.peak.toLocaleString()}</td>
-            </tr>
+              </TableCell>
+              <TableCell className="max-w-20 overflow-hidden text-ellipsis text-nowrap text-left text-xs md:max-w-80 md:text-sm">
+                {game.apps.title}
+              </TableCell>
+              <TableCell className="text-right text-xs md:text-sm">
+                {game.current.toLocaleString()}
+              </TableCell>
+              <TableCell className="text-right text-xs md:text-sm">
+                {game.peak.toLocaleString()}
+              </TableCell>
+            </TableRow>
           );
         })}
-      </tbody>
-    </table>
+      </TableBody>
+    </Table>
   );
 }
