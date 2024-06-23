@@ -21,12 +21,19 @@ interface PricesProps {
 interface Props {
   prices: PricesProps[];
   hasBackground?: boolean;
+  noPadding?: boolean;
 }
 
-export default function PriceDisplay({ prices, hasBackground = false }: Props) {
+export default function PriceDisplay({
+  prices,
+  hasBackground = false,
+  noPadding = false,
+}: Props) {
   const className = clsx(
-    "flex h-12 flex-row items-center justify-end rounded-lg p-1 text-right text-sm",
+    "flex flex-row items-center justify-end rounded-lg text-right text-sm",
     { "bg-background": hasBackground },
+    { "p-1": !noPadding },
+    { "h-12": !noPadding },
   );
 
   return (
@@ -38,7 +45,7 @@ export default function PriceDisplay({ prices, hasBackground = false }: Props) {
               price.discount_price != null &&
               price.discount_price != price.original_price && (
                 <div className="flex flex-row">
-                  <p className="bg-green-600 p-1">
+                  <p className={clsx(`bg-green-600`, { "p-1": !noPadding })}>
                     -
                     {(
                       ((price.original_price - price.discount_price) /
@@ -47,7 +54,12 @@ export default function PriceDisplay({ prices, hasBackground = false }: Props) {
                     ).toFixed(0)}
                     %
                   </p>
-                  <p className="bg-slate-300/10 p-1 text-slate-400 line-through">
+                  <p
+                    className={clsx(
+                      `bg-slate-300/10 text-slate-400 line-through`,
+                      { "p-1": !noPadding },
+                    )}
+                  >
                     {"$" + (price.original_price / 100).toFixed(2)}
                   </p>
                 </div>
@@ -55,7 +67,7 @@ export default function PriceDisplay({ prices, hasBackground = false }: Props) {
           </div>
         );
       })}
-      <div className="bg-slate-300/10 p-1">
+      <div className={clsx(`bg-slate-300/10`, { "p-1": !noPadding })}>
         {prices.map((price) => {
           return (
             <div key={price.id + "prid"}>
