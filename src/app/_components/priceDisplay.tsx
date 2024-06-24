@@ -30,7 +30,9 @@ export default function PriceDisplay({
   noPadding = false,
 }: Props) {
   const className = clsx(
-    "flex flex-row items-center justify-end rounded-lg text-right text-sm",
+    "flex flex-row items-center justify-end text-right text-sm",
+    { "rounded-lg": !hasBackground },
+    { "rounded-b-md": hasBackground },
     { "bg-background": hasBackground },
     { "p-1": !noPadding },
     { "h-12": !noPadding },

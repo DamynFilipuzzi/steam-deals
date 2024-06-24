@@ -82,7 +82,7 @@ export default async function Home({
             >
               <div className="m-0">
                 <div className="flex w-44 flex-col justify-between rounded-lg border-2 border-slate-700/25 bg-slate-700/25 transition duration-100 ease-in hover:border-cyan-500 active:border-cyan-700">
-                  <div className="line-clamp-2 h-12 rounded-lg bg-background">
+                  <div className="line-clamp-2 h-12 rounded-t-md bg-background">
                     {game.title}
                   </div>
                   <div>
@@ -90,7 +90,7 @@ export default async function Home({
                       <img
                         src={`https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_id}/library_600x900.jpg`}
                         alt={`${game.title} game image`}
-                        className="h-64"
+                        className="mx-auto h-64"
                       />
                     ) : (
                       <img
