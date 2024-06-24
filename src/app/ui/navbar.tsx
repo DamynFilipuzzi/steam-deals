@@ -3,8 +3,9 @@ import { unstable_noStore as noStore } from "next/cache";
 import { getServerAuthSession } from "~/server/auth";
 import Image from "next/image";
 import Logo from "public/android-chrome-192x192.png";
-import { LogOut } from "lucide-react";
-import { User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import { Separator } from "~/components/ui/separator";
 
 export default async function Navbar() {
   noStore();
@@ -14,17 +15,44 @@ export default async function Navbar() {
       <a
         aria-label="Navigate to home page"
         href="/"
-        className="flex flex-row items-center justify-center gap-4 hover:opacity-70"
+        className="flex flex-row items-center justify-center gap-5 hover:opacity-70"
       >
         <Image src={Logo} height={60} width={60} alt="Steam Deals Site Logo" />
-        <h1 className="text-lg font-medium text-cyan-500 sm:text-3xl">
+        <h1 className="hidden font-medium text-cyan-500 sm:flex sm:text-3xl">
           Steam Deals
         </h1>
       </a>
 
-      <div className="my-7 flex flex-row items-center justify-center gap-4">
+      <div className="flex h-full flex-row items-center justify-center gap-5">
+        <div className="group relative text-lg sm:mr-8">
+          <button>
+            <span className="hidden sm:inline">Steam</span> Stats
+            <ChevronDown className="ml-2 inline duration-200 group-hover:rotate-180" />
+          </button>
+          <div className="absolute right-0 z-10 hidden min-w-36 border-2 border-t-0 border-slate-500/20 bg-background shadow-lg group-hover:block">
+            <Link
+              href={"/stats"}
+              className="block px-4 py-3 text-sm text-white hover:text-cyan-300 active:border-cyan-700"
+            >
+              Steam Stats
+            </Link>
+            <Separator />
+            <Link
+              href={"/stats/mostplayed"}
+              className="block px-4 py-3 text-sm text-white hover:text-cyan-300 active:border-cyan-700"
+            >
+              Most Played
+            </Link>
+            <Link
+              href={"/stats/topsellers"}
+              className="block px-4 py-3 text-sm text-white hover:text-cyan-300 active:border-cyan-700"
+            >
+              Top Selling
+            </Link>
+          </div>
+        </div>
         {session ? (
-          <div className="dropdown group relative inline-block">
+          <div className="group relative flex h-full items-center">
             <button className="dropbtn">
               <p className="mr-2 inline text-center align-middle text-2xl text-white">
                 {session.user?.name ? (
@@ -46,13 +74,15 @@ export default async function Navbar() {
                   <div className="inline-block h-12 w-12 overflow-hidden rounded-full border-2 border-cyan-300 bg-white/10 align-middle text-xl text-cyan-300"></div>
                 )}
               </div>
-              <div className="dropdown-content absolute right-0 z-10 hidden min-w-36 border-2 border-t-0 border-slate-500/20 bg-background shadow-lg group-hover:block">
+              {/* dropdown */}
+              <div className="absolute right-0 z-10 hidden min-w-36 border-2 border-t-0 border-slate-500/20 bg-background shadow-lg group-hover:block">
                 <Link
                   aria-label="Sign Out Button"
                   href="/api/auth/signout"
-                  className="block px-4 py-3 text-white hover:text-cyan-300 active:border-cyan-700"
+                  className="block px-4 py-3 text-sm text-white hover:text-cyan-300 active:border-cyan-700"
                 >
-                  Sign Out <LogOut className="inline" />
+                  Sign Out
+                  <LogOut className="ml-2 inline" size={18} />
                 </Link>
               </div>
             </button>
