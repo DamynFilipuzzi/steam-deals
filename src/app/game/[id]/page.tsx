@@ -13,6 +13,7 @@ import { cache } from "react";
 import ImageCarousel from "./_components/imageCarousel";
 import PriceDisplay from "~/app/_components/priceDisplay";
 import DLCTable from "./_components/dlcTable";
+import Link from "next/link";
 
 type Props = {
   params: { id: string };
@@ -231,6 +232,19 @@ export default async function Page({ params }: Props) {
               </p>
             )}
           </div>
+          {game.dlc_steam_id != null && (
+            <div className="h-full w-full bg-slate-900 p-5">
+              <h2 className="mb-2 text-2xl text-cyan-500">Base Game</h2>
+              <div>
+                <Link href={`/game/${game.dlc_steam_id}`}>
+                  <img
+                    src={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${game.dlc_steam_id}/capsule_616x353.jpg`}
+                    alt={`Base game for ${game.title}`}
+                  />
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </div>
       {/* DLC */}
