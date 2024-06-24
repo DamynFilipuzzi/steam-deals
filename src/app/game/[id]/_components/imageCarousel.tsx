@@ -40,6 +40,15 @@ export default function ImageCarousel({ screenshots }: props) {
             <h2 className="mb-2 text-2xl text-cyan-500">Screenshots</h2>
             <Carousel plugins={[plugin.current]}>
               <CarouselContent>
+                {/* POC for video content */}
+                {/* <CarouselItem className="basis-5/6 md:basis-2/4 3xl:basis-1/3">
+                  <video controls>
+                    <source
+                      src="http://cdn.akamai.steamstatic.com/steam/apps/256972298/movie480.mp4?t=1696005467"
+                      type="video/mp4"
+                    />
+                  </video>
+                </CarouselItem> */}
                 {screenshots.map((image) => {
                   return (
                     <CarouselItem
