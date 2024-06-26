@@ -9,6 +9,8 @@ import { api } from "~/trpc/server";
 import TagsFilter from "./_components/tagsFilter";
 import FiltersDropdownMenu from "./_components/filtersDropdownMenu";
 import PriceDisplay from "./_components/priceDisplay";
+import { getServerSession } from "next-auth";
+import { getAuthOptions } from "~/server/auth";
 
 export default async function Home({
   searchParams,
@@ -23,8 +25,10 @@ export default async function Home({
   };
 }) {
   noStore();
-  const maxPrice = await api.price.getMaxPrice.query();
+  const session = await getServerSession(getAuthOptions());
 
+  const userId = session?.user.steam.steamid ?? "";
+  const maxPrice = await api.price.getMaxPrice.query();
   const query = searchParams?.query ?? "";
   const currentPage = Number(searchParams?.page) || 1;
   const tags = searchParams?.tags ?? "";
@@ -46,6 +50,7 @@ export default async function Home({
     type: type,
     limit: limit,
     hidefree: hidefree,
+    userId: userId,
   };
   const paramsPages = {
     query: query,
@@ -53,6 +58,7 @@ export default async function Home({
     type: type,
     limit: limit,
     hidefree: hidefree,
+    userId: userId,
   };
   const totalPages = Math.ceil(
     Number((await api.apps.getTotalPages.query(paramsPages)) / appsPerPages()),
@@ -81,11 +87,11 @@ export default async function Home({
               className="text-center"
             >
               <div className="m-0">
-                <div className="flex w-44 flex-col justify-between rounded-lg border-2 border-slate-700/25 bg-slate-700/25 transition duration-100 ease-in hover:border-cyan-500 active:border-cyan-700">
+                <div className="relative flex w-44 flex-col justify-between rounded-lg border-2 border-slate-700/25 bg-slate-700/25 transition duration-100 ease-in hover:border-cyan-500 active:border-cyan-700">
                   <div className="line-clamp-2 h-12 rounded-t-md bg-background">
                     {game.title}
                   </div>
-                  <div>
+                  <div className="relative flex overflow-hidden">
                     {game.type == "game" ? (
                       <img
                         src={`https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_id}/library_600x900.jpg`}
@@ -99,6 +105,17 @@ export default async function Home({
                         className="h-24"
                       />
                     )}
+
+                    {game.users_apps.map((userApp) => {
+                      return (
+                        <div
+                          key={userApp.steam_id + "UAID"}
+                          className="absolute -left-14 top-4 w-full -rotate-45 border-2 border-white/85 bg-green-600"
+                        >
+                          Owned
+                        </div>
+                      );
+                    })}
                   </div>
                   <PriceDisplay prices={game.prices} hasBackground={true} />
                 </div>

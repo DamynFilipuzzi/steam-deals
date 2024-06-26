@@ -47,15 +47,30 @@ declare module "next-auth" {
         timecreated: number;
         personastateflags: number;
       };
-      // ...other properties
-      // role: UserRole;
     } & DefaultSession["user"];
   }
+}
 
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
+interface AppsResponse {
+  response:
+    | {
+        game_count: number | null | undefined;
+        games:
+          | {
+              appid: number;
+              playtime_forever: number;
+              playtime_windows_forever: number;
+              playtime_mac_forever: number;
+              playtime_linux_forever: number;
+              playtime_deck_forever: number;
+              rtime_last_played: number;
+              playtime_disconnected: number;
+            }[]
+          | null
+          | undefined;
+      }
+    | null
+    | undefined;
 }
 
 /**
@@ -113,8 +128,9 @@ export function getAuthOptions(req?: NextRequest): AuthOptions {
       async jwt({ token, account, profile }) {
         if (account?.provider === PROVIDER_ID) {
           // console.log(token, account, profile);
-          await createUser(token);
           token.steam = profile;
+          await upsertUser(token);
+          await upsertUsersApps(token);
         }
         return token;
       },
@@ -129,7 +145,7 @@ export function getAuthOptions(req?: NextRequest): AuthOptions {
   };
 }
 
-async function createUser(token: JWT) {
+async function upsertUser(token: JWT) {
   // Upsert User
   await db.user.upsert({
     where: {
@@ -148,4 +164,51 @@ async function createUser(token: JWT) {
       image: token.picture,
     },
   });
+}
+
+async function upsertUsersApps(token: JWT) {
+  // updates or inserts users games. connects games from users steam library to users account
+  // get users games
+  if (token.sub != null) {
+    const response = await fetch(
+      `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${process.env.STEAM_SECRET!}&steamid=${token.sub}`,
+    );
+    const apps: AppsResponse = (await response.json()) as AppsResponse;
+    console.log("Games Count: ", apps.response?.game_count);
+    if (
+      (apps.response != null || apps.response != undefined) &&
+      (apps.response.games != null || apps.response.games != undefined)
+    ) {
+      Promise.all(
+        apps.response.games.map(async (app) => {
+          // Check if UsersGames already exists.
+          const uaExists = !!(await db.usersApps.count({
+            where: { user_id: token.sub, steam_id: app.appid },
+          }));
+          if (!uaExists) {
+            // Else Check if app exists
+            const appExists = !!(await db.apps.count({
+              where: { steam_id: app.appid },
+            }));
+            if (appExists && token.sub != undefined) {
+              // if true then store UsersGames
+              await db.usersApps.create({
+                data: { steam_id: app.appid, user_id: token.sub },
+              });
+            } else {
+              console.log("DNE: ", app.appid);
+            }
+          }
+        }),
+      )
+        .then(function () {
+          return;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } else {
+      console.log("User has no games");
+    }
+  }
 }

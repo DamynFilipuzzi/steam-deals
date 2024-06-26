@@ -50,6 +50,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  users_Apps    UsersApps[]
 }
 
 model VerificationToken {
@@ -58,6 +59,15 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model UsersApps {
+  user_id     String
+  steam_id    Int
+  users       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  apps        Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+
+  @@id([user_id, steam_id])
 }
 
 model Apps {
@@ -76,6 +86,7 @@ model Apps {
   releasedate             ReleaseDate?
   prices                  Prices[]
   apps_tags               Apps_Tags[]
+  users_apps              UsersApps[]
   top_sellers             TopSellers?
   most_played             MostPlayed?
   screenshots             Screenshots[]
@@ -107,7 +118,7 @@ model ReleaseDate {
   id            Int       @id @default(autoincrement())
   steam_id      Int       @unique
   coming_soon   Boolean
-  date          DateTime
+  release_date  DateTime
   app           Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
 
