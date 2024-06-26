@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
-import { getServerAuthSession } from "~/server/auth";
 import Image from "next/image";
 import Logo from "public/android-chrome-192x192.png";
 import { LogOut, User } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import { Separator } from "~/components/ui/separator";
+import { getServerSession } from "next-auth";
+import { getAuthOptions } from "~/server/auth";
 
 export default async function Navbar() {
   noStore();
-  const session = await getServerAuthSession();
+  const session = await getServerSession(getAuthOptions());
   return (
     <nav className="sticky top-0 z-50 flex h-24 w-full flex-row items-center justify-between bg-background px-6 py-3 shadow-md">
       <a
