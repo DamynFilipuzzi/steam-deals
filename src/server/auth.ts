@@ -208,7 +208,7 @@ async function upsertUsersApps(token: JWT) {
           console.log(error);
         });
     } else {
-      console.log("User has no games");
+      console.log("Something Went wrong, or User has no games");
     }
   }
 }

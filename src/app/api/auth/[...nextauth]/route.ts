@@ -11,12 +11,16 @@ import { getAuthOptions } from "~/server/auth";
 
 import type { NextRequest } from "next/server";
 
-async function handler(
-  req: NextRequest,
-  ctx: { params: { nextauth: string[] } },
-) {
+const handler = (req: NextRequest, ctx: { params: { nextauth: string[] } }) =>
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  return NextAuth(req, ctx, getAuthOptions(req));
-}
+  NextAuth(req, ctx, getAuthOptions(req));
+
+// async function handler(
+//   req: NextRequest,
+//   ctx: { params: { nextauth: string[] } },
+// ) {
+//   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+//   return NextAuth(req, ctx, getAuthOptions(req));
+// }
 
 export { handler as GET, handler as POST };
