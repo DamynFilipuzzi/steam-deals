@@ -12,13 +12,10 @@
 
 import { type DefaultSession } from "next-auth";
 
-import { db } from "~/server/db";
-
 import SteamProvider, { PROVIDER_ID } from "@kenjiow/next-auth-steam";
 
 import type { AuthOptions } from "next-auth";
 import type { NextRequest } from "next/server";
-import { JWT } from "next-auth/jwt";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -30,6 +27,7 @@ declare module "next-auth" {
   interface Session extends DefaultSession {
     user: {
       id: string;
+      //  Might Not Need, TBD: https://next-auth.js.org/configuration/callbacks#session-callback
       steam: {
         steamid: string;
         communityvisibilitystate: number;
@@ -49,28 +47,6 @@ declare module "next-auth" {
       };
     } & DefaultSession["user"];
   }
-}
-
-interface AppsResponse {
-  response:
-    | {
-        game_count: number | null | undefined;
-        games:
-          | {
-              appid: number;
-              playtime_forever: number;
-              playtime_windows_forever: number;
-              playtime_mac_forever: number;
-              playtime_linux_forever: number;
-              playtime_deck_forever: number;
-              rtime_last_played: number;
-              playtime_disconnected: number;
-            }[]
-          | null
-          | undefined;
-      }
-    | null
-    | undefined;
 }
 
 /**
@@ -125,11 +101,9 @@ export function getAuthOptions(req?: NextRequest): AuthOptions {
         ]
       : [],
     callbacks: {
-      async jwt({ token, account, profile }) {
+      jwt({ token, account, profile }) {
         if (account?.provider === PROVIDER_ID) {
           token.steam = profile;
-          await upsertUser(token);
-          await upsertUsersApps(token);
         }
         return token;
       },
@@ -142,65 +116,4 @@ export function getAuthOptions(req?: NextRequest): AuthOptions {
       },
     },
   };
-}
-
-async function upsertUser(token: JWT) {
-  // Upsert User
-  await db.user.upsert({
-    where: {
-      id: token.sub,
-    },
-    update: {
-      id: token.sub,
-      name: token.name,
-      email: token.email,
-      image: token.picture,
-    },
-    create: {
-      id: token.sub,
-      name: token.name,
-      email: token.email,
-      image: token.picture,
-    },
-  });
-}
-
-async function upsertUsersApps(token: JWT) {
-  // updates or inserts users games. connects games from users steam library to users account
-  // get users games
-  if (token.sub != null) {
-    const response = await fetch(
-      `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${process.env.STEAM_SECRET!}&steamid=${token.sub}`,
-    );
-    const apps: AppsResponse = (await response.json()) as AppsResponse;
-    console.log("Games Count: ", apps.response?.game_count);
-    if (
-      (apps.response != null || apps.response != undefined) &&
-      (apps.response.games != null || apps.response.games != undefined)
-    ) {
-      // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      apps.response.games.map(async (app) => {
-        // Check if UsersGames already exists.
-        const uaExists = !!(await db.usersApps.count({
-          where: { user_id: token.sub, steam_id: app.appid },
-        }));
-        if (!uaExists) {
-          // Else Check if app exists
-          const appExists = !!(await db.apps.count({
-            where: { steam_id: app.appid },
-          }));
-          if (appExists && token.sub != undefined) {
-            // if true then store UsersGames
-            await db.usersApps.create({
-              data: { steam_id: app.appid, user_id: token.sub },
-            });
-          } else {
-            console.log("DNE: ", app.appid);
-          }
-        }
-      });
-    } else {
-      console.log("Something Went wrong, or User has no games");
-    }
-  }
 }

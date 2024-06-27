@@ -2,11 +2,11 @@ import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache";
 import Image from "next/image";
 import Logo from "public/android-chrome-192x192.png";
-import { LogOut, User } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import { Separator } from "~/components/ui/separator";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "~/server/auth";
+import { SignIn, SignOut } from "./authButtons";
 
 export default async function Navbar() {
   noStore();
@@ -54,7 +54,7 @@ export default async function Navbar() {
         </div>
         {session ? (
           <div className="group relative flex h-full items-center">
-            <button className="dropbtn">
+            <div className="dropbtn cursor-pointer">
               <p className="mr-2 inline text-center align-middle text-2xl text-white">
                 {session.user?.name ? (
                   <span className="hidden capitalize sm:inline">
@@ -77,25 +77,12 @@ export default async function Navbar() {
               </div>
               {/* dropdown */}
               <div className="absolute right-0 z-10 hidden min-w-36 border-2 border-t-0 border-slate-500/20 bg-background shadow-lg group-hover:block">
-                <Link
-                  aria-label="Sign Out Button"
-                  href="/api/auth/signout"
-                  className="block px-4 py-3 text-sm text-white hover:text-cyan-300 active:border-cyan-700"
-                >
-                  Sign Out
-                  <LogOut className="ml-2 inline" size={18} />
-                </Link>
+                <SignOut />
               </div>
-            </button>
+            </div>
           </div>
         ) : (
-          <Link
-            aria-label="Sign In Button"
-            href="/api/auth/signin"
-            className="rounded-full border-2 border-cyan-500 px-1 py-1 font-semibold text-black no-underline hover:border-cyan-300 active:border-cyan-700"
-          >
-            <User size={32} color="#06b6d4" />
-          </Link>
+          <SignIn />
         )}
       </div>
     </nav>
