@@ -11,7 +11,10 @@ import { getAuthOptions } from "~/server/auth";
 
 import type { NextRequest } from "next/server";
 
-const handler = (req: NextRequest, ctx: { params: { nextauth: string[] } }) =>
+const handler = async (
+  req: NextRequest,
+  ctx: { params: { nextauth: string[] } },
+) =>
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   NextAuth(req, ctx, getAuthOptions(req));
 
