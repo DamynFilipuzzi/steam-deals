@@ -127,7 +127,6 @@ export function getAuthOptions(req?: NextRequest): AuthOptions {
     callbacks: {
       async jwt({ token, account, profile }) {
         if (account?.provider === PROVIDER_ID) {
-          // console.log(token, account, profile);
           token.steam = profile;
           await upsertUser(token);
           await upsertUsersApps(token);
@@ -179,34 +178,27 @@ async function upsertUsersApps(token: JWT) {
       (apps.response != null || apps.response != undefined) &&
       (apps.response.games != null || apps.response.games != undefined)
     ) {
-      Promise.all(
-        apps.response.games.map(async (app) => {
-          // Check if UsersGames already exists.
-          const uaExists = !!(await db.usersApps.count({
-            where: { user_id: token.sub, steam_id: app.appid },
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      apps.response.games.map(async (app) => {
+        // Check if UsersGames already exists.
+        const uaExists = !!(await db.usersApps.count({
+          where: { user_id: token.sub, steam_id: app.appid },
+        }));
+        if (!uaExists) {
+          // Else Check if app exists
+          const appExists = !!(await db.apps.count({
+            where: { steam_id: app.appid },
           }));
-          if (!uaExists) {
-            // Else Check if app exists
-            const appExists = !!(await db.apps.count({
-              where: { steam_id: app.appid },
-            }));
-            if (appExists && token.sub != undefined) {
-              // if true then store UsersGames
-              await db.usersApps.create({
-                data: { steam_id: app.appid, user_id: token.sub },
-              });
-            } else {
-              console.log("DNE: ", app.appid);
-            }
+          if (appExists && token.sub != undefined) {
+            // if true then store UsersGames
+            await db.usersApps.create({
+              data: { steam_id: app.appid, user_id: token.sub },
+            });
+          } else {
+            console.log("DNE: ", app.appid);
           }
-        }),
-      )
-        .then(function () {
-          return;
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+        }
+      });
     } else {
       console.log("Something Went wrong, or User has no games");
     }
