@@ -26,6 +26,7 @@ export const appsRouter = createTRPCRouter({
         type: z.string(),
         limit: z.number(),
         hidefree: z.number(),
+        userId: z.string(),
       }),
     )
     .query(({ ctx, input }) => {
@@ -52,6 +53,16 @@ export const appsRouter = createTRPCRouter({
             contains: input.query,
             mode: "insensitive",
           },
+          // Hide all Owned Apps
+          // ...(input.userId
+          //   ? {
+          //       users_apps: {
+          //         none: {
+          //           user_id: input.userId,
+          //         },
+          //       },
+          //     }
+          //   : {}),
           // Limit by maximum price set by user AND hide free apps if selected
           ...(input.limit
             ? {
@@ -123,6 +134,9 @@ export const appsRouter = createTRPCRouter({
               currency: true,
               is_free: true,
             },
+          },
+          users_apps: {
+            where: { user_id: input.userId },
           },
         },
       });
@@ -196,6 +210,7 @@ export const appsRouter = createTRPCRouter({
         type: z.string(),
         limit: z.number(),
         hidefree: z.number(),
+        userId: z.string(),
       }),
     )
     .query(({ ctx, input }) => {
@@ -206,6 +221,16 @@ export const appsRouter = createTRPCRouter({
             contains: input.query,
             mode: "insensitive",
           },
+          // Hide all Owned Apps
+          // ...(input.userId
+          //   ? {
+          //       users_apps: {
+          //         none: {
+          //           user_id: input.userId,
+          //         },
+          //       },
+          //     }
+          //   : {}),
           // Limit by maximum price set by user AND hide free apps if selected
           ...(input.limit
             ? {

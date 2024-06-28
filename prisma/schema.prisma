@@ -50,6 +50,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  users_Apps    UsersApps[]
 }
 
 model VerificationToken {
@@ -58,6 +59,15 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model UsersApps {
+  user_id     String
+  steam_id    Int
+  users       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  apps        Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+
+  @@id([user_id, steam_id])
 }
 
 model Apps {
@@ -73,11 +83,14 @@ model Apps {
   updated_at              DateTime
   created_at              DateTime  @default(now())
   app_info                App_Info?
+  releasedate             ReleaseDate?
   prices                  Prices[]
   apps_tags               Apps_Tags[]
+  users_apps              UsersApps[]
   top_sellers             TopSellers?
   most_played             MostPlayed?
   screenshots             Screenshots[]
+  videos                  Videos[]
   app                     Apps?     @relation("Appa_Dlcs", fields: [dlc_steam_id], references: [steam_id])
   dlc                     Apps[]    @relation("Appa_Dlcs")
 }
@@ -91,6 +104,22 @@ model Screenshots {
   app               Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 
   @@unique([steam_id, image_order])
+}
+
+model Videos {
+  id                Int       @id @default(autoincrement())
+  video_id          Int       @unique
+  steam_id          Int
+  video_order       Int
+  app               Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+}
+
+model ReleaseDate {
+  id            Int       @id @default(autoincrement())
+  steam_id      Int       @unique
+  coming_soon   Boolean
+  release_date  DateTime
+  app           Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
 
 model App_Info {
