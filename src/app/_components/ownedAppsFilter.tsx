@@ -2,8 +2,9 @@
 
 import React from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { Session } from "next-auth";
 
-export default function FreeAppsFilter() {
+export default function OwnedAppsFilter() {
   const [checked, setChecked] = React.useState(false);
 
   const searchParams = useSearchParams();
@@ -13,8 +14,8 @@ export default function FreeAppsFilter() {
   // Initialize state with value from URL param if exists
   React.useEffect(() => {
     const params = new URLSearchParams(searchParams);
-    const hideFree = params.get("hidefree");
-    if (hideFree != null) {
+    const hideOwned = params.get("hideOwned");
+    if (hideOwned != null) {
       setChecked(true);
       return;
     }
@@ -26,9 +27,9 @@ export default function FreeAppsFilter() {
     setChecked(checked);
 
     if (checked) {
-      params.set("hidefree", "1");
+      params.set("hideOwned", "1");
     } else {
-      params.delete("hidefree");
+      params.delete("hideOwned");
     }
     // reset page
     params.delete("page");
@@ -46,7 +47,7 @@ export default function FreeAppsFilter() {
             checked={checked}
             onChange={handleChange}
           />{" "}
-          Hide Free Apps
+          Hide Owned Apps
         </label>
       </li>
     </ul>

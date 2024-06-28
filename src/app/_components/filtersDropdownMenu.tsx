@@ -14,6 +14,8 @@ import { ChevronDownIcon } from "lucide-react";
 import MaxPriceFilter from "./maxPriceFilter";
 import TypeFilter from "./typeFilter";
 import FreeAppsFilter from "./freeAppsFilter";
+import OwnedAppsFilter from "./ownedAppsFilter";
+import { useSession } from "next-auth/react";
 
 type Props = {
   maxPrice: number;
@@ -21,6 +23,7 @@ type Props = {
 
 export default function FiltersDropdownMenu({ maxPrice }: Props) {
   const [changeButton, setChangeButton] = React.useState(false);
+  const session = useSession();
 
   return (
     <DropdownMenu onOpenChange={() => setChangeButton(!changeButton)}>
@@ -47,6 +50,7 @@ export default function FiltersDropdownMenu({ maxPrice }: Props) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <FreeAppsFilter />
+        {session.status == "authenticated" && <OwnedAppsFilter />}
       </DropdownMenuContent>
     </DropdownMenu>
   );
