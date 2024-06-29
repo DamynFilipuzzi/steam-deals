@@ -11,6 +11,7 @@ import { SignIn, SignOut } from "./authButtons";
 export default async function Navbar() {
   noStore();
   const session = await getServerSession(getAuthOptions());
+
   return (
     <nav className="sticky top-0 z-50 flex h-24 w-full flex-row items-center justify-between bg-background px-6 py-3 shadow-md">
       <a

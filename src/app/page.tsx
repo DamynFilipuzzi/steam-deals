@@ -11,6 +11,7 @@ import FiltersDropdownMenu from "./_components/filtersDropdownMenu";
 import PriceDisplay from "./_components/priceDisplay";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "~/server/auth";
+import { redirect } from "next/navigation";
 
 export default async function Home({
   searchParams,
@@ -22,10 +23,17 @@ export default async function Home({
     type?: string;
     limit?: number;
     hidefree?: number;
+    hideOwned?: number;
   };
 }) {
   noStore();
   const session = await getServerSession(getAuthOptions());
+
+  // validate search params if user signed out with having selected havingOwned
+  if (!session && searchParams?.hideOwned == 1) {
+    searchParams.hideOwned = 0;
+    redirect("/");
+  }
 
   const userId = session?.user.steam.steamid ?? "";
   const maxPrice = await api.price.getMaxPrice.query();
@@ -34,6 +42,7 @@ export default async function Home({
   const tags = searchParams?.tags ?? "";
   const type = searchParams?.type ?? "game";
   const hidefree = Number(searchParams?.hidefree) || 0;
+  const hideOwned = Number(searchParams?.hideOwned) || 0;
 
   let limit = 1500;
   if (maxPrice._max.discount_price != null) {
@@ -51,6 +60,7 @@ export default async function Home({
     limit: limit,
     hidefree: hidefree,
     userId: userId,
+    hideOwned: hideOwned,
   };
   const paramsPages = {
     query: query,
@@ -59,6 +69,7 @@ export default async function Home({
     limit: limit,
     hidefree: hidefree,
     userId: userId,
+    hideOwned: hideOwned,
   };
   const totalPages = Math.ceil(
     Number((await api.apps.getTotalPages.query(paramsPages)) / appsPerPages()),

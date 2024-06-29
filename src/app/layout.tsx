@@ -7,6 +7,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./ui/navbar";
 import Footer from "./ui/footer";
+import { Providers } from "./providers";
 // import GoogleAdsense from "./_components/googleAdsense";
 
 const fontSans = FontSans({
@@ -48,7 +49,7 @@ export default function RootLayout({
       >
         <TRPCReactProvider>
           <Navbar />
-          {children}
+          <Providers>{children}</Providers>
           <Footer />
         </TRPCReactProvider>
         <SpeedInsights />
