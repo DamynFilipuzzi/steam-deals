@@ -11,6 +11,8 @@ import FiltersDropdownMenu from "./_components/filtersDropdownMenu";
 import PriceDisplay from "./_components/priceDisplay";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "~/server/auth";
+import { redirect } from "next/navigation";
+
 export default async function Home({
   searchParams,
 }: {
@@ -26,6 +28,12 @@ export default async function Home({
 }) {
   noStore();
   const session = await getServerSession(getAuthOptions());
+
+  // validate search params if user signed out with having selected havingOwned
+  if (!session && searchParams?.hideOwned == 1) {
+    searchParams.hideOwned = 0;
+    redirect("/");
+  }
 
   const userId = session?.user.steam.steamid ?? "";
   const maxPrice = await api.price.getMaxPrice.query();
