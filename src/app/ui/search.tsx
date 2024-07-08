@@ -51,13 +51,14 @@ export default function Search({ placeholder }: { placeholder: string }) {
   };
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0">
+    <div className="relative flex max-w-[500px] grow">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
+        id="search"
         ref={searchRef}
-        className="placeholder:text-white-500 peer block w-full rounded-md border border-gray-600 bg-slate-800 py-[9px] pl-10 text-sm text-white"
+        className="placeholder:text-white-500 max-w peer block w-full rounded-md border border-gray-600 bg-slate-800 px-10 py-[9px] text-sm text-white"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);

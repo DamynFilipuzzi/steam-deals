@@ -2,7 +2,7 @@ import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { reverseFormatCurrencyInt } from "~/lib/utils";
 import { z } from "zod";
 
-const appsPerPage = 18;
+const appsPerPage = 24;
 export const appsPerPages = () => {
   return appsPerPage;
 };
