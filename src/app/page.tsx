@@ -80,7 +80,7 @@ export default async function Home({
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white">
-      <div className="my-5 flex w-5/6 flex-row justify-center gap-4 xl:w-1/3">
+      <div className="my-5 flex w-5/6 flex-row justify-center gap-4 xl:w-2/3">
         <Search placeholder="Search apps..." />
         <TagsFilter data={tagsQuery} />
         {maxPrice._max.discount_price == null ? (
@@ -89,7 +89,7 @@ export default async function Home({
           <FiltersDropdownMenu maxPrice={maxPrice._max.discount_price} />
         )}
       </div>
-      <div className="grid grid-cols-2 items-center justify-center gap-4 md:grid-cols-3 xl:grid-cols-6">
+      <div className="grid grid-cols-2 items-center justify-center gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
         {appsQuery.map((game) => {
           return (
             <Link
