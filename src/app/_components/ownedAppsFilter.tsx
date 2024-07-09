@@ -2,7 +2,6 @@
 
 import React from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { Session } from "next-auth";
 
 export default function OwnedAppsFilter() {
   const [checked, setChecked] = React.useState(false);
