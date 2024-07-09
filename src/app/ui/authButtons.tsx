@@ -21,7 +21,7 @@ export function SignIn() {
 export function SignOut() {
   return (
     <button
-      className="block px-4 py-3 text-sm text-white hover:text-cyan-300 active:border-cyan-700"
+      className="block px-4 py-3 text-sm text-primary hover:text-cyan-300 active:border-cyan-700"
       onClick={() => signOut()}
     >
       Sign Out

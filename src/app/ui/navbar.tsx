@@ -7,6 +7,7 @@ import { Separator } from "~/components/ui/separator";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "~/server/auth";
 import { SignIn, SignOut } from "./authButtons";
+import ThemeDefault from "./themeToggle";
 
 export default async function Navbar() {
   noStore();
@@ -14,6 +15,7 @@ export default async function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 flex h-24 w-full flex-row items-center justify-between bg-background px-6 py-3 shadow-md">
+      {/* Logo */}
       <a
         aria-label="Navigate to home page"
         href="/"
@@ -25,6 +27,7 @@ export default async function Navbar() {
         </h1>
       </a>
 
+      {/* Stats */}
       <div className="flex h-full flex-row items-center justify-center gap-5">
         <div className="group relative text-lg sm:mr-8">
           <button>
@@ -34,35 +37,42 @@ export default async function Navbar() {
           <div className="absolute right-0 z-10 hidden min-w-36 border-2 border-t-0 border-slate-500/20 bg-background shadow-lg group-hover:block">
             <Link
               href={"/stats"}
-              className="block px-4 py-3 text-sm text-white hover:text-cyan-300 active:border-cyan-700"
+              className="block px-4 py-3 text-sm text-primary hover:text-cyan-300 active:border-cyan-700"
             >
               Steam Stats
             </Link>
             <Separator />
             <Link
               href={"/stats/mostplayed"}
-              className="block px-4 py-3 text-sm text-white hover:text-cyan-300 active:border-cyan-700"
+              className="block px-4 py-3 text-sm text-primary hover:text-cyan-300 active:border-cyan-700"
             >
               Most Played
             </Link>
             <Link
               href={"/stats/topsellers"}
-              className="block px-4 py-3 text-sm text-white hover:text-cyan-300 active:border-cyan-700"
+              className="block px-4 py-3 text-sm text-primary hover:text-cyan-300 active:border-cyan-700"
             >
               Top Selling
             </Link>
           </div>
         </div>
+
+        {/* Theme */}
+        <ThemeDefault />
+
+        {/* Auth/User */}
         {session ? (
           <div className="group relative flex h-full items-center">
             <div className="dropbtn cursor-pointer">
-              <p className="mr-2 inline text-center align-middle text-2xl text-white">
+              <p className="mr-2 inline text-center align-middle text-2xl text-primary">
                 {session.user?.name ? (
-                  <span className="hidden capitalize sm:inline">
+                  <span className="hidden capitalize md:inline">
                     {session.user?.name}
                   </span>
                 ) : (
-                  <span className="hidden sm:inline">Username</span>
+                  <span className="hidden text-primary md:inline">
+                    Username
+                  </span>
                 )}
               </p>
               <div className="inline text-center align-middle">

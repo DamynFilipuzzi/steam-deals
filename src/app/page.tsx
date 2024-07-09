@@ -79,7 +79,7 @@ export default async function Home({
   const tagsQuery = await api.tags.getAllTags.query();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center bg-black text-white">
+    <main className="bg-body flex min-h-screen flex-col items-center justify-center text-white">
       <div className="my-5 flex w-5/6 flex-row justify-center gap-4 xl:w-2/3">
         <Search placeholder="Search apps..." />
         <TagsFilter data={tagsQuery} />
@@ -98,7 +98,7 @@ export default async function Home({
               className="text-center"
             >
               <div className="relative flex w-44 flex-col justify-between rounded-lg border-2 border-slate-700/25 bg-slate-700/25 transition duration-100 ease-in hover:border-cyan-500 active:border-cyan-700">
-                <div className="line-clamp-2 h-12 rounded-t-md bg-background">
+                <div className="line-clamp-2 h-12 rounded-t-md bg-background px-1 text-primary">
                   {game.title}
                 </div>
                 <div className="relative flex overflow-hidden">
@@ -132,12 +132,12 @@ export default async function Home({
             </Link>
           );
         })}
-        {appsQuery.length == 0 && (
-          <div>
-            <p className="text-white">No results found</p>
-          </div>
-        )}
       </div>
+      {appsQuery.length == 0 && (
+        <div className="text-center">
+          <p className="text-white">No results found</p>
+        </div>
+      )}
       <div className="my-5 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
       </div>

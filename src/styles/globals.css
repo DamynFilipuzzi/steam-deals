@@ -6,7 +6,9 @@
   :root {
     background: var(--body-background);
 
-    --background: 0 0% 100%;
+    --body: 0, 0%, 100%;
+
+    --background: 0 0% 80%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -38,6 +40,8 @@
   }
 
   .dark {
+    --body: 0, 0%, 0%;
+
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 

@@ -94,7 +94,7 @@ export default async function Page({ params }: Props) {
   );
 
   return (
-    <main className="flex min-h-screen flex-col bg-black text-white">
+    <main className="bg-body flex min-h-screen flex-col text-white">
       {game.type == "game" ? (
         <>
           <div className="grid-rows grid w-full p-4 text-center align-middle xl:hidden">
@@ -249,7 +249,7 @@ export default async function Page({ params }: Props) {
       </div>
       {/* DLC */}
       <DLCTable appDLC={game?.dlc} />
-      <div className="mb-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
+      <div className="mb-5 justify-center gap-4 px-5 xl:flex-row xl:px-80">
         <iframe
           title={`${game.title} - Link to steam store page`}
           src={`https://store.steampowered.com/widget/${game.steam_id}`}
