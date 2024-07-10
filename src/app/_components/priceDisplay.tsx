@@ -58,8 +58,10 @@ export default function PriceDisplay({
                   </p>
                   <p
                     className={clsx(
-                      `bg-slate-300/10 text-slate-400 line-through`,
-                      { "p-1": !noPadding },
+                      `bg-muted text-muted-foreground line-through `,
+                      {
+                        "p-1": !noPadding,
+                      },
                     )}
                   >
                     {"$" + (price.original_price / 100).toFixed(2)}
@@ -69,10 +71,10 @@ export default function PriceDisplay({
           </div>
         );
       })}
-      <div className={clsx(`bg-slate-300/10`, { "p-1": !noPadding })}>
+      <div className={clsx(`bg-muted`, { "p-1": !noPadding })}>
         {prices.map((price) => {
           return (
-            <div key={price.id + "prid"}>
+            <div key={price.id + "prid"} className="text-primary">
               {!price.is_free ? (
                 <>
                   {price.discount_price != null ? (
@@ -80,16 +82,16 @@ export default function PriceDisplay({
                   ) : (
                     <TooltipProvider>
                       <Tooltip>
-                        <TooltipTrigger>
+                        <TooltipTrigger className="text-primary">
                           Price Not Listed{" "}
                           <QuestionMarkCircleIcon
-                            className="inline"
+                            className="inline text-primary"
                             height={22}
                             width={22}
                           />
                         </TooltipTrigger>
                         <TooltipContent className="max-w-80">
-                          <p className="text-left">
+                          <p className="text-left text-primary">
                             The price is not listed, likely because the app is
                             part of a <span className="underline">package</span>{" "}
                             or has not been{" "}
