@@ -94,7 +94,7 @@ export default async function Page({ params }: Props) {
   );
 
   return (
-    <main className="bg-body flex min-h-screen flex-col text-white">
+    <main className="flex min-h-screen flex-col bg-body text-white">
       {game.type == "game" ? (
         <>
           <div className="grid-rows grid w-full p-4 text-center align-middle xl:hidden">
@@ -153,12 +153,12 @@ export default async function Page({ params }: Props) {
       <ImageCarousel screenshots={game.screenshots} />
       <div className="mt-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
         {/* Price History */}
-        <div className="h-full w-full bg-slate-900 p-5">
-          <h2 className="mb-2 text-2xl text-cyan-500">Price History</h2>
+        <div className="bg-secondary-background h-full w-full p-5">
+          <h2 className="text-identity-default mb-2 text-2xl">Price History</h2>
           {priceHistory.length > 1 && !priceIsAllNull ? (
             <HistoricalPriceChart data={priceHistory} />
           ) : (
-            <p className="text-center text-slate-400">
+            <p className="text-center text-muted-foreground">
               No price history to display.
             </p>
           )}
@@ -171,18 +171,20 @@ export default async function Page({ params }: Props) {
         {/* Right Bar */}
         <div className="flex h-full w-full basis-1/3 flex-col gap-5">
           {/* Price */}
-          <div className="h-full w-full bg-slate-900 p-5">
-            <h2 className="mb-2 text-2xl text-cyan-500">Price</h2>
+          <div className="bg-secondary-background h-full w-full p-5">
+            <h2 className="text-identity-default mb-2 text-2xl">Price</h2>
             {!priceIsAllNull && (
-              <h3 className="text-lg text-cyan-500">Current Price</h3>
+              <h3 className="text-identity-default text-lg">Current Price</h3>
             )}
             <PriceDisplay prices={game.prices} />
             {!priceIsAllNull && (
               <>
-                <h3 className="text-lg text-cyan-500">Historical Low</h3>
+                <h3 className="text-identity-default text-lg">
+                  Historical Low
+                </h3>
                 <div className="flex h-12 flex-row items-center justify-end rounded-lg p-1 text-right text-sm">
                   {historicalLow != null ? (
-                    <span className="bg-slate-300/10 p-1">
+                    <span className="bg-muted p-1 text-primary">
                       {"$" + (historicalLow / 100).toFixed(2)}
                     </span>
                   ) : (
@@ -193,11 +195,11 @@ export default async function Page({ params }: Props) {
             )}
           </div>
           {/* Reviews */}
-          <div className="h-full w-full bg-slate-900 p-5">
-            <h2 className="mb-2 text-2xl text-cyan-500">Reviews</h2>
-            <p className="text-right">
+          <div className="bg-secondary-background h-full w-full p-5">
+            <h2 className="text-identity-default mb-2 text-2xl">Reviews</h2>
+            <p className="text-right text-primary">
               Total Reviews:{" "}
-              <span className="text-slate-400">
+              <span className="text-muted-foreground">
                 {game?.total_reviews != 0 && game?.total_reviews != null
                   ? (game?.total_reviews)
                       .toString()
@@ -205,9 +207,9 @@ export default async function Page({ params }: Props) {
                   : "No reviews yet"}
               </span>
             </p>
-            <p className="text-right">
+            <p className="text-right text-primary">
               Positive reviews:{" "}
-              <span className="text-slate-400">
+              <span className="text-muted-foreground">
                 {game?.total_reviews != null &&
                 game?.total_positive_reviews != null &&
                 game?.total_reviews != 0 &&
@@ -220,14 +222,17 @@ export default async function Page({ params }: Props) {
               </span>
             </p>
           </div>
-          <div className="h-full w-full bg-slate-900 p-5">
-            <h2 className="mb-2 text-2xl text-cyan-500">Popular Tags</h2>
+          {/* Tags */}
+          <div className="bg-secondary-background h-full w-full p-5">
+            <h2 className="text-identity-default mb-2 text-2xl">
+              Popular Tags
+            </h2>
             {game.apps_tags.length > 0 ? (
               game.apps_tags.map((tag) => (
                 <Tag key={tag.tag_id + "tk"} data={tag.tags} />
               ))
             ) : (
-              <p className="text-right text-slate-400">
+              <p className="text-right text-muted-foreground">
                 This app does not have any tags associated
               </p>
             )}

@@ -36,8 +36,8 @@ export default function ImageCarousel({ screenshots }: props) {
     <>
       {screenshots.length > 0 && (
         <div className="mt-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
-          <div className="h-full w-full bg-slate-900 p-5">
-            <h2 className="mb-2 text-2xl text-cyan-500">Screenshots</h2>
+          <div className="bg-secondary-background h-full w-full p-5">
+            <h2 className="text-identity-default mb-2 text-2xl">Screenshots</h2>
             <Carousel plugins={[plugin.current]}>
               <CarouselContent>
                 {/* POC for video content */}
@@ -52,7 +52,7 @@ export default function ImageCarousel({ screenshots }: props) {
                 {screenshots.map((image) => {
                   return (
                     <CarouselItem
-                      className="5xl:basis-1/5 4xl:basis-1/6 basis-5/6 md:basis-2/4 lg:basis-1/3 2xl:basis-1/4 3xl:basis-1/3"
+                      className="basis-5/6 md:basis-2/4 lg:basis-1/3 2xl:basis-1/4 3xl:basis-1/3 4xl:basis-1/6 5xl:basis-1/5"
                       key={image.id + "sid"}
                     >
                       <Dialog>

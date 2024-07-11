@@ -6,13 +6,13 @@ import { signIn, signOut } from "next-auth/react";
 export function SignIn() {
   return (
     <button
-      className="group rounded-full border-2 border-cyan-500 px-1 py-1 font-semibold text-black no-underline hover:border-cyan-300 active:border-cyan-700"
+      className="border-identity-default hover:border-identity-hover active:border-identity-focus group rounded-full border-2 px-1 py-1 font-semibold text-primary no-underline"
       onClick={() => signIn("", { callbackUrl: "/authCheck" })}
     >
       <div className="sr-only">Sign In</div>
       <User
         size={32}
-        className="text-cyan-500 group-hover:text-cyan-300 group-active:text-cyan-700"
+        className="text-identity-default group-hover:text-identity-hover group-active:text-identity-focus"
       />
     </button>
   );
@@ -21,7 +21,7 @@ export function SignIn() {
 export function SignOut() {
   return (
     <button
-      className="block w-full px-4 py-3 text-left text-sm text-primary hover:text-cyan-300 active:border-cyan-700"
+      className="hover:text-identity-hover active:border-identity-focus block w-full px-4 py-3 text-left text-sm text-primary"
       onClick={() => signOut()}
     >
       Sign Out

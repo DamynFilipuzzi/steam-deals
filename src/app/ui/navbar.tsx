@@ -28,7 +28,7 @@ export default async function Navbar() {
           alt="Steam Deals Site Logo"
           className="p-1"
         />
-        <h1 className="hidden font-medium text-cyan-500 sm:flex sm:text-3xl">
+        <h1 className="text-identity-default hidden font-medium sm:flex sm:text-3xl">
           Steam Deals
         </h1>
       </a>
@@ -40,23 +40,23 @@ export default async function Navbar() {
             <span className="hidden sm:inline">Steam</span> Stats
             <ChevronDown className=" inline duration-200 group-hover:rotate-180" />
           </button>
-          <div className="absolute left-0 z-10 hidden min-w-36 border-2 border-t-0 border-slate-500/20 bg-background shadow-lg group-hover:block sm:w-full">
+          <div className="absolute left-0 z-10 hidden min-w-32 border-2 border-t-0 border-border bg-background shadow-lg group-hover:block sm:w-full">
             <Link
               href={"/stats"}
-              className="block px-4 py-3 text-sm text-primary hover:text-cyan-300 active:border-cyan-700"
+              className="hover:text-identity-hover active:text-identity-focus block px-4 py-3 text-sm text-primary"
             >
               Steam Stats
             </Link>
             <Separator />
             <Link
               href={"/stats/mostplayed"}
-              className="block px-4 py-3 text-sm text-primary hover:text-cyan-300 active:border-cyan-700"
+              className="hover:text-identity-hover active:text-identity-focus block px-4 py-3 text-sm text-primary"
             >
               Most Played
             </Link>
             <Link
               href={"/stats/topsellers"}
-              className="block px-4 py-3 text-sm text-primary hover:text-cyan-300 active:border-cyan-700"
+              className="hover:text-identity-hover active:text-identity-focus block px-4 py-3 text-sm text-primary"
             >
               Top Selling
             </Link>
@@ -93,7 +93,7 @@ export default async function Navbar() {
                 )}
               </div>
               {/* dropdown */}
-              <div className="absolute right-0 z-10 hidden min-w-36 border-2 border-t-0 border-slate-500/20 bg-background shadow-lg group-hover:block sm:w-full">
+              <div className="absolute right-0 z-10 hidden min-w-36 border-2 border-t-0 border-border bg-background shadow-lg group-hover:block sm:w-full">
                 <SignOut />
               </div>
             </div>

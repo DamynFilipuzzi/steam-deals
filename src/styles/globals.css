@@ -9,6 +9,7 @@
     --body: 0, 0%, 100%;
 
     --background: 0 0% 80%;
+    --secondary-background: 0 0% 90%;
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -37,12 +38,17 @@
     --ring: 222.2 84% 4.9%;
 
     --radius: 0.5rem;
+
+    --identity: 193 82% 31%;
+    --identity-hover: 189 94% 43%;
+    --identity-focus: 187 92% 69%;
   }
 
   .dark {
     --body: 0, 0%, 0%;
 
     --background: 222.2 84% 4.9%;
+    --secondary-background: 223 84% 5%;
     --foreground: 210 40% 98%;
 
     --card: 222.2 84% 4.9%;
@@ -69,6 +75,10 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+    --identity: 189 94% 43%;
+    --identity-hover: 187 92% 69%;
+    --identity-focus: 193 82% 31%;
   }
 }
 
@@ -84,14 +94,21 @@ input[type="number"] {
 }
 
 /* About This Game - Text */
-.desc-header {
-  --tw-text-opacity: 1;
-  color: rgb(6 182 212 / var(--tw-text-opacity));
+.desc_header_dark {
   font-size: 1.5rem /* 24px */;
   line-height: 2rem /* 32px */;
   margin-bottom: 5%;
   border-bottom: 3px solid;
-  border-image: linear-gradient(to right, #06b6d4, #0f172a) 1;
+  border-image: linear-gradient(to right, #06b6d4, #020817) 1;
+}
+
+/* About This Game - Text */
+.desc_header_light {
+  font-size: 1.5rem /* 24px */;
+  line-height: 2rem /* 32px */;
+  margin-bottom: 5%;
+  border-bottom: 3px solid;
+  border-image: linear-gradient(to right, #0e7490, #e6e6e6) 1;
 }
 
 .game_area_description h2 {
@@ -100,16 +117,33 @@ input[type="number"] {
 }
 
 /* Headers - steam tag */
-.game_area_description .bb_tag {
+.game_area_description_dark .bb_tag {
   --tw-text-opacity: 1;
   color: rgb(6 182 212 / var(--tw-text-opacity));
 }
 
-.game_area_description a {
+/* Headers - steam tag */
+.game_area_description_light .bb_tag {
+  --tw-text-opacity: 1;
+  color: rgb(14 116 144 / var(--tw-text-opacity));
+}
+
+.game_area_description_dark a {
   color: rgb(6 182 212 / var(--tw-text-opacity));
 }
 
-.game_area_description img {
+.game_area_description_light a {
+  color: rgb(14 116 144 / var(--tw-text-opacity));
+}
+
+.game_area_description_dark img {
+  margin-bottom: 2%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.game_area_description_light img {
   margin-bottom: 2%;
   display: block;
   margin-left: auto;

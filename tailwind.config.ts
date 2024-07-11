@@ -40,6 +40,11 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
+        identity: {
+          default: "hsl(var(--identity))",
+          hover: "hsl(var(--identity-hover))",
+          focus: "hsl(var(--identity-focus))",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
@@ -49,6 +54,7 @@ const config = {
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          background: "hsl(var(--secondary-background))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",

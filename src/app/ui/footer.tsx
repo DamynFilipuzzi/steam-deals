@@ -3,11 +3,11 @@ export default function Footer() {
     // <footer className="bot-0 z-50 flex h-24 w-full flex-row items-center justify-between bg-background px-6 py-3 shadow-md ">
     <footer className="grid-rows grid w-full place-content-center justify-items-center gap-6 bg-background lg:grid-cols-3">
       <div className="flex flex-col p-2">
-        <p className="p-2 text-sm text-slate-400">
+        <p className="p-2 text-sm text-muted-foreground">
           Steam Deals is a hobby project and is not affiliated with Valve or
           Steam.
         </p>
-        <p className="p-2 text-sm text-slate-400">
+        <p className="p-2 text-sm text-muted-foreground">
           Steam and the Steam logo are trademarks of Valve Corporation. All
           other trademarks are property of their respective owners.
         </p>

@@ -74,7 +74,7 @@ function PaginationNumber({
   isActive: boolean;
 }) {
   const className = clsx(
-    "flex h-10 w-10 items-center justify-center text-sm border",
+    "flex h-10 w-10 items-center justify-center text-sm border bg-background text-primary",
     {
       "rounded-l-md": position === "first" || position === "single",
       "rounded-r-md": position === "last" || position === "single",
@@ -109,7 +109,7 @@ function PaginationArrow({
   ariaLabel: string;
 }) {
   const className = clsx(
-    "flex h-10 w-10 items-center justify-center rounded-md border",
+    "flex h-10 w-10 items-center justify-center rounded-md border bg-background text-primary",
     {
       "pointer-events-none text-gray-300": isDisabled,
       "hover:bg-gray-700": !isDisabled,

@@ -79,7 +79,7 @@ export default async function Home({
   const tagsQuery = await api.tags.getAllTags.query();
 
   return (
-    <main className="bg-body flex min-h-screen flex-col items-center justify-center text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center bg-body text-white">
       <div className="my-5 flex w-5/6 flex-row justify-center gap-4 xl:w-2/3">
         <Search placeholder="Search apps..." />
         <TagsFilter data={tagsQuery} />
@@ -89,7 +89,7 @@ export default async function Home({
           <FiltersDropdownMenu maxPrice={maxPrice._max.discount_price} />
         )}
       </div>
-      <div className="grid grid-cols-2 items-center justify-center gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-8">
+      <div className="grid grid-cols-2 items-center justify-center gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 3xl:grid-cols-8">
         {appsQuery.map((game) => {
           return (
             <Link
@@ -97,7 +97,7 @@ export default async function Home({
               href={`/game/${game.steam_id}`}
               className="text-center"
             >
-              <div className="relative flex w-44 flex-col justify-between rounded-lg border-2 border-slate-700/25 bg-slate-700/25 transition duration-100 ease-in hover:border-cyan-500 active:border-cyan-700">
+              <div className="hover:border-identity-hover active:border-identity-focus bg-secondary-background relative flex w-44 flex-col justify-between rounded-lg border-2 border-border text-primary transition duration-100 ease-in">
                 <div className="line-clamp-2 h-12 rounded-t-md bg-background px-1 text-primary">
                   {game.title}
                 </div>
@@ -106,7 +106,7 @@ export default async function Home({
                     <img
                       src={`https://steamcdn-a.akamaihd.net/steam/apps/${game.steam_id}/library_600x900.jpg`}
                       alt={`${game.title} game image`}
-                      className="mx-auto h-64"
+                      className="mx-auto min-h-[259.2px] w-fit"
                     />
                   ) : (
                     <img
