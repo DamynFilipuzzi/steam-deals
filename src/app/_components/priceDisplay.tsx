@@ -47,7 +47,11 @@ export default function PriceDisplay({
               price.discount_price != null &&
               price.discount_price != price.original_price && (
                 <div className="flex flex-row">
-                  <p className={clsx(`bg-green-600`, { "p-1": !noPadding })}>
+                  <p
+                    className={clsx(`bg-green-600 text-white`, {
+                      "p-1": !noPadding,
+                    })}
+                  >
                     -
                     {(
                       ((price.original_price - price.discount_price) /

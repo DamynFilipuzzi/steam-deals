@@ -146,15 +146,15 @@ export default async function Page({ params }: Props) {
         </>
       ) : (
         <div className="grid-rows mt-5 grid w-full p-4 text-center align-middle">
-          <h1 className="text-2xl">{game?.title}</h1>
+          <h1 className="text-2xl text-primary">{game?.title}</h1>
         </div>
       )}
       {/* Image Carousel */}
       <ImageCarousel screenshots={game.screenshots} />
       <div className="mt-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
         {/* Price History */}
-        <div className="bg-secondary-background h-full w-full p-5">
-          <h2 className="text-identity-default mb-2 text-2xl">Price History</h2>
+        <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+          <h2 className="mb-2 text-2xl text-identity-default">Price History</h2>
           {priceHistory.length > 1 && !priceIsAllNull ? (
             <HistoricalPriceChart data={priceHistory} />
           ) : (
@@ -171,15 +171,15 @@ export default async function Page({ params }: Props) {
         {/* Right Bar */}
         <div className="flex h-full w-full basis-1/3 flex-col gap-5">
           {/* Price */}
-          <div className="bg-secondary-background h-full w-full p-5">
-            <h2 className="text-identity-default mb-2 text-2xl">Price</h2>
+          <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+            <h2 className="mb-2 text-2xl text-identity-default">Price</h2>
             {!priceIsAllNull && (
-              <h3 className="text-identity-default text-lg">Current Price</h3>
+              <h3 className="text-lg text-identity-default">Current Price</h3>
             )}
             <PriceDisplay prices={game.prices} />
             {!priceIsAllNull && (
               <>
-                <h3 className="text-identity-default text-lg">
+                <h3 className="text-lg text-identity-default">
                   Historical Low
                 </h3>
                 <div className="flex h-12 flex-row items-center justify-end rounded-lg p-1 text-right text-sm">
@@ -195,8 +195,8 @@ export default async function Page({ params }: Props) {
             )}
           </div>
           {/* Reviews */}
-          <div className="bg-secondary-background h-full w-full p-5">
-            <h2 className="text-identity-default mb-2 text-2xl">Reviews</h2>
+          <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+            <h2 className="mb-2 text-2xl text-identity-default">Reviews</h2>
             <p className="text-right text-primary">
               Total Reviews:{" "}
               <span className="text-muted-foreground">
@@ -223,8 +223,8 @@ export default async function Page({ params }: Props) {
             </p>
           </div>
           {/* Tags */}
-          <div className="bg-secondary-background h-full w-full p-5">
-            <h2 className="text-identity-default mb-2 text-2xl">
+          <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+            <h2 className="mb-2 text-2xl text-identity-default">
               Popular Tags
             </h2>
             {game.apps_tags.length > 0 ? (
@@ -237,9 +237,10 @@ export default async function Page({ params }: Props) {
               </p>
             )}
           </div>
+          {/* Base Game - only appears if app is DLC */}
           {game.dlc_steam_id != null && (
-            <div className="h-full w-full bg-slate-900 p-5">
-              <h2 className="mb-2 text-2xl text-cyan-500">Base Game</h2>
+            <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+              <h2 className="mb-2 text-2xl text-identity-default">Base Game</h2>
               <div>
                 <Link href={`/game/${game.dlc_steam_id}`}>
                   <img

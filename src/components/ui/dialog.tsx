@@ -69,7 +69,7 @@ const DialogContentCustomClose = React.forwardRef<
     >
       {children}
       <DialogPrimitive.Close className="absolute right-8 top-8 rounded-sm opacity-90 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
-        <X className="h-8 w-8 rounded-lg border-2 border-cyan-500 bg-black" />
+        <X className="h-8 w-8 rounded-lg border-2 bg-background" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>

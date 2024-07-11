@@ -18,10 +18,10 @@ export default async function Page() {
   const topSellers = await api.apps.topSellersSample.query();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-5 bg-black text-white">
+    <main className="flex min-h-screen flex-col items-center justify-center gap-5 bg-body text-primary">
       <h1 className="pt-5 text-3xl">Steam Stats</h1>
       <div className="flex flex-col gap-5 pb-5 xl:flex-row">
-        <Card className="shrink-0 basis-1/2 border-2 border-solid border-slate-300/20">
+        <Card className="shrink-0 basis-1/2 border-2 border-solid border-border bg-secondary-background">
           <CardHeader>
             <CardTitle>Top Selling</CardTitle>
             <CardDescription>
@@ -37,7 +37,7 @@ export default async function Page() {
             </Link>
           </CardFooter>
         </Card>
-        <Card className="shrink-0 basis-1/2 border-2 border-solid border-slate-300/20">
+        <Card className="shrink-0 basis-1/2 border-2 border-solid border-border bg-secondary-background">
           <CardHeader>
             <CardTitle>Most Played</CardTitle>
             <CardDescription>

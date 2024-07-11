@@ -72,7 +72,7 @@ export default function DLCTable({ appDLC }: DLCProp) {
     <>
       {appDLC.length > 0 && (
         <div className="mb-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
-          <div className="h-full w-full bg-slate-900 p-5">
+          <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
             <h2 className="mb-2 text-2xl text-cyan-500">DLC</h2>
             <Table className="bg-background">
               <TableHeader>
@@ -97,7 +97,7 @@ export default function DLCTable({ appDLC }: DLCProp) {
                           alt={`DLC - ${dlc.title} capsule image`}
                         />
                       </TableCell>
-                      <TableCell className="text-xs md:text-sm">
+                      <TableCell className="text-xs text-primary md:text-sm">
                         {dlc.title}
                       </TableCell>
                       <TableCell>
