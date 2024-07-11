@@ -41,16 +41,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          `dark min-h-screen bg-background font-sans antialiased ${fontSans.variable}`,
+          `min-h-screen bg-background font-sans antialiased ${fontSans.variable}`,
         )}
       >
         <TRPCReactProvider>
-          <Navbar />
-          <Providers>{children}</Providers>
-          <Footer />
+          <Providers>
+            <Navbar />
+            {children}
+            <Footer />
+          </Providers>
         </TRPCReactProvider>
         <SpeedInsights />
         <Analytics />

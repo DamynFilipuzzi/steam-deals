@@ -34,7 +34,7 @@ export function TopSellingTable({ games }: Props) {
   return (
     <Table className="bg-background">
       <TableHeader>
-        <TableRow>
+        <TableRow className="hover:bg-background">
           <TableHead className="w-[10px] text-center">Rank</TableHead>
           <TableHead className="hidden w-[100px] lg:inline-block lg:w-[140px]"></TableHead>
           <TableHead className="text-left">Title</TableHead>

@@ -94,7 +94,7 @@ export default async function Page({ params }: Props) {
   );
 
   return (
-    <main className="flex min-h-screen flex-col bg-black text-white">
+    <main className="flex min-h-screen flex-col bg-body text-white">
       {game.type == "game" ? (
         <>
           <div className="grid-rows grid w-full p-4 text-center align-middle xl:hidden">
@@ -146,19 +146,19 @@ export default async function Page({ params }: Props) {
         </>
       ) : (
         <div className="grid-rows mt-5 grid w-full p-4 text-center align-middle">
-          <h1 className="text-2xl">{game?.title}</h1>
+          <h1 className="text-2xl text-primary">{game?.title}</h1>
         </div>
       )}
       {/* Image Carousel */}
       <ImageCarousel screenshots={game.screenshots} />
       <div className="mt-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
         {/* Price History */}
-        <div className="h-full w-full bg-slate-900 p-5">
-          <h2 className="mb-2 text-2xl text-cyan-500">Price History</h2>
+        <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+          <h2 className="mb-2 text-2xl text-identity-default">Price History</h2>
           {priceHistory.length > 1 && !priceIsAllNull ? (
             <HistoricalPriceChart data={priceHistory} />
           ) : (
-            <p className="text-center text-slate-400">
+            <p className="text-center text-muted-foreground">
               No price history to display.
             </p>
           )}
@@ -171,18 +171,20 @@ export default async function Page({ params }: Props) {
         {/* Right Bar */}
         <div className="flex h-full w-full basis-1/3 flex-col gap-5">
           {/* Price */}
-          <div className="h-full w-full bg-slate-900 p-5">
-            <h2 className="mb-2 text-2xl text-cyan-500">Price</h2>
+          <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+            <h2 className="mb-2 text-2xl text-identity-default">Price</h2>
             {!priceIsAllNull && (
-              <h3 className="text-lg text-cyan-500">Current Price</h3>
+              <h3 className="text-lg text-identity-default">Current Price</h3>
             )}
             <PriceDisplay prices={game.prices} />
             {!priceIsAllNull && (
               <>
-                <h3 className="text-lg text-cyan-500">Historical Low</h3>
+                <h3 className="text-lg text-identity-default">
+                  Historical Low
+                </h3>
                 <div className="flex h-12 flex-row items-center justify-end rounded-lg p-1 text-right text-sm">
                   {historicalLow != null ? (
-                    <span className="bg-slate-300/10 p-1">
+                    <span className="bg-muted p-1 text-primary">
                       {"$" + (historicalLow / 100).toFixed(2)}
                     </span>
                   ) : (
@@ -193,11 +195,11 @@ export default async function Page({ params }: Props) {
             )}
           </div>
           {/* Reviews */}
-          <div className="h-full w-full bg-slate-900 p-5">
-            <h2 className="mb-2 text-2xl text-cyan-500">Reviews</h2>
-            <p className="text-right">
+          <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+            <h2 className="mb-2 text-2xl text-identity-default">Reviews</h2>
+            <p className="text-right text-primary">
               Total Reviews:{" "}
-              <span className="text-slate-400">
+              <span className="text-muted-foreground">
                 {game?.total_reviews != 0 && game?.total_reviews != null
                   ? (game?.total_reviews)
                       .toString()
@@ -205,9 +207,9 @@ export default async function Page({ params }: Props) {
                   : "No reviews yet"}
               </span>
             </p>
-            <p className="text-right">
+            <p className="text-right text-primary">
               Positive reviews:{" "}
-              <span className="text-slate-400">
+              <span className="text-muted-foreground">
                 {game?.total_reviews != null &&
                 game?.total_positive_reviews != null &&
                 game?.total_reviews != 0 &&
@@ -220,21 +222,25 @@ export default async function Page({ params }: Props) {
               </span>
             </p>
           </div>
-          <div className="h-full w-full bg-slate-900 p-5">
-            <h2 className="mb-2 text-2xl text-cyan-500">Popular Tags</h2>
+          {/* Tags */}
+          <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+            <h2 className="mb-2 text-2xl text-identity-default">
+              Popular Tags
+            </h2>
             {game.apps_tags.length > 0 ? (
               game.apps_tags.map((tag) => (
                 <Tag key={tag.tag_id + "tk"} data={tag.tags} />
               ))
             ) : (
-              <p className="text-right text-slate-400">
+              <p className="text-right text-muted-foreground">
                 This app does not have any tags associated
               </p>
             )}
           </div>
+          {/* Base Game - only appears if app is DLC */}
           {game.dlc_steam_id != null && (
-            <div className="h-full w-full bg-slate-900 p-5">
-              <h2 className="mb-2 text-2xl text-cyan-500">Base Game</h2>
+            <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+              <h2 className="mb-2 text-2xl text-identity-default">Base Game</h2>
               <div>
                 <Link href={`/game/${game.dlc_steam_id}`}>
                   <img
@@ -249,7 +255,7 @@ export default async function Page({ params }: Props) {
       </div>
       {/* DLC */}
       <DLCTable appDLC={game?.dlc} />
-      <div className="mb-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
+      <div className="mb-5 justify-center gap-4 px-5 xl:flex-row xl:px-80">
         <iframe
           title={`${game.title} - Link to steam store page`}
           src={`https://store.steampowered.com/widget/${game.steam_id}`}

@@ -58,18 +58,18 @@ export default function Search({ placeholder }: { placeholder: string }) {
       <input
         id="search"
         ref={searchRef}
-        className="placeholder:text-white-500 max-w peer block w-full rounded-md border border-gray-600 bg-slate-800 px-10 py-[9px] text-sm text-white"
+        className="max-w peer block w-full rounded-md border border-border bg-background px-10 py-[9px] text-sm text-primary placeholder:text-muted-foreground"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
         defaultValue={searchParams.get("query")?.toString()}
       />
-      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-400 peer-focus:text-gray-300" />
+      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-primary peer-focus:text-muted-foreground" />
       <div ref={clearRef} hidden>
         <X
           onClick={clearSearch}
-          className="absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 cursor-pointer text-gray-400 peer-focus:text-gray-300"
+          className="peer-focus:text--muted-foreground absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 cursor-pointer text-primary"
         />
       </div>
     </div>
