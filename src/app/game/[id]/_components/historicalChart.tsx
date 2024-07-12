@@ -68,11 +68,15 @@ export function HistoricalPriceChart({ data }: PriceHistoryProps) {
     }
     const dataFormated = [];
     for (let i = 0; i < daysBetween.length; i++) {
-      for (let j = 0; j < daysBetween[i].dates.length; j++) {
-        dataFormated.push({
-          date: daysBetween[i]?.dates[j],
-          price: pricesArray[i]?.price,
-        });
+      const days = daysBetween[i]?.dates;
+      if (days != undefined) {
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
+        for (let j = 0; j < days.length; j++) {
+          dataFormated.push({
+            date: days[j],
+            price: pricesArray[i]?.price,
+          });
+        }
       }
     }
     return dataFormated;
