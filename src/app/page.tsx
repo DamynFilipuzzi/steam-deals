@@ -12,6 +12,7 @@ import PriceDisplay from "./_components/priceDisplay";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "~/server/auth";
 import { redirect } from "next/navigation";
+import OwnedAppPopover from "./_components/ownedAppPopover";
 
 export default async function Home({
   searchParams,
@@ -97,7 +98,7 @@ export default async function Home({
               href={`/game/${game.steam_id}`}
               className="text-center"
             >
-              <div className="hover:border-identity-hover active:border-identity-focus bg-secondary-background relative flex w-44 flex-col justify-between rounded-lg border-2 border-border text-primary transition duration-100 ease-in">
+              <div className="relative flex w-44 flex-col justify-between rounded-lg border-2 border-border bg-secondary-background text-primary transition duration-100 ease-in hover:border-identity-hover active:border-identity-focus">
                 <div className="line-clamp-2 h-12 rounded-t-md bg-background px-1 text-primary">
                   {game.title}
                 </div>
@@ -118,12 +119,13 @@ export default async function Home({
 
                   {game.users_apps.map((userApp) => {
                     return (
-                      <div
-                        key={userApp.steam_id + "UAID"}
-                        className="absolute -left-14 top-4 w-full -rotate-45 border-2 border-white/85 bg-green-600"
-                      >
-                        Owned
-                      </div>
+                      // <div
+                      //   key={userApp.steam_id + "UAID"}
+                      //   className="absolute -left-14 top-4 w-full -rotate-45 border-2 border-white/85 bg-green-600"
+                      // >
+                      //   Owned
+                      // </div>
+                      <OwnedAppPopover key={userApp.steam_id + "UAID"} />
                     );
                   })}
                 </div>
