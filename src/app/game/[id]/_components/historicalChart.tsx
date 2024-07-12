@@ -59,7 +59,7 @@ export function HistoricalPriceChart({ data }: PriceHistoryProps) {
     data.map((price) => {
       pricesArray.push({ price: price.discount_price });
     });
-    // get today date, calculate diff and push to array as well
+    // get today date, calculate diff and push to array
     const lastDate = data[data.length - 1]?.valid_from;
     if (lastDate != null && lastDate != undefined) {
       daysBetween.push({
@@ -114,7 +114,6 @@ export function HistoricalPriceChart({ data }: PriceHistoryProps) {
             name="Date"
             type="category"
             axisLine={false}
-            interval={10}
             tick={{ fill: "#94a3b8" }}
             tickMargin={10}
           />
