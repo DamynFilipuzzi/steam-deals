@@ -8,20 +8,29 @@ import Link from "next/link";
 export default async function UsersWishlistTable() {
   const session = await getServerSession(getAuthOptions());
 
-  async function upsertUsersWishlist(steamIds: number[], userId: string) {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    steamIds.map(async (steamId) => {
-      // Check if UsersGames already exists.
-      const uaExists = !!(await db.usersWishlist.count({
+  async function upsertUsersWishlist(
+    steamIds: number[],
+    userId: string,
+  ): Promise<boolean> {
+    if (userId === undefined) {
+      throw new Error("Invalid userId");
+    }
+
+    // Map steamIds to promises and use Promise.all to wait for all of them to complete
+    const upsertPromises = steamIds.map(async (steamId) => {
+      // Check if UsersWishlist already exists
+      const uaExists = await db.usersWishlist.count({
         where: { user_id: userId, steam_id: steamId },
-      }));
+      });
+
       if (!uaExists) {
-        // Else Check if app exists
-        const appExists = !!(await db.apps.count({
+        // Check if app exists
+        const appExists = await db.apps.count({
           where: { steam_id: steamId },
-        }));
-        if (appExists && userId != undefined) {
-          // if true then store UsersGames
+        });
+
+        if (appExists) {
+          // If true, then store UsersWishlist
           await db.usersWishlist.create({
             data: { steam_id: steamId, user_id: userId },
           });
@@ -30,6 +39,11 @@ export default async function UsersWishlistTable() {
         }
       }
     });
+
+    // Wait for all upsert operations to complete
+    await Promise.all(upsertPromises);
+
+    return true;
   }
 
   if (!session) {

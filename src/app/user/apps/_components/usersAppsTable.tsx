@@ -30,45 +30,49 @@ interface AppsResponse {
 export default async function UsersAppsTable() {
   const session = await getServerSession(getAuthOptions());
 
-  async function upsertUsersApps(userId: string) {
-    // updates or inserts users games. connects games from users steam library to users account
-    // get users games
-    if (userId != null) {
-      const response = await fetch(
-        `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${process.env.STEAM_SECRET!}&steamid=${userId}`,
-      );
-      const apps: AppsResponse = (await response.json()) as AppsResponse;
-      console.log("Games Count: ", apps.response?.game_count);
-      // this only works locally
-      if (
-        (apps.response != null || apps.response != undefined) &&
-        (apps.response.games != null || apps.response.games != undefined)
-      ) {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        apps.response.games.map(async (app) => {
-          // Check if UsersGames already exists.
-          const uaExists = !!(await db.usersApps.count({
-            where: { user_id: userId, steam_id: app.appid },
-          }));
-          if (!uaExists) {
-            // Else Check if app exists
-            const appExists = !!(await db.apps.count({
-              where: { steam_id: app.appid },
-            }));
-            if (appExists && userId != undefined) {
-              // if true then store UsersGames
-              await db.usersApps.create({
-                data: { steam_id: app.appid, user_id: userId },
-              });
-            } else {
-              console.log("DNE: ", app.appid);
-            }
-          }
-        });
-      } else {
-        console.error("Something Went wrong, or User has no games");
-      }
+  async function upsertUsersApps(userId: string): Promise<boolean> {
+    if (userId === undefined) {
+      throw new Error("Invalid userId");
     }
+    // Fetch user's games
+    const response = await fetch(
+      `https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/?key=${process.env.STEAM_SECRET!}&steamid=${userId}`,
+    );
+    const apps: AppsResponse = (await response.json()) as AppsResponse;
+    console.log("Games Count: ", apps.response?.game_count);
+    // Check if the response is valid and contains games
+    if (apps.response?.games) {
+      // Map games to promises and use Promise.all to wait for all of them to complete
+      const upsertPromises = apps.response.games.map(async (app) => {
+        // Check if UsersApps already exists
+        const uaExists = await db.usersApps.count({
+          where: { user_id: userId, steam_id: app.appid },
+        });
+
+        if (!uaExists) {
+          // Check if app exists
+          const appExists = await db.apps.count({
+            where: { steam_id: app.appid },
+          });
+
+          if (appExists) {
+            // If true, then store UsersApps
+            await db.usersApps.create({
+              data: { steam_id: app.appid, user_id: userId },
+            });
+          } else {
+            console.log("DNE: ", app.appid);
+          }
+        }
+      });
+
+      // Wait for all upsert operations to complete
+      await Promise.all(upsertPromises);
+    } else {
+      console.error("Something went wrong, or user has no games");
+    }
+
+    return true;
   }
 
   if (!session) {
