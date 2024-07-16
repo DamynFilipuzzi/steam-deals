@@ -1,8 +1,9 @@
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "~/server/auth";
-import { LoaderCircle } from "lucide-react";
 import { db } from "~/server/db";
+import { api } from "~/trpc/server";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 
 interface AppsResponse {
   response:
@@ -26,62 +27,8 @@ interface AppsResponse {
     | undefined;
 }
 
-interface SteamUser {
-  id: string;
-  name?: string | null | undefined;
-  email?: string | null | undefined;
-  image?: string | null | undefined;
-  steam: {
-    steamid: string;
-    communityvisibilitystate: number;
-    profilestate: number;
-    personaname: string;
-    profileurl: string;
-    avatar: string;
-    avatarmedium: string;
-    avatarfull: string;
-    avatarhash: string;
-    lastlogoff: number;
-    personastate: number;
-    realname: string;
-    primaryclanid: string;
-    timecreated: number;
-    personastateflags: number;
-  };
-}
-
-export default async function Home() {
+export default async function UsersAppsTable() {
   const session = await getServerSession(getAuthOptions());
-  if (session != null) {
-    console.log("id: ", session?.user.steam);
-    await upsertUser(session.user);
-    await upsertUsersApps(session.user.steam.steamid);
-    redirect("/");
-  } else {
-    console.error("failed to retrieve session info");
-    // TODO: add toast to let user know an error occured
-    redirect("/");
-  }
-
-  async function upsertUser(user: SteamUser) {
-    // Upsert User
-    await db.user.upsert({
-      where: {
-        id: user.steam.steamid,
-      },
-      update: {
-        name: user.name,
-        email: user.email,
-        image: user.image,
-      },
-      create: {
-        id: user.steam.steamid,
-        name: user.name,
-        email: user.email,
-        image: user.image,
-      },
-    });
-  }
 
   async function upsertUsersApps(userId: string) {
     // updates or inserts users games. connects games from users steam library to users account
@@ -124,14 +71,25 @@ export default async function Home() {
     }
   }
 
-  return (
-    <main className="flex min-h-screen flex-row items-center justify-center bg-body text-primary">
-      <p className="mr-5 animate-pulse">
-        Retrieving your apps, this should only take about a minute...
-      </p>
-      <div className="flex animate-spin">
-        <LoaderCircle size={32} />
+  if (!session) {
+    console.error("failed to retrieve session info");
+    // TODO: add toast to let user know an error occurred
+    redirect("/");
+  } else {
+    console.log("id: ", session?.user.steam);
+    await upsertUsersApps(session.user.steam.steamid);
+    const userApps = await api.user.getUserApps.query(
+      session.user.steam.steamid,
+    );
+
+    return (
+      <div>
+        {userApps.map((app) => (
+          <Link href={`/game/${app.steam_id}`} key={app.apps.id}>
+            <div>{app.apps.title}</div>
+          </Link>
+        ))}
       </div>
-    </main>
-  );
+    );
+  }
 }
