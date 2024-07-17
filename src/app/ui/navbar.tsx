@@ -14,7 +14,7 @@ export default async function Navbar() {
   const session = await getServerSession(getAuthOptions());
 
   return (
-    <nav className="sticky top-0 z-50 flex h-16 w-full flex-row items-center justify-between bg-background px-6  shadow-md">
+    <nav className="sticky top-0 z-50 flex h-16 w-full flex-row items-center justify-between bg-background px-6 shadow-md">
       {/* Logo */}
       <a
         aria-label="Navigate to home page"
@@ -94,6 +94,19 @@ export default async function Navbar() {
               </div>
               {/* dropdown */}
               <div className="absolute right-0 z-10 hidden min-w-36 bg-background group-hover:block sm:w-full">
+                <Link
+                  href={"/user/apps"}
+                  className="block px-4 py-3 text-sm text-primary hover:bg-foreground/10 hover:text-identity-default active:text-identity-focus"
+                >
+                  Your Apps
+                </Link>
+                <Link
+                  href={"/user/wishlist"}
+                  className="block px-4 py-3 text-sm text-primary hover:bg-foreground/10 hover:text-identity-default active:text-identity-focus"
+                >
+                  Your Wish List
+                </Link>
+                <Separator />
                 <SignOut />
               </div>
             </div>

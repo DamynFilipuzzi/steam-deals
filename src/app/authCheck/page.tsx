@@ -59,6 +59,8 @@ export default async function Home() {
     redirect("/");
   } else {
     console.error("failed to retrieve session info");
+    // TODO: add toast to let user know an error occured
+    redirect("/");
   }
 
   async function upsertUser(user: SteamUser) {
@@ -123,7 +125,7 @@ export default async function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-row items-center justify-center bg-black text-white">
+    <main className="flex min-h-screen flex-row items-center justify-center bg-body text-primary">
       <p className="mr-5 animate-pulse">
         Retrieving your apps, this should only take about a minute...
       </p>

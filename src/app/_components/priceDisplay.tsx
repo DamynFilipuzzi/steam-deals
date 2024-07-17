@@ -37,6 +37,7 @@ export default function PriceDisplay({
     { "p-1": !noPadding },
     { "h-12": !noPadding },
   );
+  const classNameTooltip = clsx({ "hidden sm:inline": noPadding });
 
   return (
     <div className={className}>
@@ -87,7 +88,9 @@ export default function PriceDisplay({
                     <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger className="text-primary">
-                          Price Not Listed{" "}
+                          <span className={classNameTooltip}>
+                            Price Not Listed{" "}
+                          </span>
                           <QuestionMarkCircleIcon
                             className="inline text-primary"
                             height={22}

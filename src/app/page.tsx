@@ -4,7 +4,6 @@ import Link from "next/link";
 import { appsPerPages } from "~/server/api/routers/app";
 import Search from "./ui/search";
 import { formatCurrencyInt } from "~/lib/utils";
-
 import { api } from "~/trpc/server";
 import TagsFilter from "./_components/tagsFilter";
 import FiltersDropdownMenu from "./_components/filtersDropdownMenu";
@@ -12,6 +11,7 @@ import PriceDisplay from "./_components/priceDisplay";
 import { getServerSession } from "next-auth";
 import { getAuthOptions } from "~/server/auth";
 import { redirect } from "next/navigation";
+import OwnedAppPopover from "./_components/ownedAppPopover";
 
 export default async function Home({
   searchParams,
@@ -97,7 +97,7 @@ export default async function Home({
               href={`/game/${game.steam_id}`}
               className="text-center"
             >
-              <div className="hover:border-identity-hover active:border-identity-focus bg-secondary-background relative flex w-44 flex-col justify-between rounded-lg border-2 border-border text-primary transition duration-100 ease-in">
+              <div className="relative flex w-44 flex-col justify-between rounded-lg border-2 border-border bg-secondary-background/40 text-primary transition duration-100 ease-in hover:border-identity-hover active:border-identity-focus">
                 <div className="line-clamp-2 h-12 rounded-t-md bg-background px-1 text-primary">
                   {game.title}
                 </div>
@@ -117,14 +117,7 @@ export default async function Home({
                   )}
 
                   {game.users_apps.map((userApp) => {
-                    return (
-                      <div
-                        key={userApp.steam_id + "UAID"}
-                        className="absolute -left-14 top-4 w-full -rotate-45 border-2 border-white/85 bg-green-600"
-                      >
-                        Owned
-                      </div>
-                    );
+                    return <OwnedAppPopover key={userApp.steam_id + "UAID"} />;
                   })}
                 </div>
                 <PriceDisplay prices={game.prices} hasBackground={true} />

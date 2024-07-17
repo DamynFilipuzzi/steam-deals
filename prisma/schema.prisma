@@ -43,14 +43,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  users_Apps    UsersApps[]
+  id                String    @id @default(cuid())
+  name              String?
+  email             String?   @unique
+  emailVerified     DateTime?
+  image             String?
+  accounts          Account[]
+  sessions          Session[]
+  users_Apps        UsersApps[]
+  users_wishlist    UsersWishlist[]
 }
 
 model VerificationToken {
@@ -62,6 +63,15 @@ model VerificationToken {
 }
 
 model UsersApps {
+  user_id     String
+  steam_id    Int
+  users       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  apps        Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+
+  @@id([user_id, steam_id])
+}
+
+model UsersWishlist {
   user_id     String
   steam_id    Int
   users       User      @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -87,6 +97,7 @@ model Apps {
   prices                  Prices[]
   apps_tags               Apps_Tags[]
   users_apps              UsersApps[]
+  users_wishlist          UsersWishlist[]
   top_sellers             TopSellers?
   most_played             MostPlayed?
   screenshots             Screenshots[]
