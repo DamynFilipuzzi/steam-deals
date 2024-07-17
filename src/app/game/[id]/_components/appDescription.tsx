@@ -3,7 +3,6 @@
 import React, { useEffect } from "react";
 import { Button } from "~/components/ui/button";
 import { ChevronDoubleDownIcon } from "@heroicons/react/24/outline";
-import { useTheme } from "next-themes";
 
 type Props = {
   data: string | null | undefined;
@@ -11,8 +10,6 @@ type Props = {
 
 export function AppDescription({ data }: Props) {
   const [expandDescription, setExpandDescription] = React.useState(false);
-  const { resolvedTheme } = useTheme();
-
   const textRef = React.useRef() as React.MutableRefObject<HTMLInputElement>;
 
   function isOverflowActive(event: HTMLElement) {
