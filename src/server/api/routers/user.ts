@@ -8,7 +8,22 @@ export const userRouter = createTRPCRouter({
         user_id: input,
       },
       include: {
-        apps: true,
+        apps: {
+          select: {
+            id: true,
+            title: true,
+            prices: {
+              where: { valid_to: new Date("9999-12-31T00:00:00.000Z") },
+              select: {
+                id: true,
+                is_free: true,
+                discount_price: true,
+                original_price: true,
+                currency: true,
+              },
+            },
+          },
+        },
       },
     });
   }),
@@ -19,7 +34,22 @@ export const userRouter = createTRPCRouter({
         user_id: input,
       },
       include: {
-        apps: true,
+        apps: {
+          select: {
+            id: true,
+            title: true,
+            prices: {
+              where: { valid_to: new Date("9999-12-31T00:00:00.000Z") },
+              select: {
+                id: true,
+                is_free: true,
+                discount_price: true,
+                original_price: true,
+                currency: true,
+              },
+            },
+          },
+        },
       },
     });
   }),

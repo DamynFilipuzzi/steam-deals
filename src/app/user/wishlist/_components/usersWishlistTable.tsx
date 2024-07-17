@@ -5,6 +5,25 @@ import { db } from "~/server/db";
 import { api } from "~/trpc/server";
 import Link from "next/link";
 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui/table";
+import PriceDisplay from "~/app/_components/priceDisplay";
+
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
+
 export default async function UsersWishlistTable() {
   const session = await getServerSession(getAuthOptions());
 
@@ -113,12 +132,57 @@ export default async function UsersWishlistTable() {
     );
 
     return (
-      <div>
-        {userWishlist.map((app) => (
-          <Link href={`/game/${app.steam_id}`} key={app.apps.id}>
-            <div>{app.apps.title}</div>
-          </Link>
-        ))}
+      <div className="flex flex-col py-5">
+        <Card className="shrink-0 border-2 border-solid border-border bg-secondary-background">
+          <CardHeader>
+            <CardTitle>Your Wish List</CardTitle>
+            <CardDescription>
+              Your Steam Wishlist. Explore all the apps you&apos;ve added to
+              your wishlist
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Table className="bg-background">
+              <TableHeader>
+                <TableRow className="hover:bg-background">
+                  <TableHead className="hidden w-[100px] lg:inline-block lg:w-[140px]"></TableHead>
+                  <TableHead className="text-left">Title</TableHead>
+                  <TableHead className="text-right">Price</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {userWishlist.map((app) => (
+                  <TableRow key={app.apps.id}>
+                    <TableCell className="m-0 hidden w-fit p-1 lg:inline-block">
+                      <Link href={`/game/${app.steam_id}`}>
+                        <img
+                          src={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${app.steam_id}/capsule_sm_120.jpg`}
+                          alt={`${app.apps.title} game image`}
+                        />
+                      </Link>
+                    </TableCell>
+
+                    <TableCell className="text-left text-xs md:text-sm">
+                      <Link href={`/game/${app.steam_id}`}>
+                        {app.apps.title}
+                      </Link>
+                    </TableCell>
+
+                    <TableCell>
+                      <Link href={`/game/${app.steam_id}`}>
+                        <PriceDisplay
+                          prices={app.apps.prices}
+                          noPadding={true}
+                        />
+                      </Link>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </CardContent>
+          <CardFooter className="justify-center"></CardFooter>
+        </Card>
       </div>
     );
   }
