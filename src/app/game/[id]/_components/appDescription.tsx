@@ -42,42 +42,19 @@ export function AppDescription({ data }: Props) {
         >
           {data ? (
             <div>
-              {resolvedTheme == "dark" ? (
-                <h2 className="desc_header_dark text-identity-default">
-                  Description
-                </h2>
-              ) : (
-                <h2 className="desc_header_light text-identity-default">
-                  Description
-                </h2>
-              )}
-              {resolvedTheme == "dark" ? (
-                <div
-                  className="game_area_description_dark"
-                  dangerouslySetInnerHTML={{
-                    __html: data,
-                  }}
-                ></div>
-              ) : (
-                <div
-                  className="game_area_description_light"
-                  dangerouslySetInnerHTML={{
-                    __html: data,
-                  }}
-                ></div>
-              )}
+              <h2 className="text-2xl text-identity-default">Description</h2>
+              <div className="mb-5 h-1 rounded-xl bg-gradient-to-r from-identity-default pt-0"></div>
+              <div
+                className="game_area_description"
+                dangerouslySetInnerHTML={{
+                  __html: data,
+                }}
+              ></div>
             </div>
           ) : (
             <div>
-              {resolvedTheme == "dark" ? (
-                <h2 className="desc_header_dark text-identity-default">
-                  Description
-                </h2>
-              ) : (
-                <h2 className="desc_header_light text-identity-default">
-                  Description
-                </h2>
-              )}
+              <h2 className="text-2xl text-identity-default">Description</h2>
+              <div className="mb-5 h-1 rounded-xl bg-gradient-to-r from-identity-default pt-0"></div>
               <div>No Description Available</div>
             </div>
           )}
