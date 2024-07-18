@@ -40,6 +40,7 @@ export default async function Navbar() {
             <span className="hidden sm:inline">Steam</span> Stats
             <ChevronDown className=" inline duration-200 group-hover:rotate-180" />
           </button>
+          {/* dropdown */}
           <div className="absolute left-0 z-10 hidden min-w-32 bg-background group-hover:block sm:w-full">
             <Link
               href={"/stats"}
@@ -63,52 +64,52 @@ export default async function Navbar() {
           </div>
         </div>
 
-        {/* Theme */}
-        <div className="sm:mr-8">
+        {/* Dark/light Theme */}
+        <div>
           <ThemeDefault />
         </div>
 
         {/* Auth User */}
         {session ? (
-          <div className="group relative flex h-full items-center">
-            <div className="h-full cursor-pointer hover:bg-foreground/10">
-              <p className="mr-2 inline h-full text-center align-middle text-2xl text-primary">
-                {session.user?.name ? (
-                  <span className="hidden h-full capitalize md:inline">
-                    {session.user?.name}
-                  </span>
-                ) : (
-                  <span className="hidden h-full text-primary md:inline">
-                    Username
-                  </span>
-                )}
-              </p>
-              <div className="inline h-full text-center align-middle">
-                {session.user.image && (
-                  <img
-                    src={`${session.user.image}`}
-                    alt="Profile Photo"
-                    className="inline h-full overflow-hidden rounded-full p-1"
-                  />
-                )}
-              </div>
-              {/* dropdown */}
-              <div className="absolute right-0 z-10 hidden min-w-36 bg-background group-hover:block sm:w-full">
-                <Link
-                  href={"/user/apps"}
-                  className="block px-4 py-3 text-sm text-primary hover:bg-foreground/10 hover:text-identity-default active:text-identity-focus"
-                >
-                  Your Apps
-                </Link>
-                <Link
-                  href={"/user/wishlist"}
-                  className="block px-4 py-3 text-sm text-primary hover:bg-foreground/10 hover:text-identity-default active:text-identity-focus"
-                >
-                  Your Wish List
-                </Link>
-                <Separator />
-                <SignOut />
-              </div>
+          <div className="group relative h-full cursor-pointer hover:bg-foreground/10">
+            <p className="mx-0 inline h-full text-center align-middle text-2xl text-primary md:mx-2 ">
+              {session.user?.name ? (
+                <span className="hidden h-full capitalize md:inline">
+                  {/* TODO: ADD Line clamp when username over certain size, max size is 32 char */}
+                  {/* {session.user.name.length > } */}
+                  {session.user?.name}
+                </span>
+              ) : (
+                <span className="hidden h-full text-primary md:inline">
+                  Username
+                </span>
+              )}
+            </p>
+            <div className="mx-auto inline h-full items-center text-center align-middle">
+              {session.user.image && (
+                <img
+                  src={`${session.user.image}`}
+                  alt="Profile Photo"
+                  className="inline h-full overflow-hidden rounded-2xl p-2"
+                />
+              )}
+            </div>
+            {/* dropdown */}
+            <div className="absolute right-0 z-10 hidden min-w-36 bg-background group-hover:block sm:w-full">
+              <Link
+                href={"/user/apps"}
+                className="block px-4 py-3 text-sm text-primary hover:bg-foreground/10 hover:text-identity-default active:text-identity-focus"
+              >
+                Your Apps
+              </Link>
+              <Link
+                href={"/user/wishlist"}
+                className="block px-4 py-3 text-sm text-primary hover:bg-foreground/10 hover:text-identity-default active:text-identity-focus"
+              >
+                Your Wish List
+              </Link>
+              <Separator />
+              <SignOut />
             </div>
           </div>
         ) : (

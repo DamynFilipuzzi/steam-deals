@@ -34,6 +34,7 @@ export default function PriceDisplay({
     { "rounded-lg": !hasBackground },
     { "rounded-b-md": hasBackground },
     { "bg-background": hasBackground },
+    { "text-xs sm:text-sm": noPadding },
     { "p-1": !noPadding },
     { "h-12": !noPadding },
   );
