@@ -21,8 +21,8 @@ export default async function Page() {
     <main className="flex min-h-screen flex-row items-center justify-center bg-body text-primary">
       <Suspense
         fallback={
-          <p className="mr-5 animate-pulse">
-            Retrieving your apps, this should only take a minute...
+          <p className="mr-5 animate-pulse text-center">
+            Retrieving your Wish List, this should only take a minute...
           </p>
         }
       >
