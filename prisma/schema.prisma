@@ -131,7 +131,7 @@ model ReleaseDate {
   id            Int       @id @default(autoincrement())
   steam_id      Int       @unique
   coming_soon   Boolean
-  release_date  DateTime
+  release_date  String
   app           Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
 
