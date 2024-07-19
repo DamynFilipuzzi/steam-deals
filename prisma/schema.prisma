@@ -96,6 +96,8 @@ model Apps {
   releasedate             ReleaseDate?
   prices                  Prices[]
   apps_tags               Apps_Tags[]
+  apps_developers         Apps_Developers[]
+  apps_publishers         Apps_Publishers[]
   users_apps              UsersApps[]
   users_wishlist          UsersWishlist[]
   top_sellers             TopSellers?
@@ -119,9 +121,9 @@ model Screenshots {
 
 model Videos {
   id                Int       @id @default(autoincrement())
-  video_id          Int       @unique
   steam_id          Int
-  video_order       Int
+  video_id          Int       @unique
+  video_name        String
   app               Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
 
@@ -170,6 +172,36 @@ model Apps_Tags {
   apps          Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 
   @@id([steam_id, tag_id])
+}
+
+model Developers {
+  id              Int       @id @default(autoincrement())
+  developer_name  String    @unique
+  apps_developers Apps_Developers[]
+}
+
+model Apps_Developers {
+  developer_id    Int
+  steam_id        Int
+  developers      Developers  @relation(fields: [developer_id], references: [id], onDelete: Cascade)
+  apps            Apps        @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+
+  @@id([developer_id, steam_id])
+}
+
+model Publishers {
+  id              Int       @id @default(autoincrement())
+  publisher_name  String    @unique
+  apps_publishers Apps_Publishers[]
+}
+
+model Apps_Publishers {
+  publisher_id    Int
+  steam_id        Int
+  publisher       Publishers  @relation(fields: [publisher_id], references: [id], onDelete: Cascade)
+  apps            Apps        @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
+
+  @@id([publisher_id, steam_id])
 }
 
 model TopSellers {
