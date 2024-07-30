@@ -165,6 +165,7 @@ export const appsRouter = createTRPCRouter({
           screenshots: {
             orderBy: { image_order: "asc" },
           },
+          videos: true,
           dlc: {
             orderBy: {
               steam_id: "desc",
@@ -184,6 +185,17 @@ export const appsRouter = createTRPCRouter({
               },
             },
           },
+          apps_developers: {
+            include: {
+              developers: true,
+            },
+          },
+          apps_publishers: {
+            include: {
+              publisher: true,
+            },
+          },
+          releasedate: true,
           app_info: true,
           prices: {
             select: {

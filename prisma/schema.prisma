@@ -104,8 +104,8 @@ model Apps {
   most_played             MostPlayed?
   screenshots             Screenshots[]
   videos                  Videos[]
-  app                     Apps?     @relation("Appa_Dlcs", fields: [dlc_steam_id], references: [steam_id])
-  dlc                     Apps[]    @relation("Appa_Dlcs")
+  app                     Apps?     @relation("Apps_Dlcs", fields: [dlc_steam_id], references: [steam_id])
+  dlc                     Apps[]    @relation("Apps_Dlcs")
 }
 
 model Screenshots {
@@ -130,8 +130,8 @@ model Videos {
 model ReleaseDate {
   id            Int       @id @default(autoincrement())
   steam_id      Int       @unique
-  coming_soon   Boolean
-  release_date  String
+  coming_soon   Boolean?
+  release_date  String?
   app           Apps      @relation(fields: [steam_id], references: [steam_id], onDelete: Cascade)
 }
 
