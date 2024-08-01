@@ -56,7 +56,10 @@ export default function ImageCarousel({ screenshots, videos }: props) {
                       key={video.video_id}
                       className="basis-5/6 md:basis-2/4 lg:basis-1/3 2xl:basis-1/4 3xl:basis-1/3 4xl:basis-1/6 5xl:basis-1/5"
                     >
-                      <video controls>
+                      <video
+                        controls
+                        poster={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${video.video_id}/movie.293x165.jpg?t=1721739680`}
+                      >
                         <source
                           src={`http://cdn.akamai.steamstatic.com/steam/apps/${video.video_id}/movie480.mp4?t=1696005467`}
                           type="video/mp4"
