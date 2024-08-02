@@ -252,45 +252,47 @@ export default async function Page({ params }: Props) {
             </div>
           )}
           {/* Publishers/Developers TODO: Add links so users can search by Developer/Publisher (Similar to Tags) */}
-          {game.apps_developers.length > 0 &&
-            game.apps_developers.length > 0 && (
-              <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
-                {game.apps_developers.length > 0 && (
-                  <>
-                    <h2 className="mb-2 text-2xl text-identity-default">
-                      Developer:
-                    </h2>
-                    <div className="flex flex-row flex-wrap justify-end gap-x-4">
-                      {game.apps_developers.map((dev) => (
-                        <p
-                          className="text-muted-foreground"
-                          key={dev.developer_id}
-                        >
-                          {dev.developers.developer_name}
-                        </p>
-                      ))}
-                    </div>
-                  </>
-                )}
-                {game.apps_publishers.length > 0 && (
-                  <>
-                    <h2 className="mb-2 text-2xl text-identity-default">
-                      Publisher:
-                    </h2>
-                    <div className="flex flex-row flex-wrap justify-end gap-x-4">
-                      {game.apps_publishers.map((pub) => (
-                        <p
-                          className="text-muted-foreground"
-                          key={pub.publisher_id}
-                        >
-                          {pub.publisher.publisher_name}
-                        </p>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </div>
-            )}
+          {game.apps_developers.length > 0 ||
+          game.apps_publishers.length > 0 ? (
+            <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
+              {game.apps_developers.length > 0 && (
+                <>
+                  <h2 className="mb-2 text-2xl text-identity-default">
+                    Developer:
+                  </h2>
+                  <div className="gap-x-4 text-end">
+                    {game.apps_developers.map((dev) => (
+                      <p
+                        className="text-muted-foreground"
+                        key={dev.developer_id}
+                      >
+                        {dev.developers.developer_name}
+                      </p>
+                    ))}
+                  </div>
+                </>
+              )}
+              {game.apps_publishers.length > 0 && (
+                <>
+                  <h2 className="mb-2 text-2xl text-identity-default">
+                    Publisher:
+                  </h2>
+                  <div className="gap-x-4 text-end">
+                    {game.apps_publishers.map((pub) => (
+                      <p
+                        className="text-muted-foreground"
+                        key={pub.publisher_id}
+                      >
+                        {pub.publisher.publisher_name}
+                      </p>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
           {/* Release Information */}
           {game.releasedate?.coming_soon != null &&
             game.releasedate.release_date != null && (
