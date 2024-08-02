@@ -101,7 +101,7 @@ export default function DLCTable({ appDLC }: DLCProp) {
                         {dlc.title}
                       </TableCell>
                       <TableCell>
-                        <PriceDisplay prices={dlc.prices} />
+                        <PriceDisplay prices={dlc.prices} noPadding />
                       </TableCell>
                     </TableRow>
                   );
