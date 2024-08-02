@@ -50,7 +50,9 @@ export default function ImageCarousel({ screenshots, videos }: props) {
       {screenshots.length > 0 || videos.length > 0 ? (
         <div className="mt-5 flex flex-col-reverse justify-center gap-4 px-5 xl:flex-row xl:px-80">
           <div className="h-full w-full bg-secondary-background p-5 shadow-md shadow-background dark:shadow-none">
-            <h2 className="mb-2 text-2xl text-identity-default">Screenshots</h2>
+            <h2 className="mb-2 text-2xl text-identity-default">
+              Videos/Screenshots
+            </h2>
             <Carousel plugins={[plugin.current]}>
               <CarouselContent>
                 {videos.map((video) => {
@@ -76,12 +78,12 @@ export default function ImageCarousel({ screenshots, videos }: props) {
                             />
                           </div>
                         </DialogTrigger>
-                        <DialogContent className="max-w-7xl border-0 bg-background">
+                        <DialogContent className="max-w-xl border-0 bg-background xl:max-w-7xl">
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
                             <DialogDescription>
                               <video
-                                className="m-auto"
+                                className="m-auto w-full"
                                 controls
                                 poster={`https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${video.video_id}/movie.293x165.jpg`}
                               >
@@ -112,12 +114,12 @@ export default function ImageCarousel({ screenshots, videos }: props) {
                             alt={`Image: ${image.id}`}
                           />
                         </DialogTrigger>
-                        <DialogContent className="max-w-7xl border-0 bg-background">
+                        <DialogContent className="max-w-xl border-0 bg-background xl:max-w-7xl">
                           <DialogHeader>
                             <DialogTitle></DialogTitle>
                             <DialogDescription>
                               <img
-                                className="m-auto"
+                                className="m-auto w-full"
                                 src={image.path_full}
                                 alt={`Image: ${image.id}`}
                               />
