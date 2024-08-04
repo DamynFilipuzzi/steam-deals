@@ -108,8 +108,12 @@ export default function ImageCarousel({ screenshots, videos }: props) {
                       key={image.id + "sid"}
                     >
                       <Dialog>
-                        <DialogTrigger onMouseDown={plugin.current.stop}>
+                        <DialogTrigger
+                          onMouseDown={plugin.current.stop}
+                          className="h-full w-full"
+                        >
                           <img
+                            className="m-auto h-full w-full"
                             src={image.path_thumbnail}
                             alt={`Image: ${image.id}`}
                           />
