@@ -9,16 +9,16 @@
 
 ## Features
 
-- Tracks over 104,000 games and pulls new information on a daily basis
-- Historical price tracking
-- Search for games by text query and tags
+- Tracks over 150,000 games and DLC.
+- Historical price tracking for all apps
+- Search for games and DLC using filterable fields (Search, Checkboxes, etc..)
+- Steam OAuth Login integration
+- Display stats, most played, top selling
 
 ## Planned Features
 
-- Implement more ways to sort. (Top selling, Concurrent players)
-- Increase the amount of content (DLC, Packages, Bundles Soundtracks.).
+- Increase the amount of content tracked (Packages, Bundles Soundtracks).
 - Expand functionality of price history graph. Add Filtering options.
-- Steam Login Api integration
 - Wishlist feature with user defined low price notification setting.
 
 ## Usage
@@ -26,6 +26,9 @@
 1. Make a copy of the `.env.example` file and rename it to `.env`. Then fill the blank fields in the `.env` file.
 1.  Run `npm install`.
 1.  Then run `npm run build`, and finally `npm run dev`.
+1.  Finally run `npm run db:push` to build the database.
+
+***Note:*** This repository depends on the <a target="_blank" href="https://github.com/DamynFilipuzzi/scraper-py">steam-scraper-py</a> project for scraping data from Steam's app library. If you haven’t run the scraper yet, no apps will be visible.
 
 ## Tech Stack
 
